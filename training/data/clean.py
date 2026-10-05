@@ -310,9 +310,14 @@ def clean_stream(
         if declared and declared not in ("unknown", "multi") and declared != guess:
             rep.note_fix("language_label_disagreement")
         c = script_counts(text)
-        kept.append(
+        # Carry the document's own metadata through cleaning. Provenance, licence and the
+        # synthetic/natural flag are *not* cleaning decisions and must not be dropped here: a
+        # cleaner that returns only {text, language} silently destroys the audit trail.
+        out = dict(doc)
+        out.update(
             {
                 "id": doc.get("id") or f"{source_id}:{rep.kept}",
+                "doc_id": doc.get("doc_id") or doc.get("id") or f"{source_id}:{rep.kept}",
                 "source_id": source_id,
                 "language": declared or guess,
                 "language_guess": guess,
@@ -323,6 +328,7 @@ def clean_stream(
                 "scripts": c,
             }
         )
+        kept.append(out)
         rep.kept += 1
         rep.chars_out += len(text)
     return kept, rep, rejects

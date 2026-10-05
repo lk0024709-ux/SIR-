@@ -1,0 +1,85 @@
+# SIR — M1 corpus build configuration
+# =============================================================================
+# Drives `python -m training.data.build_corpus`. Nothing in this file asserts a
+# corpus size: every number in the report is measured by the pipeline.
+#
+# This config requires the sources listed under dataset.sources to be
+# `status: available` in data/manifests/sources.yaml (licence verified + model
+# training permitted). A source that is not available is refused loudly.
+# =============================================================================
+
+experiment:
+  name: m1_corpus
+  objective: >
+    Build a licence-verified, deduplicated, leakage-safe multilingual corpus from
+    the sources the environment can legally reach, measure it by tokenizing it,
+    and report the measured number honestly — including when it is far below 200M.
+
+seed: 20261005
+
+paths:
+  processed_dir: data/processed/m1_corpus
+  normalized_dir: data/normalized
+  tokenizer_dir: tokenizer/artifacts/m1_corpus
+  reports:
+    corpus_report_json: evaluation/results/corpus_report.json
+    corpus_report_md: docs/corpus-report.md
+
+dataset:
+  # The list is explicit: adding a source is a deliberate, reviewable act.
+  sources:
+    - sir_fixture_v0          # CC0-1.0     — SIR-authored fixture (synthetic; counted separately)
+    - cltk_sa_wikisource      # CC0-1.0     — Sanskrit (Devanagari) classical/encyclopedic
+    - cltk_sa_gitasupersite   # PDM-1.0     — Sanskrit + Awadhi (Ramcharitmanas)
+    - cltk_te_wikisource      # PDM-1.0     — Telugu classical
+    - cltk_pa_gurban          # Unlicense   — Punjabi (Guru Granth Sahib)
+    - cltk_mr_wikisource      # CC-BY-SA-3.0— Marathi classical
+    - cltk_bn_wikisource      # CC-BY-SA-3.0— Bengali classical
+    - cltk_gu_wikisource      # CC-BY-SA-3.0— Gujarati classical
+    - nltk_gutenberg_pd       # PD-US       — English public-domain literature
+    - standardebooks_en_pd    # PD-US + CC0 — English public-domain literature
+  include_fixture: true
+
+  normalization:
+    max_doc_chars: 6000
+    min_doc_chars: 200
+
+  clean:
+    min_chars: 200
+    max_chars: 100_000
+    min_alnum_ratio: 0.40
+    max_symbol_ratio: 0.30
+    max_url_ratio: 0.10
+    max_repeat_frac: 0.55
+    recover_mojibake: true
+
+  dedup:
+    exact: true
+    near: true
+    num_perm: 64
+    band_size: 8
+    threshold: 0.8
+    shingle_chars: 24
+    max_band_size: 200
+    max_candidates: 200_000
+
+  split:
+    val_frac: 0.02
+    seed: 20261005
+    leak_ngram: 8
+    max_leak_repair_iters: 8
+    repair_leakage: true
+
+tokenizer:
+  # the bake-off picks the winner from these candidates; nothing is pre-selected by hand
+  candidates: [byte_bpe, sp_bpe, sp_unigram]
+  vocab_sizes: [16000]
+  max_train_chars: 8_000_000   # bounded so the bake-off finishes on 2 CPU cores
+  eval_slice_min_chars: 2_000
+
+model:
+  max_seq_len: 512
+
+gates:
+  target_tokens: 200_000_000
+  min_tokens_for_any_training: 10_000_000

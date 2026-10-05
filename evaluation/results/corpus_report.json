@@ -1,0 +1,422 @@
+{
+  "generated_utc": "2026-10-05T13:41:44Z",
+  "experiment": "configs/m1_corpus.yaml",
+  "corpus": {
+    "documents": {
+      "raw_files": 3,
+      "normalized": 35,
+      "cleaned_kept": 35,
+      "after_dedup": 35,
+      "natural": 0,
+      "synthetic": 35,
+      "train": 4,
+      "validation": 0
+    },
+    "characters": {
+      "normalized": 189355,
+      "cleaned": 189339,
+      "after_dedup": 189339,
+      "train": 23628,
+      "validation": 0,
+      "by_language": {
+        "en": 55953,
+        "hi": 64365,
+        "hinc-deva": 24952,
+        "hinc-latn": 44069
+      }
+    },
+    "tokens": {
+      "measured": false,
+      "tool": null,
+      "tokenizer_spec": null,
+      "tokenizer_kind": null,
+      "tokenizer_sha256": null,
+      "total": null,
+      "train": null,
+      "validation": null,
+      "contexts_at_seq_len": null
+    },
+    "per_language": {
+      "en": {
+        "documents": 10,
+        "characters": 55953,
+        "tokens": null,
+        "share_of_documents": 0.285714,
+        "share_of_tokens": null,
+        "synthetic_documents": 10,
+        "train_documents": 1,
+        "validation_documents": 0,
+        "measured_documents": 10
+      },
+      "hi": {
+        "documents": 12,
+        "characters": 64365,
+        "tokens": null,
+        "share_of_documents": 0.342857,
+        "share_of_tokens": null,
+        "synthetic_documents": 12,
+        "train_documents": 1,
+        "validation_documents": 0,
+        "measured_documents": 14
+      },
+      "hinc-deva": {
+        "documents": 5,
+        "characters": 24952,
+        "tokens": null,
+        "share_of_documents": 0.142857,
+        "share_of_tokens": null,
+        "synthetic_documents": 5,
+        "train_documents": 1,
+        "validation_documents": 0,
+        "measured_documents": 3
+      },
+      "hinc-latn": {
+        "documents": 8,
+        "characters": 44069,
+        "tokens": null,
+        "share_of_documents": 0.228571,
+        "share_of_tokens": null,
+        "synthetic_documents": 8,
+        "train_documents": 1,
+        "validation_documents": 0,
+        "measured_documents": 8
+      }
+    },
+    "per_source": {
+      "sir_fixture_v0": {
+        "documents": 35,
+        "characters": 189339,
+        "tokens": null,
+        "synthetic_documents": 35,
+        "train_documents": 4,
+        "validation_documents": 0,
+        "license": "CC0-1.0",
+        "license_url": "https://creativecommons.org/publicdomain/zero/1.0/",
+        "license_verified": true,
+        "model_training_allowed": true,
+        "attribution_required": false,
+        "share_alike": false,
+        "commercial_use": "allowed",
+        "status": "available",
+        "provider": "SIR (this repository)",
+        "provenance": "scripts/build_fixture_corpus.py (seeded generator, deterministic)",
+        "url": null,
+        "revision": "local",
+        "synthetic": true
+      }
+    }
+  },
+  "split": {
+    "method": "doc-id-fallback",
+    "seed": 20261005,
+    "val_frac_requested": 0.02,
+    "val_frac_achieved": 0.0,
+    "components": 35,
+    "train_docs": 4,
+    "val_docs": 0,
+    "train_chars": 23628,
+    "val_chars": 0,
+    "per_language": {
+      "en": {
+        "documents": 10,
+        "train_documents": 1,
+        "validation_documents": 0,
+        "components": 10,
+        "validation_components": 1,
+        "note": "single validation component; per-language metrics will be noisy"
+      },
+      "hi": {
+        "documents": 12,
+        "train_documents": 1,
+        "validation_documents": 0,
+        "components": 12,
+        "validation_components": 1,
+        "note": "single validation component; per-language metrics will be noisy"
+      },
+      "hinc-deva": {
+        "documents": 5,
+        "train_documents": 1,
+        "validation_documents": 0,
+        "components": 5,
+        "validation_components": 1,
+        "note": "single validation component; per-language metrics will be noisy"
+      },
+      "hinc-latn": {
+        "documents": 8,
+        "train_documents": 1,
+        "validation_documents": 0,
+        "components": 8,
+        "validation_components": 1,
+        "note": "single validation component; per-language metrics will be noisy"
+      }
+    },
+    "notes": [
+      "validation fraction 11.4286% differs from the 2.00% target because whole components move together; the achieved value is what the report uses",
+      "a component is a set of documents linked by shared normalized sentences; it can hold many documents",
+      "4 document(s) moved from validation to train by leakage repair; validation shrank rather than being trimmed"
+    ],
+    "leak_repair": {
+      "performed": true,
+      "converged": true,
+      "iterations": 1,
+      "before": {
+        "n": 8,
+        "train_ngrams": 29120,
+        "val_documents": 4,
+        "val_ngrams": 4094,
+        "overlapping_ngram_occurrences_train": 3707,
+        "unique_overlapping_ngrams": 243,
+        "leaking_val_documents": 4,
+        "overlap_rate": 0.1273008242,
+        "examples": [
+          {
+            "doc_id": "sir_fixture_v0:docs:000001",
+            "source_id": "sir_fixture_v0",
+            "shared_ngrams_in_doc": 1038
+          },
+          {
+            "doc_id": "sir_fixture_v0:docs:000014",
+            "source_id": "sir_fixture_v0",
+            "shared_ngrams_in_doc": 825
+          },
+          {
+            "doc_id": "sir_fixture_v0:docs:000020",
+            "source_id": "sir_fixture_v0",
+            "shared_ngrams_in_doc": 1072
+          },
+          {
+            "doc_id": "sir_fixture_v0:docs:000028",
+            "source_id": "sir_fixture_v0",
+            "shared_ngrams_in_doc": 772
+          }
+        ],
+        "method": "sorted uint64 rolling-hash array of train n-grams; validation streamed"
+      },
+      "after": {
+        "n": 8,
+        "train_ngrams": 4094,
+        "val_documents": 0,
+        "val_ngrams": 0,
+        "overlapping_ngram_occurrences_train": 0,
+        "unique_overlapping_ngrams": 0,
+        "leaking_val_documents": 0,
+        "overlap_rate": 0.0,
+        "examples": [],
+        "method": "sorted uint64 rolling-hash array of train n-grams; validation streamed"
+      },
+      "log": [
+        {
+          "iteration": 1,
+          "overlapping_ngram_occurrences_train": 3707,
+          "unique_overlapping_ngrams": 243,
+          "leaking_val_documents": 4,
+          "moved_documents": 4
+        }
+      ]
+    }
+  },
+  "quality": {
+    "exact_duplicates_removed": 0,
+    "near_duplicates_removed": 0,
+    "cross_source_near_duplicate_removals": 0,
+    "leakage": {
+      "leakage_8gram": {
+        "n": 8,
+        "train_ngrams": 4094,
+        "val_documents": 0,
+        "val_ngrams": 0,
+        "overlapping_ngram_occurrences_train": 0,
+        "unique_overlapping_ngrams": 0,
+        "leaking_val_documents": 0,
+        "overlap_rate": 0.0,
+        "examples": [],
+        "method": "sorted uint64 rolling-hash array of train n-grams; validation streamed"
+      },
+      "cross_split_near_dups": {
+        "pairs": 0,
+        "exact_duplicate_documents": 0,
+        "threshold": 0.8,
+        "val_band_keys": 0,
+        "examples": [],
+        "method": "validation MinHash bands indexed in memory; train streamed and verified by Jaccard"
+      }
+    },
+    "language_quality": {
+      "documents": 35,
+      "script_mismatch": 0,
+      "label_disagreements": 2,
+      "documents_seen_cleaning": 35,
+      "documents_kept_cleaning": 35,
+      "documents_after_dedup": 35
+    },
+    "rejects_by_reason": {
+      "sir_fixture_v0": {}
+    },
+    "cleaner_repairs": {
+      "sir_fixture_v0": {
+        "language_label_disagreement": 2
+      }
+    }
+  },
+  "gates": [
+    {
+      "id": "G1",
+      "name": "licence",
+      "passed": true,
+      "requirement": "every training source is available with a verified, recorded training permission",
+      "detail": "all sources carry a verified training permission",
+      "measured": {
+        "sources_checked": 1,
+        "offenders": {}
+      }
+    },
+    {
+      "id": "G2",
+      "name": "provenance",
+      "passed": true,
+      "requirement": "every document carries doc_id + source_id + artifact provenance; every source has a pinned revision",
+      "detail": "every document traces to a pinned artifact",
+      "measured": {
+        "document_gaps": {},
+        "unpinned_sources": []
+      }
+    },
+    {
+      "id": "G3",
+      "name": "integrity",
+      "passed": true,
+      "requirement": "every acquired artifact re-hashes to its recorded SHA-256",
+      "detail": "3 artifacts re-hashed, 0 mismatch(es)",
+      "measured": {
+        "checked": 3,
+        "failures": [],
+        "failure_count": 0
+      }
+    },
+    {
+      "id": "G4",
+      "name": "leakage",
+      "passed": true,
+      "requirement": "zero shared 8-grams between train and validation AND zero cross-split near-duplicates",
+      "detail": "shared 8-grams: 0 unique / 0 occurrences; cross-split near-duplicate pairs: 0",
+      "measured": {
+        "unique_overlapping_ngrams": 0,
+        "overlapping_ngram_occurrences_train": 0,
+        "cross_split_near_duplicate_pairs": 0,
+        "overlap_rate": 0.0,
+        "val_ngrams": 0,
+        "train_ngrams": 4094
+      }
+    },
+    {
+      "id": "G5",
+      "name": "measured size",
+      "passed": false,
+      "requirement": "token counts were produced by tokenizing the corpus with a recorded tokenizer",
+      "detail": "token counts are missing or were not produced by tokenization",
+      "measured": {
+        "measured": false,
+        "tool": null,
+        "tokenizer_sha256": null,
+        "total": 0,
+        "train": null,
+        "validation": null
+      }
+    },
+    {
+      "id": "G6",
+      "name": "language integrity",
+      "passed": true,
+      "requirement": "unknown-language share ≤ 2% and script-mismatch share ≤ 2%",
+      "detail": "unknown 0.0000% (0/35), script mismatch 0.0000% (0/35 documents the cleaner examined)",
+      "measured": {
+        "documents": 35,
+        "unknown": 0,
+        "unknown_share": 0.0,
+        "script_mismatch": 0,
+        "script_mismatch_share": 0.0,
+        "script_mismatch_base": 35,
+        "unknown_threshold": 0.02,
+        "script_mismatch_threshold": 0.02
+      }
+    },
+    {
+      "id": "G7",
+      "name": "reproducibility",
+      "passed": true,
+      "requirement": "config/script hashes, seed and pinned revisions are recorded; normalized files re-hash on disk",
+      "detail": "reproducibility record complete and re-verified",
+      "measured": {
+        "missing_fields": [],
+        "unverified_normalized_files": [],
+        "seed": 20261005,
+        "sources_pinned": 1
+      }
+    }
+  ],
+  "m1": {
+    "status": "BLOCKED",
+    "reason": "0 measured tokens is below the 10,000,000 floor; no training run may be started or reported as a model",
+    "measured_tokens": 0,
+    "target_tokens": 200000000,
+    "min_tokens_for_any_training": 10000000,
+    "failing_gates": [
+      "G5"
+    ],
+    "training_readiness": {
+      "state": "NOT READY",
+      "ready": false,
+      "reason": "0 measured tokens is below the 10M floor"
+    }
+  },
+  "reproducibility": {
+    "git_commit": "c437e46f1a59926a9f3d0ed17e582f7bb83232cf",
+    "config_path": "configs/m1_corpus.yaml",
+    "config_sha256": "87254e39c84229a8511cd9b76cd78750864cf616b894dcb0088d4b34054b654b",
+    "seed": 20261005,
+    "script_sha256": {
+      "training/data/acquire.py": "4cf3e4153e07de22e7b27efebe8f10c3596b873357ee08344b72b450e3203d1a",
+      "training/data/normalize.py": "fb5231d5d61461a9d78038cfbb6905bd042030d3b42355ddfe6a1cd5da22a296",
+      "training/data/langid.py": "be0494f9417ae002e6de19bec970e580e9dd09d236aa483b53e6ad73d13a0332",
+      "training/data/clean.py": "e0dabed63257ddd044c8218abd0e9cf671d689b98c96c59d153383fbbe17c518",
+      "training/data/deduplicate.py": "2c8c2f3cfbdd9fefedde2cc318f43b21dc9a55b96bceffa2975051394dc015b3",
+      "training/data/dedup_stream.py": "b4593005abf628657422ca885c58dd844e60161c6e6efe2916b429aa8fe26f27",
+      "training/data/split.py": "8c87e9223ffea31bdffdea84de785bfb76444da94e4d399de39f2ce47191b71c",
+      "training/data/split_stream.py": "a6a7a6c61914aab83d37d2869d037f3f192e165bd1db56f47f4b82222a8187b6",
+      "training/data/build_corpus.py": "18d79e76c13b4cbd68fa6fb887a2460306720d483f10c5aa7b80066ba1f80abb",
+      "training/data/gates.py": "55860d600bfdfebd3e91b7d3973b64d3db0b9aac94458074aec111a7d77f8705",
+      "training/data/corpus_report.py": "9442868b1343d8f4afd6bf114fadbd0706d8fd1681f2183bb1a699b21d32fe03",
+      "training/data/manifest.py": "7768621825d330121eeeb8377de8248c746c147ed2c403444210fa109c2ab276"
+    },
+    "source_revisions": {
+      "sir_fixture_v0": "local"
+    },
+    "source_archive_sha256": {
+      "sir_fixture_v0": []
+    },
+    "normalized_files": {
+      "sir_fixture_v0": {
+        "path": "data/normalized/sir_fixture_v0.jsonl",
+        "recorded": "fe4816f81e27f74a4241d6fa5c4a7b25ae4feca4f44668317316ee0d6640fffc",
+        "recomputed": "fe4816f81e27f74a4241d6fa5c4a7b25ae4feca4f44668317316ee0d6640fffc",
+        "verified": true
+      }
+    },
+    "python": "3.11.2",
+    "numpy": "2.4.6"
+  },
+  "sources_requested": [
+    "sir_fixture_v0"
+  ],
+  "sources_refused": [],
+  "environment": {
+    "python": "3.11.2",
+    "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "cpu_count": 2,
+    "mem_total_mb": 3940,
+    "disk_free_mb": 9465,
+    "numpy": "2.4.6",
+    "utc": "2026-10-05T13:41:44Z",
+    "network_policy": "acquisition only from what the egress proxy allows; blocked hosts are recorded, never bypassed"
+  }
+}

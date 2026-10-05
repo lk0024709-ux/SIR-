@@ -7,6 +7,7 @@
 # and data *cards* (license/source records) belong in git.
 data/raw/*
 data/cleaned/*
+data/normalized/*
 data/processed/*
 !data/**/.gitkeep
 data/**/*.jsonl
@@ -14,6 +15,10 @@ data/**/*.parquet
 data/**/*.arrow
 !data/**/CARD.md
 !data/**/README.md
+
+# Acquisition metadata IS committed: source manifest, per-artifact size/SHA-256 ledgers,
+# acquisition log and blocked-host records. These are evidence, not corpus text.
+!data/manifests/**
 
 # Trained tokenizer artifacts (regenerable via tokenizer.train_tokenizer; may embed corpus text)
 tokenizer/artifacts/
