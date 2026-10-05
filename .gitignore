@@ -1,0 +1,74 @@
+# --- SIR: keep large/derived artifacts out of git ------------------------------
+# Scaffold placeholders stay tracked so module boundaries remain visible in git.
+!**/.gitkeep
+
+# The data pipeline is deliberately local-first. Raw corpora, intermediate
+# exports, checkpoints and tokenizers are never committed; only configs, scripts
+# and data *cards* (license/source records) belong in git.
+data/raw/*
+data/cleaned/*
+data/processed/*
+!data/**/.gitkeep
+data/**/*.jsonl
+data/**/*.parquet
+data/**/*.arrow
+!data/**/CARD.md
+!data/**/README.md
+
+# Model weights, checkpoints, tokenizer artifacts, caches
+*.bin
+*.safetensors
+*.gguf
+*.onnx
+*.pt
+*.pth
+*.ckpt
+*.model
+*.sentencepieces
+*.spm
+tokenizer/**/*.json
+!tokenizer/*.json.example
+runs/
+wandb/
+lightning_logs/
+*.log
+cache/
+.cache/
+.ipynb_checkpoints/
+
+# Android / edge build output
+android/**/build/
+android/.gradle/
+*.apk
+*.aab
+*.aab.idsig
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+
+# Secrets — SIR policy: no key ever reaches weights, configs or APKs
+.env
+.env.*
+*.pem
+*.key
+secrets/
+local.properties
+service-account*.json
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
