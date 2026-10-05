@@ -479,6 +479,7 @@ grant with a recorded audit entry.
 
 A major goal is to make smaller SIR models usable on Android and other edge devices.
 
+- **Android build foundation:** a minimal Kotlin/JNI APK scaffold and pinned GitHub Actions build are documented in [`docs/android-build.md`](docs/android-build.md). This validates build plumbing only; SIR-Nano Android inference is not implemented.
 - **Candidate runtimes:** GGUF · llama.cpp · ONNX Runtime · ExecuTorch · LiteRT · Android acceleration APIs
 - **Deployment targets** depend on model size and device hardware; no device is assumed today.
 - **Metrics that must be reported for every quantized build:** RAM usage · model size · tokens/sec ·
