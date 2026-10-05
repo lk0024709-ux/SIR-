@@ -113,4 +113,7 @@ It reuses the existing llama.cpp dependency rather than adding another. It does 
 
 ## Validation record
 
-Validation status is recorded from actual commands and the GitHub Actions run; absence of a local toolchain is **NOT VERIFIED**, not a pass. The initial Agent sandbox inspection found no `java`, Gradle, CMake, or Android SDK executable, and direct downloads from the Gradle/Google SDK hosts were unavailable. Therefore a local APK build in that sandbox is **NOT VERIFIED**; CI must pass the acceptance criteria above before this foundation is described as build-validated.
+- GitHub Actions PR run [37343152291](https://github.com/lk0024709-ux/SIR-/actions/runs/37343152291) **passed** on 2026-10-05 in 4m7s. JDK setup, pinned SDK installation, Gradle version check, `assembleDebug`, APK/JNI payload verification, and artifact upload all completed successfully.
+- The workflow verified a non-empty `app/build/outputs/apk/debug/app-debug.apk` containing `lib/arm64-v8a/libsir_android.so` and `lib/x86_64/libsir_android.so`; artifact `sir-android-debug-apk` was uploaded (7,823,876-byte artifact archive).
+- The existing Python suite in the Agent sandbox: **117 passed, 3 skipped**.
+- A local Android APK build remains **NOT VERIFIED** in the Agent sandbox: it had no `java`, Gradle, CMake, or Android SDK executable, and direct downloads from the Gradle/Google SDK hosts were unavailable. The CI build above is the verified build result; local absence is not counted as a pass.
