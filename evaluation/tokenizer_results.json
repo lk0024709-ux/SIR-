@@ -1,0 +1,1116 @@
+{
+  "tool": "tokenizer/evaluate_tokenizer.py",
+  "experiment": "sir_nano_smoke",
+  "config": "configs/sir_nano_smoke.yaml",
+  "corpus": {
+    "train_file": {
+      "path": "/home/user/SIR-/data/processed/smoke/train.jsonl",
+      "sha256": "d5dfbbd15bb6324656af57d19095eea6ec274453cedf85d50ee913730187e436",
+      "docs": 390,
+      "chars": 138425
+    },
+    "eval_file": "/home/user/SIR-/data/processed/smoke/val.jsonl",
+    "eval_file_sha256": "5ff6cc67f0ad7e21",
+    "eval_docs": 102,
+    "natural": false,
+    "provisional": true,
+    "provisional_reasons": [
+      "corpus is 171476 chars (< 1000000); metrics are pipeline-validation only",
+      "corpus is a composed fixture, not natural text (see data/manifests/sources.yaml)"
+    ]
+  },
+  "slices": {
+    "hi": {
+      "docs": 26,
+      "chars": 7922,
+      "label": "Hindi (Devanagari)",
+      "constructed": false
+    },
+    "en": {
+      "docs": 26,
+      "chars": 9340,
+      "label": "English (Latin)",
+      "constructed": false
+    },
+    "hinc-latn": {
+      "docs": 24,
+      "chars": 7553,
+      "label": "Hinglish (romanized, code-mixed)",
+      "constructed": false
+    },
+    "hinc-deva": {
+      "docs": 26,
+      "chars": 8236,
+      "label": "Mixed-script Hinglish (Devanagari + Latin words)",
+      "constructed": false
+    },
+    "constructed_codeswitch": {
+      "docs": 113,
+      "chars": 16012,
+      "label": "Constructed code-switch stress slice",
+      "constructed": true
+    }
+  },
+  "candidates": [
+    {
+      "kind": "byte_bpe",
+      "vocab_requested": 1024,
+      "vocab_actual": 1024,
+      "vocab_clamped_from": null,
+      "equal_vocab": true,
+      "train_seconds": 0.067,
+      "artifact_bytes": 56816,
+      "artifact_sha256": "696dd01e65c60d24",
+      "spec": "/home/user/SIR-/tokenizer/artifacts/smoke/byte_bpe-1024/spec.json",
+      "slices": {
+        "hi": {
+          "docs": 26,
+          "tokens": 5608,
+          "chars": 7922,
+          "words": 1638,
+          "utf8_bytes": 20426,
+          "chars_per_token": 1.4126,
+          "tokens_per_char": 0.7079,
+          "tokens_per_word": 3.4237,
+          "bytes_per_token": 3.6423,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 912092,
+          "encode_ms_per_doc": 0.3341,
+          "with_special_tokens": 5660,
+          "context": {
+            "probe_tokens": 841,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.6171,
+            "context_capacity_chars": 103
+          },
+          "provisional_slice": true
+        },
+        "en": {
+          "docs": 26,
+          "tokens": 4256,
+          "chars": 9340,
+          "words": 1556,
+          "utf8_bytes": 9340,
+          "chars_per_token": 2.1945,
+          "tokens_per_char": 0.45567,
+          "tokens_per_word": 2.7352,
+          "bytes_per_token": 2.1945,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 2611719,
+          "encode_ms_per_doc": 0.1375,
+          "with_special_tokens": 4308,
+          "context": {
+            "probe_tokens": 841,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.6171,
+            "context_capacity_chars": 103
+          },
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "docs": 24,
+          "tokens": 3442,
+          "chars": 7553,
+          "words": 1416,
+          "utf8_bytes": 7553,
+          "chars_per_token": 2.1944,
+          "tokens_per_char": 0.45571,
+          "tokens_per_word": 2.4308,
+          "bytes_per_token": 2.1944,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 2251838,
+          "encode_ms_per_doc": 0.1398,
+          "with_special_tokens": 3490,
+          "context": {
+            "probe_tokens": 841,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.6171,
+            "context_capacity_chars": 103
+          },
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "docs": 26,
+          "tokens": 5587,
+          "chars": 8236,
+          "words": 1642,
+          "utf8_bytes": 20370,
+          "chars_per_token": 1.4741,
+          "tokens_per_char": 0.67836,
+          "tokens_per_word": 3.4026,
+          "bytes_per_token": 3.646,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 902154,
+          "encode_ms_per_doc": 0.3511,
+          "with_special_tokens": 5639,
+          "context": {
+            "probe_tokens": 841,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.6171,
+            "context_capacity_chars": 103
+          },
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "docs": 113,
+          "tokens": 8982,
+          "chars": 16012,
+          "words": 2960,
+          "utf8_bytes": 26716,
+          "chars_per_token": 1.7827,
+          "tokens_per_char": 0.56095,
+          "tokens_per_word": 3.0345,
+          "bytes_per_token": 2.9744,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 1130198,
+          "encode_ms_per_doc": 0.1254,
+          "with_special_tokens": 9208,
+          "context": {
+            "probe_tokens": 841,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.6171,
+            "context_capacity_chars": 103
+          },
+          "provisional_slice": true
+        }
+      },
+      "india_slices_tokens": 14637
+    },
+    {
+      "kind": "sp_bpe",
+      "vocab_requested": 1024,
+      "vocab_actual": 1024,
+      "vocab_clamped_from": null,
+      "equal_vocab": true,
+      "train_seconds": 0.069,
+      "artifact_bytes": 16271,
+      "artifact_sha256": "bf838874d9a51244",
+      "spec": "/home/user/SIR-/tokenizer/artifacts/smoke/sp_bpe-1024/spec.json",
+      "slices": {
+        "hi": {
+          "docs": 26,
+          "tokens": 4053,
+          "chars": 7922,
+          "words": 1638,
+          "utf8_bytes": 20426,
+          "chars_per_token": 1.9546,
+          "tokens_per_char": 0.51161,
+          "tokens_per_word": 2.4744,
+          "bytes_per_token": 5.0397,
+          "unk_rate": 0.00690846,
+          "roundtrip_exact_rate": 0.230769,
+          "encode_chars_per_sec": 2577683,
+          "encode_ms_per_doc": 0.1182,
+          "with_special_tokens": 4105,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        },
+        "en": {
+          "docs": 26,
+          "tokens": 4278,
+          "chars": 9340,
+          "words": 1556,
+          "utf8_bytes": 9340,
+          "chars_per_token": 2.1833,
+          "tokens_per_char": 0.45803,
+          "tokens_per_word": 2.7494,
+          "bytes_per_token": 2.1833,
+          "unk_rate": 0.00537634,
+          "roundtrip_exact_rate": 0.307692,
+          "encode_chars_per_sec": 4283708,
+          "encode_ms_per_doc": 0.0839,
+          "with_special_tokens": 4330,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "docs": 24,
+          "tokens": 3444,
+          "chars": 7553,
+          "words": 1416,
+          "utf8_bytes": 7553,
+          "chars_per_token": 2.1931,
+          "tokens_per_char": 0.45598,
+          "tokens_per_word": 2.4322,
+          "bytes_per_token": 2.1931,
+          "unk_rate": 0.00667828,
+          "roundtrip_exact_rate": 0.25,
+          "encode_chars_per_sec": 3265991,
+          "encode_ms_per_doc": 0.0964,
+          "with_special_tokens": 3492,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "docs": 26,
+          "tokens": 4156,
+          "chars": 8236,
+          "words": 1642,
+          "utf8_bytes": 20370,
+          "chars_per_token": 1.9817,
+          "tokens_per_char": 0.50461,
+          "tokens_per_word": 2.5311,
+          "bytes_per_token": 4.9013,
+          "unk_rate": 0.0074591,
+          "roundtrip_exact_rate": 0.230769,
+          "encode_chars_per_sec": 2350227,
+          "encode_ms_per_doc": 0.1348,
+          "with_special_tokens": 4208,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "docs": 113,
+          "tokens": 7711,
+          "chars": 16012,
+          "words": 2960,
+          "utf8_bytes": 26716,
+          "chars_per_token": 2.0765,
+          "tokens_per_char": 0.48158,
+          "tokens_per_word": 2.6051,
+          "bytes_per_token": 3.4647,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 2222783,
+          "encode_ms_per_doc": 0.0637,
+          "with_special_tokens": 7937,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        }
+      },
+      "india_slices_tokens": 11653
+    },
+    {
+      "kind": "sp_unigram",
+      "vocab_requested": 1024,
+      "vocab_actual": 1024,
+      "vocab_clamped_from": null,
+      "equal_vocab": true,
+      "train_seconds": 0.381,
+      "artifact_bytes": 16344,
+      "artifact_sha256": "b271b632c4ba39d5",
+      "spec": "/home/user/SIR-/tokenizer/artifacts/smoke/sp_unigram-1024/spec.json",
+      "slices": {
+        "hi": {
+          "docs": 26,
+          "tokens": 4398,
+          "chars": 7922,
+          "words": 1638,
+          "utf8_bytes": 20426,
+          "chars_per_token": 1.8013,
+          "tokens_per_char": 0.55516,
+          "tokens_per_word": 2.685,
+          "bytes_per_token": 4.6444,
+          "unk_rate": 0.00636653,
+          "roundtrip_exact_rate": 0.230769,
+          "encode_chars_per_sec": 2670366,
+          "encode_ms_per_doc": 0.1141,
+          "with_special_tokens": 4450,
+          "context": {
+            "probe_tokens": 902,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.5078,
+            "context_capacity_chars": 96
+          },
+          "provisional_slice": true
+        },
+        "en": {
+          "docs": 26,
+          "tokens": 4559,
+          "chars": 9340,
+          "words": 1556,
+          "utf8_bytes": 9340,
+          "chars_per_token": 2.0487,
+          "tokens_per_char": 0.48812,
+          "tokens_per_word": 2.9299,
+          "bytes_per_token": 2.0487,
+          "unk_rate": 0.00504497,
+          "roundtrip_exact_rate": 0.307692,
+          "encode_chars_per_sec": 3480805,
+          "encode_ms_per_doc": 0.1032,
+          "with_special_tokens": 4611,
+          "context": {
+            "probe_tokens": 902,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.5078,
+            "context_capacity_chars": 96
+          },
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "docs": 24,
+          "tokens": 3666,
+          "chars": 7553,
+          "words": 1416,
+          "utf8_bytes": 7553,
+          "chars_per_token": 2.0603,
+          "tokens_per_char": 0.48537,
+          "tokens_per_word": 2.589,
+          "bytes_per_token": 2.0603,
+          "unk_rate": 0.00627387,
+          "roundtrip_exact_rate": 0.25,
+          "encode_chars_per_sec": 3868162,
+          "encode_ms_per_doc": 0.0814,
+          "with_special_tokens": 3714,
+          "context": {
+            "probe_tokens": 902,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.5078,
+            "context_capacity_chars": 96
+          },
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "docs": 26,
+          "tokens": 4563,
+          "chars": 8236,
+          "words": 1642,
+          "utf8_bytes": 20370,
+          "chars_per_token": 1.805,
+          "tokens_per_char": 0.55403,
+          "tokens_per_word": 2.7789,
+          "bytes_per_token": 4.4642,
+          "unk_rate": 0.00679378,
+          "roundtrip_exact_rate": 0.230769,
+          "encode_chars_per_sec": 4285160,
+          "encode_ms_per_doc": 0.0739,
+          "with_special_tokens": 4615,
+          "context": {
+            "probe_tokens": 902,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.5078,
+            "context_capacity_chars": 96
+          },
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "docs": 113,
+          "tokens": 8302,
+          "chars": 16012,
+          "words": 2960,
+          "utf8_bytes": 26716,
+          "chars_per_token": 1.9287,
+          "tokens_per_char": 0.51849,
+          "tokens_per_word": 2.8047,
+          "bytes_per_token": 3.218,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 4812173,
+          "encode_ms_per_doc": 0.0294,
+          "with_special_tokens": 8528,
+          "context": {
+            "probe_tokens": 902,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.5078,
+            "context_capacity_chars": 96
+          },
+          "provisional_slice": true
+        }
+      },
+      "india_slices_tokens": 12627
+    },
+    {
+      "kind": "byte_bpe",
+      "vocab_requested": 2048,
+      "vocab_actual": 1963,
+      "vocab_clamped_from": null,
+      "equal_vocab": true,
+      "train_seconds": 0.063,
+      "artifact_bytes": 124304,
+      "artifact_sha256": "22397a77a97823ea",
+      "spec": "/home/user/SIR-/tokenizer/artifacts/smoke/byte_bpe-2048/spec.json",
+      "slices": {
+        "hi": {
+          "docs": 26,
+          "tokens": 5397,
+          "chars": 7922,
+          "words": 1638,
+          "utf8_bytes": 20426,
+          "chars_per_token": 1.4679,
+          "tokens_per_char": 0.68127,
+          "tokens_per_word": 3.2949,
+          "bytes_per_token": 3.7847,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 997530,
+          "encode_ms_per_doc": 0.3054,
+          "with_special_tokens": 5449,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        },
+        "en": {
+          "docs": 26,
+          "tokens": 3808,
+          "chars": 9340,
+          "words": 1556,
+          "utf8_bytes": 9340,
+          "chars_per_token": 2.4527,
+          "tokens_per_char": 0.40771,
+          "tokens_per_word": 2.4473,
+          "bytes_per_token": 2.4527,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 2448725,
+          "encode_ms_per_doc": 0.1467,
+          "with_special_tokens": 3860,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "docs": 24,
+          "tokens": 3051,
+          "chars": 7553,
+          "words": 1416,
+          "utf8_bytes": 7553,
+          "chars_per_token": 2.4756,
+          "tokens_per_char": 0.40395,
+          "tokens_per_word": 2.1547,
+          "bytes_per_token": 2.4756,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 2515916,
+          "encode_ms_per_doc": 0.1251,
+          "with_special_tokens": 3099,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "docs": 26,
+          "tokens": 5255,
+          "chars": 8236,
+          "words": 1642,
+          "utf8_bytes": 20370,
+          "chars_per_token": 1.5673,
+          "tokens_per_char": 0.63805,
+          "tokens_per_word": 3.2004,
+          "bytes_per_token": 3.8763,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 1010003,
+          "encode_ms_per_doc": 0.3136,
+          "with_special_tokens": 5307,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "docs": 113,
+          "tokens": 8367,
+          "chars": 16012,
+          "words": 2960,
+          "utf8_bytes": 26716,
+          "chars_per_token": 1.9137,
+          "tokens_per_char": 0.52255,
+          "tokens_per_word": 2.8267,
+          "bytes_per_token": 3.193,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 1163923,
+          "encode_ms_per_doc": 0.1217,
+          "with_special_tokens": 8593,
+          "context": {
+            "probe_tokens": 781,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.7414,
+            "context_capacity_chars": 111
+          },
+          "provisional_slice": true
+        }
+      },
+      "india_slices_tokens": 13703
+    },
+    {
+      "kind": "sp_bpe",
+      "vocab_requested": 2048,
+      "vocab_actual": 2048,
+      "vocab_clamped_from": null,
+      "equal_vocab": true,
+      "train_seconds": 0.062,
+      "artifact_bytes": 37307,
+      "artifact_sha256": "dd1c2a91340c8e48",
+      "spec": "/home/user/SIR-/tokenizer/artifacts/smoke/sp_bpe-2048/spec.json",
+      "slices": {
+        "hi": {
+          "docs": 26,
+          "tokens": 3769,
+          "chars": 7922,
+          "words": 1638,
+          "utf8_bytes": 20426,
+          "chars_per_token": 2.1019,
+          "tokens_per_char": 0.47576,
+          "tokens_per_word": 2.301,
+          "bytes_per_token": 5.4195,
+          "unk_rate": 0.00742903,
+          "roundtrip_exact_rate": 0.230769,
+          "encode_chars_per_sec": 3446971,
+          "encode_ms_per_doc": 0.0884,
+          "with_special_tokens": 3821,
+          "context": {
+            "probe_tokens": 681,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9971,
+            "context_capacity_chars": 127
+          },
+          "provisional_slice": true
+        },
+        "en": {
+          "docs": 26,
+          "tokens": 4048,
+          "chars": 9340,
+          "words": 1556,
+          "utf8_bytes": 9340,
+          "chars_per_token": 2.3073,
+          "tokens_per_char": 0.4334,
+          "tokens_per_word": 2.6015,
+          "bytes_per_token": 2.3073,
+          "unk_rate": 0.00568182,
+          "roundtrip_exact_rate": 0.307692,
+          "encode_chars_per_sec": 3160084,
+          "encode_ms_per_doc": 0.1137,
+          "with_special_tokens": 4100,
+          "context": {
+            "probe_tokens": 681,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9971,
+            "context_capacity_chars": 127
+          },
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "docs": 24,
+          "tokens": 3173,
+          "chars": 7553,
+          "words": 1416,
+          "utf8_bytes": 7553,
+          "chars_per_token": 2.3804,
+          "tokens_per_char": 0.4201,
+          "tokens_per_word": 2.2408,
+          "bytes_per_token": 2.3804,
+          "unk_rate": 0.00724866,
+          "roundtrip_exact_rate": 0.25,
+          "encode_chars_per_sec": 3910540,
+          "encode_ms_per_doc": 0.0805,
+          "with_special_tokens": 3221,
+          "context": {
+            "probe_tokens": 681,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9971,
+            "context_capacity_chars": 127
+          },
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "docs": 26,
+          "tokens": 3880,
+          "chars": 8236,
+          "words": 1642,
+          "utf8_bytes": 20370,
+          "chars_per_token": 2.1227,
+          "tokens_per_char": 0.4711,
+          "tokens_per_word": 2.363,
+          "bytes_per_token": 5.25,
+          "unk_rate": 0.00798969,
+          "roundtrip_exact_rate": 0.230769,
+          "encode_chars_per_sec": 3809353,
+          "encode_ms_per_doc": 0.0832,
+          "with_special_tokens": 3932,
+          "context": {
+            "probe_tokens": 681,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9971,
+            "context_capacity_chars": 127
+          },
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "docs": 113,
+          "tokens": 7244,
+          "chars": 16012,
+          "words": 2960,
+          "utf8_bytes": 26716,
+          "chars_per_token": 2.2104,
+          "tokens_per_char": 0.45241,
+          "tokens_per_word": 2.4473,
+          "bytes_per_token": 3.688,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 2442051,
+          "encode_ms_per_doc": 0.058,
+          "with_special_tokens": 7470,
+          "context": {
+            "probe_tokens": 681,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9971,
+            "context_capacity_chars": 127
+          },
+          "provisional_slice": true
+        }
+      },
+      "india_slices_tokens": 10822
+    },
+    {
+      "kind": "sp_unigram",
+      "vocab_requested": 1609,
+      "vocab_actual": 1609,
+      "vocab_clamped_from": 2048,
+      "equal_vocab": false,
+      "train_seconds": 0.456,
+      "artifact_bytes": 25553,
+      "artifact_sha256": "c06ad559532855a1",
+      "spec": "/home/user/SIR-/tokenizer/artifacts/smoke/sp_unigram-2048/spec.json",
+      "slices": {
+        "hi": {
+          "docs": 26,
+          "tokens": 3905,
+          "chars": 7922,
+          "words": 1638,
+          "utf8_bytes": 20426,
+          "chars_per_token": 2.0287,
+          "tokens_per_char": 0.49293,
+          "tokens_per_word": 2.384,
+          "bytes_per_token": 5.2307,
+          "unk_rate": 0.00717029,
+          "roundtrip_exact_rate": 0.230769,
+          "encode_chars_per_sec": 4874750,
+          "encode_ms_per_doc": 0.0625,
+          "with_special_tokens": 3957,
+          "context": {
+            "probe_tokens": 701,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9401,
+            "context_capacity_chars": 124
+          },
+          "provisional_slice": true
+        },
+        "en": {
+          "docs": 26,
+          "tokens": 3952,
+          "chars": 9340,
+          "words": 1556,
+          "utf8_bytes": 9340,
+          "chars_per_token": 2.3634,
+          "tokens_per_char": 0.42313,
+          "tokens_per_word": 2.5398,
+          "bytes_per_token": 2.3634,
+          "unk_rate": 0.00581984,
+          "roundtrip_exact_rate": 0.307692,
+          "encode_chars_per_sec": 5668353,
+          "encode_ms_per_doc": 0.0634,
+          "with_special_tokens": 4004,
+          "context": {
+            "probe_tokens": 701,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9401,
+            "context_capacity_chars": 124
+          },
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "docs": 24,
+          "tokens": 3200,
+          "chars": 7553,
+          "words": 1416,
+          "utf8_bytes": 7553,
+          "chars_per_token": 2.3603,
+          "tokens_per_char": 0.42367,
+          "tokens_per_word": 2.2599,
+          "bytes_per_token": 2.3603,
+          "unk_rate": 0.0071875,
+          "roundtrip_exact_rate": 0.25,
+          "encode_chars_per_sec": 6468686,
+          "encode_ms_per_doc": 0.0487,
+          "with_special_tokens": 3248,
+          "context": {
+            "probe_tokens": 701,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9401,
+            "context_capacity_chars": 124
+          },
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "docs": 26,
+          "tokens": 3981,
+          "chars": 8236,
+          "words": 1642,
+          "utf8_bytes": 20370,
+          "chars_per_token": 2.0688,
+          "tokens_per_char": 0.48337,
+          "tokens_per_word": 2.4245,
+          "bytes_per_token": 5.1168,
+          "unk_rate": 0.00778699,
+          "roundtrip_exact_rate": 0.230769,
+          "encode_chars_per_sec": 4919588,
+          "encode_ms_per_doc": 0.0644,
+          "with_special_tokens": 4033,
+          "context": {
+            "probe_tokens": 701,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9401,
+            "context_capacity_chars": 124
+          },
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "docs": 113,
+          "tokens": 7269,
+          "chars": 16012,
+          "words": 2960,
+          "utf8_bytes": 26716,
+          "chars_per_token": 2.2028,
+          "tokens_per_char": 0.45397,
+          "tokens_per_word": 2.4557,
+          "bytes_per_token": 3.6753,
+          "unk_rate": 0.0,
+          "roundtrip_exact_rate": 1.0,
+          "encode_chars_per_sec": 5182263,
+          "encode_ms_per_doc": 0.0273,
+          "with_special_tokens": 7495,
+          "context": {
+            "probe_tokens": 701,
+            "probe_chars": 1360,
+            "chars_per_token_probe": 1.9401,
+            "context_capacity_chars": 124
+          },
+          "provisional_slice": true
+        }
+      },
+      "india_slices_tokens": 11086
+    }
+  ],
+  "comparisons": [
+    {
+      "vocab_requested": 1024,
+      "vocab_actual": {
+        "baseline": 1024,
+        "challenger": 1024
+      },
+      "challenger": "sp_bpe",
+      "baseline": "byte_bpe",
+      "vocab_deviation": 0.0,
+      "slices": {
+        "hi": {
+          "baseline_tokens": 5608,
+          "challenger_tokens": 4053,
+          "token_reduction": 0.27728,
+          "chars_per_token_baseline": 1.4126,
+          "chars_per_token_challenger": 1.9546,
+          "provisional_slice": true
+        },
+        "en": {
+          "baseline_tokens": 4256,
+          "challenger_tokens": 4278,
+          "token_reduction": -0.00517,
+          "chars_per_token_baseline": 2.1945,
+          "chars_per_token_challenger": 2.1833,
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "baseline_tokens": 3442,
+          "challenger_tokens": 3444,
+          "token_reduction": -0.00058,
+          "chars_per_token_baseline": 2.1944,
+          "chars_per_token_challenger": 2.1931,
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "baseline_tokens": 5587,
+          "challenger_tokens": 4156,
+          "token_reduction": 0.25613,
+          "chars_per_token_baseline": 1.4741,
+          "chars_per_token_challenger": 1.9817,
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "baseline_tokens": 8982,
+          "challenger_tokens": 7711,
+          "token_reduction": 0.14151,
+          "chars_per_token_baseline": 1.7827,
+          "chars_per_token_challenger": 2.0765,
+          "provisional_slice": true
+        }
+      },
+      "comparable_vocab": true,
+      "acceptance": {
+        "hi": {
+          "criterion": "hindi_token_reduction_vs_baseline",
+          "target_reduction": 0.15,
+          "measured_reduction": 0.27728,
+          "measured_delta_pct": 27.73,
+          "pass": true,
+          "blocked_reason": null,
+          "provisional": true,
+          "failure_explanation": null
+        },
+        "hinc-latn": {
+          "criterion": "hinglish_token_reduction_vs_baseline",
+          "target_reduction": 0.1,
+          "measured_reduction": -0.00058,
+          "measured_delta_pct": -0.06,
+          "pass": false,
+          "blocked_reason": null,
+          "provisional": true,
+          "failure_explanation": "a byte-level BPE trained on this corpus already merges the Latin-script words that dominate romanized Hinglish, so the Devanagari byte penalty that BPE suffers does not apply to this slice"
+        }
+      }
+    },
+    {
+      "vocab_requested": 1024,
+      "vocab_actual": {
+        "baseline": 1024,
+        "challenger": 1024
+      },
+      "challenger": "sp_unigram",
+      "baseline": "byte_bpe",
+      "vocab_deviation": 0.0,
+      "slices": {
+        "hi": {
+          "baseline_tokens": 5608,
+          "challenger_tokens": 4398,
+          "token_reduction": 0.21576,
+          "chars_per_token_baseline": 1.4126,
+          "chars_per_token_challenger": 1.8013,
+          "provisional_slice": true
+        },
+        "en": {
+          "baseline_tokens": 4256,
+          "challenger_tokens": 4559,
+          "token_reduction": -0.07119,
+          "chars_per_token_baseline": 2.1945,
+          "chars_per_token_challenger": 2.0487,
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "baseline_tokens": 3442,
+          "challenger_tokens": 3666,
+          "token_reduction": -0.06508,
+          "chars_per_token_baseline": 2.1944,
+          "chars_per_token_challenger": 2.0603,
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "baseline_tokens": 5587,
+          "challenger_tokens": 4563,
+          "token_reduction": 0.18328,
+          "chars_per_token_baseline": 1.4741,
+          "chars_per_token_challenger": 1.805,
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "baseline_tokens": 8982,
+          "challenger_tokens": 8302,
+          "token_reduction": 0.07571,
+          "chars_per_token_baseline": 1.7827,
+          "chars_per_token_challenger": 1.9287,
+          "provisional_slice": true
+        }
+      },
+      "comparable_vocab": true,
+      "acceptance": {
+        "hi": {
+          "criterion": "hindi_token_reduction_vs_baseline",
+          "target_reduction": 0.15,
+          "measured_reduction": 0.21576,
+          "measured_delta_pct": 21.58,
+          "pass": true,
+          "blocked_reason": null,
+          "provisional": true,
+          "failure_explanation": null
+        },
+        "hinc-latn": {
+          "criterion": "hinglish_token_reduction_vs_baseline",
+          "target_reduction": 0.1,
+          "measured_reduction": -0.06508,
+          "measured_delta_pct": -6.51,
+          "pass": false,
+          "blocked_reason": null,
+          "provisional": true,
+          "failure_explanation": "a byte-level BPE trained on this corpus already merges the Latin-script words that dominate romanized Hinglish, so the Devanagari byte penalty that BPE suffers does not apply to this slice"
+        }
+      }
+    },
+    {
+      "vocab_requested": 2048,
+      "vocab_actual": {
+        "baseline": 1963,
+        "challenger": 2048
+      },
+      "challenger": "sp_bpe",
+      "baseline": "byte_bpe",
+      "vocab_deviation": 0.0433,
+      "slices": {
+        "hi": {
+          "baseline_tokens": 5397,
+          "challenger_tokens": 3769,
+          "token_reduction": 0.30165,
+          "chars_per_token_baseline": 1.4679,
+          "chars_per_token_challenger": 2.1019,
+          "provisional_slice": true
+        },
+        "en": {
+          "baseline_tokens": 3808,
+          "challenger_tokens": 4048,
+          "token_reduction": -0.06303,
+          "chars_per_token_baseline": 2.4527,
+          "chars_per_token_challenger": 2.3073,
+          "provisional_slice": true
+        },
+        "hinc-latn": {
+          "baseline_tokens": 3051,
+          "challenger_tokens": 3173,
+          "token_reduction": -0.03999,
+          "chars_per_token_baseline": 2.4756,
+          "chars_per_token_challenger": 2.3804,
+          "provisional_slice": true
+        },
+        "hinc-deva": {
+          "baseline_tokens": 5255,
+          "challenger_tokens": 3880,
+          "token_reduction": 0.26166,
+          "chars_per_token_baseline": 1.5673,
+          "chars_per_token_challenger": 2.1227,
+          "provisional_slice": true
+        },
+        "constructed_codeswitch": {
+          "baseline_tokens": 8367,
+          "challenger_tokens": 7244,
+          "token_reduction": 0.13422,
+          "chars_per_token_baseline": 1.9137,
+          "chars_per_token_challenger": 2.2104,
+          "provisional_slice": true
+        }
+      },
+      "comparable_vocab": false,
+      "acceptance": {
+        "hi": {
+          "criterion": "hindi_token_reduction_vs_baseline",
+          "target_reduction": 0.15,
+          "measured_reduction": 0.30165,
+          "measured_delta_pct": 30.16,
+          "pass": false,
+          "blocked_reason": "vocabularies differ or were clamped; not a like-for-like comparison",
+          "provisional": true,
+          "failure_explanation": null
+        },
+        "hinc-latn": {
+          "criterion": "hinglish_token_reduction_vs_baseline",
+          "target_reduction": 0.1,
+          "measured_reduction": -0.03999,
+          "measured_delta_pct": -4.0,
+          "pass": false,
+          "blocked_reason": "vocabularies differ or were clamped; not a like-for-like comparison",
+          "provisional": true,
+          "failure_explanation": "a byte-level BPE trained on this corpus already merges the Latin-script words that dominate romanized Hinglish, so the Devanagari byte penalty that BPE suffers does not apply to this slice"
+        }
+      }
+    }
+  ],
+  "acceptance": {
+    "hindi_target": 0.15,
+    "hinglish_target": 0.1,
+    "any_candidate_passed": false,
+    "passing": [],
+    "reading": "targets are criteria to test against; a failure is reported, not renegotiated"
+  },
+  "selection": {
+    "kind": "sp_bpe",
+    "vocab_requested": 2048,
+    "vocab_actual": 2048,
+    "spec": "/home/user/SIR-/tokenizer/artifacts/smoke/sp_bpe-2048/spec.json",
+    "basis": "no candidate met all acceptance criteria; this is the fewest-tokens-on-India-slices candidate, reported for information only",
+    "met_acceptance": false,
+    "eligible_for_release": false,
+    "why_not_release_grade": [
+      "corpus is 171476 chars (< 1000000); metrics are pipeline-validation only",
+      "corpus is a composed fixture, not natural text (see data/manifests/sources.yaml)"
+    ]
+  },
+  "informational_ranking": [
+    {
+      "kind": "sp_bpe",
+      "vocab_requested": 2048,
+      "vocab_actual": 2048,
+      "india_slice_tokens": 10822
+    },
+    {
+      "kind": "sp_unigram",
+      "vocab_requested": 1609,
+      "vocab_actual": 1609,
+      "india_slice_tokens": 11086
+    },
+    {
+      "kind": "sp_bpe",
+      "vocab_requested": 1024,
+      "vocab_actual": 1024,
+      "india_slice_tokens": 11653
+    },
+    {
+      "kind": "sp_unigram",
+      "vocab_requested": 1024,
+      "vocab_actual": 1024,
+      "india_slice_tokens": 12627
+    },
+    {
+      "kind": "byte_bpe",
+      "vocab_requested": 2048,
+      "vocab_actual": 1963,
+      "india_slice_tokens": 13703
+    },
+    {
+      "kind": "byte_bpe",
+      "vocab_requested": 1024,
+      "vocab_actual": 1024,
+      "india_slice_tokens": 14637
+    }
+  ],
+  "no_winner_declared_before_running": true
+}

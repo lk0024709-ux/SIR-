@@ -1,0 +1,148 @@
+# SIR-Nano v0.1 — TARGET configuration (~25M params)
+# =============================================================================
+# This file is a TARGET, not a record of a completed run. It has NOT been run in
+# the development sandbox (see `status` below). Running it is the point of M1 once
+# a licensed corpus and multi-hour GPU time exist.
+#
+# Do not quote numbers against this file. The executed configuration is
+# configs/sir_nano_smoke.yaml, and its results live in evaluation/results/.
+# =============================================================================
+
+status:
+  trained: false
+  reason: >
+    Blocked on two things that this repository cannot currently satisfy: (1) a licensed
+    natural Hindi/English/Hinglish corpus — all corpus hosts were unreachable in the
+    sandbox used for this revision and no dataset license is verified in
+    data/manifests/sources.yaml; (2) roughly 10 GPU-hours, which exceeds the CPU-only
+    2-core / 3 GB RAM development environment available here.
+  last_verified: "2026-10-05"
+
+experiment:
+  name: sir_nano_v0_1
+  objective: >
+    Complete the M1 loop once, on real data, at ~25M parameters: data -> tokenizer ->
+    pretrain -> evaluate -> CPU inference. Not a chatbot; not a capability claim.
+
+seed: 20261005
+
+runtime:
+  device: auto            # cpu | cuda | auto
+  threads: null           # null = let torch decide; set 1 for strict reproducibility runs
+  dtype: float32
+  amp: true               # CUDA only; ignored on CPU
+  compile: false          # torch.compile is optional and disabled for reproducibility
+
+paths:
+  processed_dir: data/processed/m1
+  tokenizer_dir: tokenizer/artifacts/m1
+  tokenizer_chosen: tokenizer/artifacts/m1/chosen.json
+  run_dir: runs/sir_nano_v0_1
+  results_dir: evaluation/results
+
+dataset:
+  sources: [hiwiki_dump, gutenberg_public_domain, codemix_325k]   # must ALL be licensed+recorded
+  min_tokens_total: 200_000_000      # M1 corpus floor; abort below it rather than train a hollow model
+  require_natural_corpus: true       # a composed fixture must never satisfy a milestone
+  clean:
+    min_chars: 200
+    max_chars: 100_000
+    min_alnum_ratio: 0.4
+    max_symbol_ratio: 0.3
+    recover_mojibake: true
+  dedup:
+    num_perm: 128
+    band_size: 8
+    threshold: 0.85
+    shingle_chars: 24
+  split:
+    val_frac: 0.002                  # ~0.4M tokens held out at the 200M-token floor
+    test_frac: 0.002
+    seed: 20261005
+    group_by: sentence               # n-gram grouping is infeasible at 200M tokens; overlap measured instead
+    leak_ngram: 8
+
+tokenizer:
+  # The bake-off decides, on the real corpus; nothing here pre-selects a winner.
+  candidates: [byte_bpe, sp_bpe, sp_unigram]
+  baseline_for_acceptance: byte_bpe
+  vocab_sizes: [8192, 16384]
+  chosen_vocab_size: null            # filled by the bake-off report, never by hand
+  special_tokens: ["<pad>", "<unk>", "<s>", "</s>"]
+  byte_fallback_required: true       # no Devanagari character may become <unk>
+  # M1 acceptance targets (README). Criteria, not predictions.
+  acceptance:
+    hindi_token_reduction_vs_baseline: 0.15
+    hinglish_token_reduction_vs_baseline: 0.10
+  eval_slice_min_chars: 50_000       # below this the report is marked provisional
+
+model:
+  # ~25M parameters with tied embeddings at 16k vocab. model/config.py recomputes and prints
+  # the true count; if it drifts >10% from target_params the run aborts rather than silently
+  # becoming a different experiment.
+  target_params: 25_000_000
+  vocab_size: 16384
+  d_model: 512
+  n_layers: 8
+  n_heads: 8
+  d_ff: 1408
+  max_seq_len: 512
+  dropout: 0.0
+  tied_embeddings: true
+  norm: pre_layernorm
+  activation: gelu
+  positional: learned_absolute      # deliberately simple for v0.1; RoPE is a Phase 2 decision
+  attention: sdpa_causal
+  init_std: 0.02
+  pad_token_id: 0
+  eos_token_id: 3
+
+training:
+  tokens_budget: 400_000_000        # ~16x params: over-trained vs Chinchilla, deliberate for a cheap probe
+  batch_size: 32
+  seq_len: 512
+  accumulation_steps: 4             # effective batch 128 sequences
+  lr: 6.0e-4
+  min_lr: 6.0e-5
+  betas: [0.9, 0.95]
+  weight_decay: 0.1
+  grad_clip: 1.0
+  warmup_steps: 500
+  schedule: cosine
+  max_steps: 19500                  # derived from tokens_budget; validated at startup
+  eval_every: 500
+  eval_batches: 200
+  log_every: 50
+  num_workers: 2
+  resume: auto                      # resume from the newest checkpoint in run_dir
+
+evaluation:
+  probes: evaluation/probes/m1_probe_v0.jsonl
+  probe_min_prompts: 50
+  leak_ngram: 8
+  degeneracy:
+    repeated_ngram_n: 8
+    max_run_tokens: 32
+    pass_rate_target: 0.50
+  reproducibility:
+    runs: 3
+    tolerance_pct: 2.0
+  cpu_latency:
+    tokens: 128
+    max_seconds: 2.0
+    repeats: 5
+
+checkpoint:
+  keep_last: 3
+  save_optimizer: true
+  include: [weights, config, tokenizer_spec, step, seed, val_loss, git_commit, environment]
+  commit_checkpoints_to_git: false  # .gitignore enforces this; Git LFS is a separate decision
+
+release:
+  model_card: docs/model-card.md
+  requires: [evaluation/results/lm_eval.json, evaluation/results/tokenizer_bakeoff.json, evaluation/results/cpu_bench.json]
+  never_claim:
+    - understands all Indian languages
+    - production-ready
+    - better than Llama/Qwen
+    - human-level reasoning
