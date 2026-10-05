@@ -1,0 +1,44 @@
+{
+  "tool": "evaluation/scripts/leakage.py",
+  "measured_at_utc": "2026-10-05T12:15:05Z",
+  "config": "configs/sir_nano_smoke.yaml",
+  "criterion": {
+    "metric": "8-gram overlap between train and validation",
+    "target": 0
+  },
+  "train_docs": 390,
+  "val_docs": 102,
+  "train_val_id_overlap": [],
+  "gram_overlap": {
+    "n": 8,
+    "train_ngrams": 21358,
+    "val_ngrams": 1192,
+    "unique_overlapping_ngrams": 0,
+    "overlapping_ngram_occurrences_train": 0,
+    "overlap_rate": 0.0,
+    "zero_overlap": true,
+    "examples": []
+  },
+  "cross_split_near_duplicates": {
+    "threshold": 0.8,
+    "shingle_chars": 24,
+    "pairs": 0,
+    "examples": []
+  },
+  "probe_contamination": {
+    "checked": true,
+    "probes": 50,
+    "ngram": 8,
+    "contaminated": 0,
+    "examples": [],
+    "clean": true,
+    "note": "a prompt shorter than the n-gram window cannot overlap by construction; that is a property of the test, not a pass",
+    "short_prompts": 16
+  },
+  "provisional_corpus": true,
+  "pass": true,
+  "integrity_notes": [
+    "no validation document was removed to improve this number",
+    "the splitter groups documents by shared sentences and shared n-grams, so zero overlap is produced by construction and then verified; a nonzero result here means the grouping missed an edge"
+  ]
+}

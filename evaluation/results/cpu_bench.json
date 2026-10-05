@@ -1,0 +1,73 @@
+{
+  "tool": "inference/bench_cpu.py",
+  "measured_at_utc": "2026-10-05T12:15:30Z",
+  "target": {
+    "tokens": 128,
+    "max_seconds": 2.0,
+    "source": "README M1 acceptance criterion"
+  },
+  "result": {
+    "median_seconds": 0.323,
+    "worst_seconds": 0.329,
+    "median_tokens_per_sec": 396.23,
+    "median_ms_per_token": 2.524,
+    "first_token_ms_median": 1.74,
+    "repeats": 3,
+    "runs": [
+      {
+        "seconds": 0.329,
+        "tokens": 128,
+        "tokens_per_sec": 389.04,
+        "ms_per_token": 2.57,
+        "complete": true,
+        "stopped_early": null
+      },
+      {
+        "seconds": 0.323,
+        "tokens": 128,
+        "tokens_per_sec": 396.23,
+        "ms_per_token": 2.524,
+        "complete": true,
+        "stopped_early": null
+      },
+      {
+        "seconds": 0.3024,
+        "tokens": 128,
+        "tokens_per_sec": 423.33,
+        "ms_per_token": 2.362,
+        "complete": true,
+        "stopped_early": null
+      }
+    ],
+    "all_runs_completed_target_length": true
+  },
+  "model": {
+    "checkpoint": "runs/sir_nano_smoke-dryrun2/final.pt",
+    "file_bytes": 10812723,
+    "weights_only_estimate_bytes": 3588608,
+    "parameters": 897152,
+    "context_length": 64,
+    "step": 60,
+    "provisional": true,
+    "kv_cache": false
+  },
+  "environment": {
+    "brand": "Intel(R) Xeon(R) Processor @ 2.60GHz",
+    "logical_processors": 2,
+    "mhz_sample": 2600.012,
+    "mem_total": "4034452 kB",
+    "machine": "x86_64",
+    "os": "Linux-6.1.158+-x86_64-with-glibc2.36",
+    "python": "3.11.2",
+    "torch": "2.14.1+cu130",
+    "torch_threads": 1
+  },
+  "process_rss_kb": 549188,
+  "pass": true,
+  "caveats": [
+    "single-threaded-per-process CPU timing on a shared container: absolute latency may differ on a phone or a laptop",
+    "no thermal control and no background-load isolation",
+    "greedy decoding, no KV cache: latency scales quadratically with generated length",
+    "checkpoint file size includes optimizer state, so it overstates deployable weight size"
+  ]
+}

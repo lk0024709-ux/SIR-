@@ -1,0 +1,19 @@
+{
+  "policy_note": "token counts here are measured by tokenize_corpus.py; sources.yaml keeps size_tokens null",
+  "records": {
+    "sir_fixture_v0": {
+      "bytes": 392773,
+      "docs": 1,
+      "file_list": [
+        "data/fixtures/sir_fixture_v0/docs.json"
+      ],
+      "files": 1,
+      "measured_at_utc": "2026-10-05T11:54:48Z",
+      "measured_by_git_commit": "17b488f",
+      "sha256": "25a339bbd0ab5b42e9407daaf1cbb35875a923f6a3aa225e525b43c84f44a47f",
+      "tokens_measured": 45021,
+      "tokens_measured_at_utc": "2026-10-05T12:04:28Z",
+      "tokens_measured_by": "training/tokenize_corpus.py"
+    }
+  }
+}

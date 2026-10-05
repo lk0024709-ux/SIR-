@@ -1,0 +1,19 @@
+{
+  "probes": 50,
+  "license": "CC0-1.0",
+  "authored_for": "SIR repository",
+  "usage": "held-out evaluation only; must never be trained on (enforced in training/tokenize_corpus.py)",
+  "categories": {
+    "hindi_completion": 12,
+    "english_completion": 10,
+    "hinglish_completion": 12,
+    "factual_short": 8,
+    "reasoning_simple": 8
+  },
+  "languages": {
+    "hi": 17,
+    "en": 17,
+    "hinc-latn": 15,
+    "hinc-deva": 1
+  }
+}

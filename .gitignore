@@ -15,6 +15,9 @@ data/**/*.arrow
 !data/**/CARD.md
 !data/**/README.md
 
+# Trained tokenizer artifacts (regenerable via tokenizer.train_tokenizer; may embed corpus text)
+tokenizer/artifacts/
+
 # Model weights, checkpoints, tokenizer artifacts, caches
 *.bin
 *.safetensors

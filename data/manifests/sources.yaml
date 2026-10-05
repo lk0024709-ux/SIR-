@@ -1,0 +1,257 @@
+# SIR — dataset source manifest (machine-readable, policy-enforcing)
+#
+# PURPOSE
+#   This file is the single record of where SIR's training text comes from and under
+#   what terms. Nothing may enter the training pipeline unless it is declared here.
+#   Code enforces this: training/data/manifest.py refuses unknown/unverified sources.
+#
+# HARD RULES (enforced by the validator, not just stated)
+#   R1. size_tokens MUST be null unless the source has status: available AND a matching
+#       record in data/manifests/acquisition.json written by the fetcher. A human-typed
+#       corpus size is treated as a fabricated size and fails validation.
+#   R2. license: "UNVERIFIED" makes the source unusable: training/data/pipeline.py aborts.
+#   R3. status: blocked sources must carry a reason.
+#   R4. redistribution_allowed: false sources may be trained on but their text/derived
+#       token streams must not be committed or redistributed.
+#
+# STATUS VOCABULARY
+#   available   fetched, hashed, locally present
+#   planned     desired, not yet fetched, no blocker identified
+#   blocked     desired, cannot be fetched right now (reason required)
+#   rejected    evaluated and unusable for SIR (license/quality)
+#
+# ACQUISITION EVIDENCE (2026-10-05, sandbox used to build this revision)
+#   Verified reachable : pypi.org, files.pythonhosted.org, github.com
+#   Verified BLOCKED   : dumps.wikimedia.org, *.wikipedia.org, api.wikimedia.org,
+#                        huggingface.co  (egress allowlist; TLS connection closed by proxy)
+#   Consequence: no natural web corpus could be obtained in this environment. All web
+#   sources below are therefore status: blocked, with the exact command that is expected
+#   to work once egress is available. Nothing here has been silently substituted.
+
+schema_version: 1
+updated: "2026-10-05"
+policy:
+  # Every dataset used for SIR-Nano must satisfy these gates before training starts.
+  require_license_record: true
+  allow_unverified_license: false
+  require_private_user_data: false      # private user data is never a training source
+  require_acquisition_record_for_sizes: true
+  derived_artifacts_follow_source_license: true
+  notes: >
+    Permissive code licensing does not imply permissive data licensing. Model weights
+    trained on CC BY-SA text inherit an open question about share-alike applicability to
+    derived artifacts; that question must be answered before weights are published.
+
+sources:
+
+  # --------------------------------------------------------------------------
+  # Fixtures actually present in this repository right now.
+  # --------------------------------------------------------------------------
+  - id: sir_fixture_v0
+    name: SIR pipeline-validation fixture corpus (self-authored)
+    kind: fixture
+    url: null
+    local_path: data/fixtures/sir_fixture_v0
+    license: CC0-1.0
+    license_notes: >
+      Authored specifically for this repository (see scripts/build_fixture_corpus.py).
+      Public-domain dedication removes licensing risk, which is why it is the only corpus
+      that can be committed and redistributed today.
+    languages: [hi, en, hinc-latn, hinc-deva]
+    natural: false
+    natural_notes: >
+      Documents are COMPOSED from a seed sentence set by a seeded generator to give the
+      pipeline realistic structure (paragraphs, doc boundaries, near-duplicates injected on
+      purpose). It is not natural web text. Any metric measured only on this fixture is
+      provisional and must not be published as a real-world Hindi/Hinglish capability number.
+    size_tokens: null
+    size_tokens_note: filled by training/data/pipeline.py into acquisition.json (measured, not typed)
+    redistribution_allowed: true
+    status: available
+    used_for: [pipeline-tests, tokenizer-bakeoff-provisional, generation-probe-fixture]
+    download_instructions: python -m scripts.build_fixture_corpus --out data/fixtures/sir_fixture_v0
+    notes: >
+      Sole corpus usable in this sandbox because all external corpus hosts are blocked.
+      Size is deliberately small; it exists to prove the pipeline, not to train a model
+      worth releasing.
+
+  # --------------------------------------------------------------------------
+  # Hindi — natural text
+  # --------------------------------------------------------------------------
+  - id: hiwiki_dump
+    name: Hindi Wikipedia (pages-articles dump)
+    kind: web-corpus
+    url: https://dumps.wikimedia.org/hiwiki/latest/hiwiki-latest-pages-articles-multistream.xml.bz2
+    license: CC-BY-SA-4.0
+    license_notes: >
+      Wikimedia text is CC BY-SA 4.0: attribution required, share-alike applies to
+      derivative databases of the text. Verify the exact terms printed on the dump page
+      at fetch time; do not rely on this note.
+    languages: [hi]
+    natural: true
+    size_tokens: null
+    redistribution_allowed: false
+    redistribution_notes: >
+      Raw and cleaned text must stay out of git (see .gitignore). Attribution list for used
+      articles must be generated before any public release that redistributes the text.
+    status: blocked
+    blocked_reason: >
+      egress blocked in the development sandbox: HEAD request to
+      https://dumps.wikimedia.org/hiwiki/latest/... returned no response (TLS closed by
+      proxy), 2026-10-05. Not a licensing problem — an access problem.
+    download_instructions: |
+      curl -fL --retry 3 -o data/raw/hiwiki-latest-pages-articles-multistream.xml.bz2 \
+        https://dumps.wikimedia.org/hiwiki/latest/hiwiki-latest-pages-articles-multistream.xml.bz2
+      sha256sum data/raw/hiwiki-latest-pages-articles-multistream.xml.bz2  # record in acquisition.json
+      python -m scripts.fetch_sources --only hiwiki_dump   # writes acquisition.json + raw/
+    expected_minimum_useful_chars: 50000000
+    notes: >
+      Largest freely-licensable Devanagari text source in India's ecosystem. Needs
+      wiki extraction (strip templates/refs/tables) before quality filtering.
+
+  - id: ai4bharat_ilci
+    name: AI4Bharat Indic Language Corpora (Monolingual)
+    kind: research-dataset
+    url: https://icit.dataset.co.in/
+    license: UNVERIFIED
+    license_notes: >
+      Access appears to require a signed request/agreement and institutional approval.
+      SIR must not use it until the actual license text is read and recorded here.
+    languages: [hi, mr, gu, bn, ta, te, kn, ml, pa, or, as, ur]
+    natural: true
+    size_tokens: null
+    redistribution_allowed: false
+    status: blocked
+    blocked_reason: >
+      Requires manual access request + license review; additionally unreachable from this
+      sandbox. Tracked as the highest-value follow-up for the 12-language expansion.
+    download_instructions: >
+      Human step: request access, obtain the license PDF, paste its terms into
+      license_notes, then set license explicitly (no "UNVERIFIED" allowed past the gate).
+    notes: >
+      Do not treat as available merely because it is publicly advertised.
+
+  # --------------------------------------------------------------------------
+  # Hinglish — romanized code-mixed Hindi-English
+  # --------------------------------------------------------------------------
+  - id: codemix_325k
+    name: Code-Mix-325K (Hindi-English code-mixed social text)
+    kind: research-dataset
+    url: https://github.com/awesome-code-mixing/Code-Mixing
+    license: UNVERIFIED
+    license_notes: >
+      Research dataset; the repository must be inspected for an explicit license file and
+      the underlying platform's terms before use. Social-media text also raises consent
+      questions independent of copyright — record the outcome here.
+    languages: [hinc-latn]
+    natural: true
+    size_tokens: null
+    redistribution_allowed: false
+    status: blocked
+    blocked_reason: >
+      Egress blocked in this sandbox (github.com raw URLs are reachable but this dataset's
+      files were not fetched here) AND license unverified. The license gate is the binding
+      constraint, not the network.
+    download_instructions: >
+      Human step: verify license, then vendor a checksum-pinned copy into data/raw/ with an
+      entry in acquisition.json. Never point the pipeline at a live URL.
+    notes: >
+      Organic code-switched data is REQUIRED before any Hinglish token-efficiency claim.
+      Until then the fixture's romanized-Hindi proxy is used and every report flags it.
+
+  - id: hinglish_proxy_romanized
+    name: Romanized-Hindi proxy (derived from hiwiki_dump by transliteration)
+    kind: derived
+    url: null
+    derived_from: hiwiki_dump
+    license: CC-BY-SA-4.0
+    license_notes: inherits the source license; same attribution obligation
+    languages: [hinc-latn]
+    natural: false
+    size_tokens: null
+    redistribution_allowed: false
+    status: blocked
+    blocked_reason: source corpus not obtainable in this sandbox (see hiwiki_dump)
+    download_instructions: python -m training.data.transliterate --in data/cleaned/hi.jsonl --out data/cleaned/hi_rom.jsonl
+    notes: >
+      Deterministic Devanagari->Latin transliteration (scripts/ASCII map, see
+      training/data/transliterate.py). Useful for measuring romanization effects. It is NOT
+      Hinglish: no English-Hindi code-switching, no slang, no social-media orthography.
+      Any Hinglish number computed from this must be labelled "proxy".
+
+  # --------------------------------------------------------------------------
+  # English — reference slice (needed so the bake-off has a fair baseline language)
+  # --------------------------------------------------------------------------
+  - id: gutenberg_public_domain
+    name: Project Gutenberg public-domain books (English)
+    kind: web-corpus
+    url: https://www.gutenberg.org/robot/
+    license: PublicDomain-US
+    license_notes: >
+      Items are public domain in the United States; other jurisdictions may differ. Each
+      retrieved item's own header states its terms — record per item.
+    languages: [en]
+    natural: true
+    size_tokens: null
+    redistribution_allowed: true
+    status: blocked
+    blocked_reason: egress blocked in this sandbox; not attempted successfully on 2026-10-05
+    download_instructions: python -m scripts.fetch_sources --only gutenberg_public_domain
+    notes: clean prose, no attribution burden for US-public-domain items
+
+  - id: enwiki_dump
+    name: English Wikipedia (pages-articles dump)
+    kind: web-corpus
+    url: https://dumps.wikimedia.org/enwiki/latest/enwiki-latest-pages-articles-multistream.xml.bz2
+    license: CC-BY-SA-4.0
+    languages: [en]
+    natural: true
+    size_tokens: null
+    redistribution_allowed: false
+    status: blocked
+    blocked_reason: egress blocked in this sandbox
+    download_instructions: |
+      Same procedure as hiwiki_dump. Multi-GB download: fetch outside the sandbox, place in
+      data/raw/, run python -m scripts.fetch_sources --record-only to hash and log it.
+    notes: >
+      Used mainly as the English efficiency reference and for scale; SIR must avoid making
+      English fluency its priority.
+
+  # --------------------------------------------------------------------------
+  # Rejected / cautionary entries (kept visible, per "no hidden data decisions")
+  # --------------------------------------------------------------------------
+  - id: commoncrawl_raw
+    name: Common Crawl raw WARC
+    kind: web-corpus
+    url: https://commoncrawl.org/get-started
+    license: Various-per-page
+    license_notes: >
+      Page-by-page rights are unknown at scale; a filtered derivative with per-source
+      license metadata would be required. Bulk scraping is not an acceptable SIR ingest path.
+    languages: [multi]
+    natural: true
+    size_tokens: null
+    redistribution_allowed: false
+    status: rejected
+    rejected_reason: >
+      Cannot honestly certify per-document licensing for a release; also far beyond SIR's
+      compute. Revisit only with a documented filtering + license-attribution design.
+    notes: >
+      Recorded so that nobody later "quietly upgrades" a crawl into the training mix.
+
+  - id: user_chat_logs
+    name: SIR user conversations (future product traffic)
+    kind: user-data
+    url: null
+    license: none-user-owned
+    license_notes: >
+      User data is not licensed for training. Long-term memory belongs to the user; it must
+      not become global training data automatically.
+    languages: [multi]
+    natural: true
+    size_tokens: null
+    redistribution_allowed: false
+    status: rejected
+    rejected_reason: forbidden by SIR privacy policy absent explicit, per-user opt-in
+    notes: >
+      This entry exists so the prohibition is auditable rather than implied.

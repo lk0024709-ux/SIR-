@@ -1,0 +1,22 @@
+{
+  "fixture_id": "sir_fixture_v0",
+  "license": "CC0-1.0",
+  "authorship": "authored for the SIR repository; seed sentences are human-written, documents are composed",
+  "generator": "scripts/build_fixture_corpus.py",
+  "seed": 20261005,
+  "docs_per_bucket": 26,
+  "documents": 551,
+  "dirty_documents": 8,
+  "seed_sentences": 153,
+  "chars_total": 188908,
+  "natural": false,
+  "built_at_utc": "2026-10-05T11:54:48Z",
+  "languages": {
+    "hi": 207,
+    "en": 132,
+    "hinc-latn": 132,
+    "hinc-deva": 79,
+    "unknown": 1
+  },
+  "sha256_docs_json": "9ba4e52a8117e2bb41b814d156046f780f6c6470da407a106de5f01766c2b6b8"
+}

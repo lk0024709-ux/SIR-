@@ -1,0 +1,93 @@
+{
+  "tool": "evaluation/scripts/evaluate_lm.py",
+  "measured_at_utc": "2026-10-05T12:25:36Z",
+  "checkpoint": "runs/sir_nano_smoke-dryrun2/final.pt",
+  "config": "configs/sir_nano_smoke.yaml",
+  "experiment": "sir_nano_smoke",
+  "val_file": "data/processed/smoke/val.jsonl",
+  "val_docs_present": 102,
+  "provisional": true,
+  "model": {
+    "parameters": 897152,
+    "parameter_breakdown": {
+      "params": {
+        "total": 897152,
+        "embedding": 262144,
+        "non_embedding": 635008,
+        "embedding_share": 0.2922,
+        "tied_embeddings": true,
+        "estimate": {
+          "analytic_estimate": 904064,
+          "actual": 897152,
+          "gap": 0.0077
+        }
+      },
+      "target_check": {
+        "checked": false,
+        "reason": "target_params is null: no claim to guard"
+      }
+    },
+    "context_length": 64,
+    "vocab_size": 2048,
+    "step": 60,
+    "seed": 20261005,
+    "architecture": "vocab=2048 d_model=128 layers=4 heads=4 ff=352 ctx=64 tied=True norm=pre_layernorm act=gelu pos=learned_absolute attn=sdpa_causal ~params=0.90M"
+  },
+  "results": {
+    "docs": 102,
+    "tokens": 14768,
+    "nll": 6.520676,
+    "perplexity_token_weighted": 679.0369,
+    "perplexity_mean_of_docs": 800.315,
+    "perplexity_median_of_docs": 576.7785,
+    "eval_seconds": 0.979,
+    "eval_tokens_per_sec": 15079.7,
+    "forward_tokens_per_sec_estimate": 15079.7
+  },
+  "per_language": {
+    "en": {
+      "docs": 26,
+      "tokens": 4022,
+      "nll": 7.08046,
+      "perplexity_token_weighted": 1188.5147,
+      "perplexity_mean_of_docs": 1194.1398,
+      "perplexity_median_of_docs": 1200.0466
+    },
+    "hi": {
+      "docs": 26,
+      "tokens": 3743,
+      "nll": 5.920552,
+      "perplexity_token_weighted": 372.6175,
+      "perplexity_mean_of_docs": 385.4253,
+      "perplexity_median_of_docs": 393.6765
+    },
+    "hinc-deva": {
+      "docs": 26,
+      "tokens": 3854,
+      "nll": 6.03302,
+      "perplexity_token_weighted": 416.9722,
+      "perplexity_mean_of_docs": 421.9023,
+      "perplexity_median_of_docs": 408.9411
+    },
+    "hinc-latn": {
+      "docs": 24,
+      "tokens": 3149,
+      "nll": 7.11586,
+      "perplexity_token_weighted": 1231.3419,
+      "perplexity_mean_of_docs": 1233.0826,
+      "perplexity_median_of_docs": 1230.9817
+    }
+  },
+  "trainer_agreement": {
+    "trainer_val_loss": 5.914305,
+    "harness_val_nll": 6.520676,
+    "relative_delta": 0.10253,
+    "note": "expected to differ (windowed vs per-document scoring); a |delta| > 0.15 means the harnesses disagree about the data",
+    "suspicious": false
+  },
+  "memory": {
+    "peak_rss_mb": 536.4,
+    "torch_cpu_alloc_mb": null
+  },
+  "reading": "perplexity here is a pipeline measurement on a small, non-natural held-out set. It is not a capability result and must not be compared with numbers from other projects."
+}

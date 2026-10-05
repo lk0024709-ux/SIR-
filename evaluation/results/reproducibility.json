@@ -1,0 +1,123 @@
+{
+  "tool": "evaluation/scripts/reproducibility.py",
+  "measured_at_utc": "2026-10-05T12:16:47Z",
+  "criterion": {
+    "metric": "held-out validation perplexity across independent runs",
+    "tolerance_rel": 0.02,
+    "source": "README M1 acceptance"
+  },
+  "runs": [
+    {
+      "run_dir": "runs/sir_nano_smoke-repro-1",
+      "seconds": 8.25,
+      "final_val_loss": 5.914305,
+      "final_val_perplexity": 370.2968,
+      "tokens_scored": 2048,
+      "best": {
+        "val_loss": 5.848297,
+        "step": 40,
+        "val_perplexity": 346.6435
+      },
+      "trace": [
+        7.65637,
+        6.19923,
+        3.93077,
+        2.81302
+      ],
+      "seed_info": {
+        "seed": 20261005,
+        "threads": 1,
+        "deterministic_algorithms": true,
+        "benchmark": false
+      },
+      "environment": {
+        "python": "3.11.2",
+        "torch": "2.14.1+cu130",
+        "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+        "machine": "x86_64",
+        "cpu_count": 2,
+        "device": "cpu",
+        "torch_threads": 1,
+        "cuda_visible_devices": null
+      },
+      "wallclock": 5.51,
+      "tokens_per_sec": 11142.9
+    },
+    {
+      "run_dir": "runs/sir_nano_smoke-repro-2",
+      "seconds": 9.49,
+      "final_val_loss": 5.914305,
+      "final_val_perplexity": 370.2968,
+      "tokens_scored": 2048,
+      "best": {
+        "val_loss": 5.848297,
+        "step": 40,
+        "val_perplexity": 346.6435
+      },
+      "trace": [
+        7.65637,
+        6.19923,
+        3.93077,
+        2.81302
+      ],
+      "seed_info": {
+        "seed": 20261005,
+        "threads": 1,
+        "deterministic_algorithms": true,
+        "benchmark": false
+      },
+      "environment": {
+        "python": "3.11.2",
+        "torch": "2.14.1+cu130",
+        "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+        "machine": "x86_64",
+        "cpu_count": 2,
+        "device": "cpu",
+        "torch_threads": 1,
+        "cuda_visible_devices": null
+      },
+      "wallclock": 6.52,
+      "tokens_per_sec": 9421.4
+    }
+  ],
+  "validation_perplexity": {
+    "values": [
+      370.2968,
+      370.2968
+    ],
+    "mean": 370.2968,
+    "relative_spread": 0.0,
+    "within_tolerance": true
+  },
+  "validation_loss_values": [
+    5.914305,
+    5.914305
+  ],
+  "train_loss_trace": {
+    "steps_compared": 4,
+    "max_abs": 0.0,
+    "mean_abs": 0.0,
+    "identical": true
+  },
+  "checkpoint_eval_twice": {
+    "values": [
+      679.0369,
+      679.0369
+    ],
+    "identical": true
+  },
+  "greedy_generation_twice": {
+    "identical": true,
+    "sample": " \u0915\u0947 \u0906\u091c\u0928\u0930\u093e \u092a\u0943\u0925\u0915\u094d\u0915\u0930\u0923 \u0915\u0947 \u0906\u091c\u0928\u0930\u093e \u092a\u0943\u0925\u0915\u094d\u0915\u0930\u0923 \u0915\u0947 \u0906\u091c\u0928\n"
+  },
+  "pass": true,
+  "if_failed_check": [
+    "torch.set_num_threads differing between runs (both runs pin 1 thread via env OMP/MKL)",
+    "torch.use_deterministic_algorithms not enabled \u2014 see seed_info in each train_log.json",
+    "training data order driven by a global RNG instead of a seeded generator",
+    "dropout active during evaluation (v0.1 uses dropout=0.0)",
+    "mixed precision on CPU (disabled in the smoke config on purpose)",
+    "tokenizer or tokenized data changed between runs (artifact sha256 is compared by train.py itself)"
+  ],
+  "environment_note": "runs share one machine; cross-machine reproduction is a separate, unmeasured question"
+}

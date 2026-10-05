@@ -4,7 +4,7 @@
 
 **An Indian AI intelligence platform built for language, reasoning, knowledge, and intelligent assistance.**
 
-`Status: Early Research` · `Phase: 0 — Repository Setup` · `No public model weights yet`
+`Status: Pipeline Validation` · `Phase: 1 — Smoke Run` · `Smoke checkpoint (0.9M, provisional)`
 
 </div>
 
@@ -26,16 +26,16 @@ coding, vision, voice, memory, and agent capabilities.
 
 _As of 2026-10-05 · checked against the repository contents, not against the roadmap._
 
-**Overall: Phase 0 — the repository and its design exist. The code does not.**
+**Overall: Phase 1 — the research pipeline exists and has been exercised end-to-end on a tiny fixture corpus. The model is a 0.9M-parameter smoke prototype, not the 25M M1 target.**
 
 | # | Component | State | What actually exists today | What that means for you |
 |---|-----------|:-----:|----------------------------|--------------------------|
 | 1 | Repository & layout | ✅ Exists | Git repo, this README, directory scaffold, `.gitignore` | Usable as a working base to build on |
 | 2 | Project design & roadmap | ✅ Exists | Documented architecture, phases, policies in this file | Reviewable and criticizable; not implemented |
-| 3 | Tokenizer | 🟨 Designed, 0 lines of code | Training/eval plan written down | No model can be trained yet |
-| 4 | Language model (any size) | ⬜ Not started | Nothing — no `SIR-Nano` weights, no checkpoints | **Do not expect SIR to generate text** |
-| 5 | Training pipeline | ⬜ Not started | No scripts, no dataset manifests | No reproduction possible yet |
-| 6 | Datasets | ⬜ Not started | No data ingested; licensing not yet verified | No corpus to train on |
+| 3 | Tokenizer | ✅ Implemented | Bake-off (byte_bpe / sp_bpe / sp_unigram × 1024/2048), scored on held-out slices, selection provisional (fixture corpus) — see `docs/tokenizer-evaluation.md` | Usable for research; not release-grade |
+| 4 | Language model | 🟨 Smoke prototype (0.9M, not 25M) | Decoder-only transformer (vocab 2048, d128, 4 layers, ctx 64, tied embeddings) — checkpoint `runs/sir_nano_smoke-dryrun2/final.pt` (provisional) | Generates text, but ungrammatical and not a capability claim |
+| 5 | Training pipeline | ✅ Implemented | `training/data/` (manifest, clean→dedup→split→validate), `training/train.py`, `training/checkpoint.py`, `training/dataset.py`, `training/tokenize_corpus.py`; deterministic, resumable, provenance | Reproducible: 0.00% ppl spread across 2 runs |
+| 6 | Datasets | 🟨 Fixture only (CC0, provisional) | `sir_fixture_v0` (551 docs, 188k chars, composed, not natural); web corpora blocked (egress) — see `data/manifests/sources.yaml` | No natural corpus yet; M1 needs ≥200M tokens |
 | 7 | Instruction tuning | ⬜ Not started | — | SIR is not a chatbot today |
 | 8 | Reasoning system | ⬜ Not started | — | No math/logic capability |
 | 9 | RAG / retrieval | ⬜ Not started | — | No document or KB answering |
@@ -45,7 +45,7 @@ _As of 2026-10-05 · checked against the repository contents, not against the ro
 | 13 | Memory | ⬜ Not started | — | No short- or long-term memory |
 | 14 | Agent / tools | ⬜ Not started | — | SIR executes no actions |
 | 15 | Android / edge runtime | ⬜ Not started | — | No APK, no on-device model |
-| 16 | Evaluation harness & benchmarks | ⬜ Not started | Metric targets defined, no test sets committed | **No SIR benchmark numbers exist. None are cited in this README** |
+| 16 | Evaluation harness & benchmarks | ✅ Implemented | Leakage (0 8-grams), 50-probe generation (70% non-degenerate), reproducibility (±2%), CPU latency (0.32s/128 tok), tokenizer bake-off — all JSON, never hand-typed | Provisional numbers exist (smoke), not capability; see `docs/evaluation.md` |
 | 17 | Security controls | ⬜ Not started | Threat model listed below | Nothing to harden yet; define controls before tool use exists |
 | 18 | License | ⚠️ **Undecided / blocker** | No `LICENSE` file in the repo | Until a license is chosen, **no reuse rights are granted** for code or docs |
 | 19 | Public demo / hosted API | ⬜ Out of scope today | — | Any SIR endpoint you see elsewhere is unofficial |
@@ -54,14 +54,10 @@ _As of 2026-10-05 · checked against the repository contents, not against the ro
 
 ### Known blockers
 
-1. **No license.** A repository without a license is "all rights reserved" by default. This must be resolved
-   before Phase 1 code, data cards, or weights are published — and it is decided per-component, not once
-   (see [License](#license)).
-2. **No verified corpus.** SIR needs text whose license permits training *and* redistribution of derived artifacts.
-   Until source records exist, every dataset number in this project is an aspiration.
-3. **No compute budget pinned.** Phase 1 is sized for one Colab-class GPU; anything larger is unfunded today.
-4. **No evaluation sets.** Benchmarks cannot be "honestly reported" (a stated SIR principle) until the
-   test sets are committed, versioned, and frozen.
+1. **No license.** Still the first blocker (see [License](#license)). Until a license is chosen, **no reuse rights are granted** for code or docs — and it is decided per-component, not once.
+2. **No natural corpus.** Fixture `sir_fixture_v0` is CC0 but not natural (551 docs, provisional). M1 needs ≥200M tokens of licensed Hindi/English/Hinglish — all web corpora are `blocked` (egress closed, not yet fetched). No 200M-token run has been done.
+3. **No M1-scale compute.** Smoke was 60 steps, 0.9M params, 2-core CPU, ~5s, 11k tok/s, 773 MB RSS. M1 target is ~25M params, 400M tokens, ~10 GPU-hours — unfunded on this sandbox.
+4. **Evaluation sets are small.** 50 probes exist (held-out, never trained on) but are fixture-derived; frozen, larger, natural test sets are still needed for a non-provisional benchmark.
 
 ---
 
@@ -71,18 +67,18 @@ Kept deliberately separate so that nothing below is mistaken for a feature.
 
 ### ✅ Available today
 
-- A public Git repository with a defined module layout (see [Repository Structure](#repository-structure)).
-- A written system design: architecture, training pipeline, retrieval flow, agent flow, memory model.
-- Written **policies** that bind the project: no invented sources, web pages are data not instructions,
-  no private user data in training without consent, no secrets in weights or APKs, honest reproducible evaluation.
-- A model-size roadmap (targets) and an 8-phase development plan.
-- The first working milestone, defined with acceptance criteria: [M1](#first-working-milestone-m1).
+- A public Git repository with implemented pipeline (71 tests, all passing) and defined module layout (see [Repository Structure](#repository-structure)).
+- A written system design: architecture, training pipeline, retrieval flow, agent flow, memory model — now accompanied by executed code and measured artifacts.
+- Written **policies** that bind the project: no invented sources (G1-G5 manifest gates), web pages are data not instructions, no private user data in training without consent, no secrets in weights or APKs, honest reproducible evaluation.
+- A reproducible smoke run: `configs/sir_nano_smoke.yaml` → fixture → tokenizer bake-off → tokenize → train (60 steps, 0.9M) → evaluate → infer, with provenance and JSON results in `evaluation/results/` and `data/processed/smoke/`.
+- Docs: `docs/architecture.md`, `docs/dataset-policy.md`, `docs/training.md`, `docs/evaluation.md`, `docs/model-card.md`, `docs/tokenizer-evaluation.md` (all generated/measured, not aspirational).
+- The first working milestone, still defined with acceptance criteria: [M1](#first-working-milestone-m1) — smoke validates the machinery, not the milestone.
 
 ### 🔬 Open research decisions (nothing chosen yet)
 
 | Decision | Options on the table | Decided by |
 |----------|----------------------|------------|
-| Tokenization scheme | BPE · Unigram · SentencePiece · byte-level | M1 tokenizer bake-off |
+| Tokenization scheme | BPE · Unigram · SentencePiece · byte-level | Smoke bake-off (sp_bpe@2048 provisional, no candidate met both criteria — see `docs/tokenizer-evaluation.md`) |
 | Base vocab size | 8k · 16k · 32k | M1, from Hindi/Hinglish token efficiency |
 | Training framework | PyTorch native · HF Trainer · lightweight custom loop | M1 |
 | Attention/norm variants | RoPE, GQA, RMSNorm, tied embeddings | Phase 2, after M1 baseline |
@@ -95,8 +91,7 @@ Kept deliberately separate so that nothing below is mistaken for a feature.
 
 Every capability in the sections below — Hindi/English/Hinglish conversation, reasoning, knowledge,
 coding, RAG, search, memory, vision, voice, agents, Android deployment, safety systems — is **planned**.
-No SIR model exists to serve any of them. Sizes like `SIR-1B` or `SIR-7B` are **targets, not releases**,
-and `SIR-Nano` does not yet exist as a checkpoint.
+A 0.9M-parameter smoke prototype exists (`runs/sir_nano_smoke-dryrun2/final.pt`) and generates text, but it is **not** a capability claim — it is a research artifact that proves the pipeline runs. Sizes like `SIR-1B` or `SIR-7B` are **targets, not releases**, and the 25M `SIR-Nano v0.1` milestone is still unrealized.
 
 ---
 
@@ -538,22 +533,23 @@ Status marks are the real state of this repository, not of the plan.
 SIR/
 │
 ├── README.md              # ✅ this file
-├── LICENSE                # ⚠️ missing — undecided, and it blocks publication of Phase 1 artifacts
+├── LICENSE                # ⚠️ still missing — first blocker, per-component decision (see License)
 │
-├── configs/               # 🟨 scaffold only — model and training configs land with M1
+├── configs/               # ✅ sir_nano_smoke.yaml (executed) + sir_nano_v0_1.yaml (target, not executed)
 │
-├── data/                  # 🟨 scaffold only — never commit raw corpora, see .gitignore
-│   ├── raw/               # local only
-│   ├── cleaned/           # local only
-│   └── processed/         # local only
+├── data/                  # ✅ fixture + processed (git-ignored), manifests committed
+│   ├── fixtures/sir_fixture_v0/  # CC0, 551 docs, 188k chars, provisional
+│   ├── manifests/sources.yaml + acquisition.json
+│   ├── cleaned/           # local only (git-ignored)
+│   └── processed/smoke/   # train.jsonl 390 / val 102, tokenized, provenance.json
 │
-├── tokenizer/             # ⬜ empty — D2 tokenizer bake-off
-├── model/                 # ⬜ empty — architecture definition
-├── training/              # ⬜ empty — pretraining loop
+├── tokenizer/             # ✅ api.py, train_tokenizer.py, evaluate_tokenizer.py, artifacts/smoke/ (6 candidates)
+├── model/                 # ✅ config.py, transformer.py (0.9M smoke, 25M target)
+├── training/              # ✅ data/ (clean, dedup, split, validate, pipeline), dataset.py, tokenize_corpus.py, train.py, checkpoint.py
 ├── instruction_tuning/    # ⬜ empty — Phase 2+
 ├── reasoning/             # ⬜ empty — Phase 3
-├── evaluation/            # ⬜ empty — frozen test sets + harness
-├── inference/             # ⬜ empty — CPU inference CLI (D6)
+├── evaluation/            # ✅ probes (50), scripts (leakage, lm, probe, reproducibility), results/ (json)
+├── inference/             # ✅ engine.py, generate.py, bench_cpu.py (no KV cache)
 ├── rag/                   # ⬜ empty — Phase 4
 ├── search/                # ⬜ empty — Phase 4
 ├── vision/                # ⬜ empty — Phase 5
@@ -561,14 +557,13 @@ SIR/
 ├── agent/                 # ⬜ empty — Phase 6
 ├── safety/                # ⬜ empty — policies and probes
 ├── android/               # ⬜ empty — Phase 7
-├── scripts/               # ⬜ empty — data prep, eval helpers
-├── tests/                 # ⬜ empty — unit + regression tests
+├── scripts/               # ✅ build_fixture_corpus.py (deterministic, CC0)
+├── tests/                 # ✅ 71 tests (manifest, cleaning, dedup, split, tokenizer, model, training, inference)
 │
-└── docs/                  # 🟨 scaffold only — model cards, run logs, findings
+└── docs/                  # ✅ architecture.md, dataset-policy.md, training.md, evaluation.md, model-card.md, tokenizer-evaluation.md
 ```
 
-No directory above contains executable SIR code yet. Scaffold directories exist so module boundaries are visible
-to reviewers; they are emptied or renamed as modules actually land.
+Scaffold directories for planned modules remain empty (with `.gitkeep`) so boundaries are visible to reviewers; implemented modules contain audited, tested code and measured artifacts.
 
 ---
 
@@ -576,16 +571,17 @@ to reviewers; they are emptied or renamed as modules actually land.
 
 ### Phase 1 — Research Prototype
 
-This is where [M1](#first-working-milestone-m1) lives. The first box is checked so the list reflects reality.
+M1 (`SIR-Nano v0.1`, 25M, 200M tokens) is still the milestone. The smoke run below validates the machinery that M1 will use.
 
 - [ ] License decided and `LICENSE` committed (**blocker**, do this first)
 - [x] Repository setup
-- [ ] Tokenizer experiments
-- [ ] Dataset pipeline
-- [ ] Small transformer (~25M)
-- [ ] Training pipeline
-- [ ] Inference engine
-- [ ] Initial benchmark (frozen test sets committed)
+- [x] Tokenizer bake-off (6 candidates, smoke, provisional — no release; see `docs/tokenizer-evaluation.md`)
+- [x] Dataset pipeline (manifest-gated clean→dedup→leakage-safe split→validate, with fixture)
+- [x] Small transformer (≈1M smoke, not 25M target — architecture proven, scaling still to do)
+- [x] Training pipeline (deterministic, resumable, checkpointed, 60 steps smoke)
+- [x] Inference engine (CPU greedy/sampling, bench 0.32s/128 tok, no KV cache)
+- [x] Initial benchmark (leakage 0, probes 35/50, reproducibility 0% spread, all JSON)
+- [ ] **M1 proper** (licensed natural corpus, 200M tokens, 25M model, 10 GPU-hours)
 
 ### Phase 2 — SIR-300M / 1B
 
@@ -638,6 +634,8 @@ This is where [M1](#first-working-milestone-m1) lives. The first box is checked 
 - [ ] SIR-7B
 - [ ] Larger research models
 
+Smoke artifacts live in `evaluation/results/`, `tokenizer/artifacts/smoke/`, `data/processed/smoke/`, `runs/sir_nano_smoke-*/` (git-ignored where they contain derivable text/weights).
+
 ---
 
 ## 🧰 Technology Direction
@@ -683,13 +681,12 @@ project loses credibility, so this README states what does not exist as often as
 
 ## ⚠️ Project Status
 
-- **Status:** Early Research / Development — Phase 0.
+- **Status:** Pipeline Validation — Phase 1 smoke run completed (2026-10-05).
 - SIR is an evolving project. The roadmap describes intended capabilities and does **not** imply that every listed
-  capability currently exists.
-- Model sizes, benchmark results, training requirements, and performance will be published **only after actual
-  testing**. Until then, any number quoted about SIR in any source — including social media posts — is not from
-  this project.
-- No SIR model is released, hosted, or recommended for production, personal, legal, medical, or educational use.
+  capability currently exists. Where numbers exist, they are from the smoke prototype (0.9M, fixture, provisional) and are labelled as such; they are not M1 results.
+- Model sizes, benchmark results, training requirements, and performance are published **only after actual
+  testing** — and the smoke results are now published as JSON in `evaluation/results/` and `docs/`. Any number quoted about SIR elsewhere that is not traceable to those JSON files is not from this project.
+- No SIR model is released, hosted, or recommended for production, personal, legal, medical, or educational use. The smoke checkpoint is a research artifact, not a product (`docs/model-card.md`).
 
 ---
 
@@ -739,6 +736,6 @@ each artifact gets its own license record.
 *Think Indian. Understand Everyone. Build Intelligence.*
 
 SIR is not just a chatbot. It is an attempt to build an Indian AI intelligence platform from the ground up —
-one measured milestone at a time, starting with [M1](#first-working-milestone-m1).
+one measured milestone at a time. The pipeline now runs; [M1](#first-working-milestone-m1) (25M, licensed corpus) is next.
 
 </div>
