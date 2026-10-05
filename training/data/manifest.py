@@ -38,7 +38,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MANIFEST = REPO_ROOT / "data" / "manifests" / "sources.yaml"
 DEFAULT_ACQUISITION = REPO_ROOT / "data" / "manifests" / "acquisition.json"
 
-VALID_STATUSES = ("available", "planned", "blocked", "rejected")
+VALID_STATUSES = ("available", "planned", "blocked", "needs_review", "rejected")
 UNUSABLE_LICENSES = {"", "unverified", "unknown", "none", "tbd", "various-per-page", "n/a"}
 REQUIRED_FIELDS = (
     "id",
@@ -66,6 +66,25 @@ OPTIONAL_DEFAULTS: dict[str, Any] = {
     "size_tokens_note": "",
     "used_for": [],
     "expected_minimum_useful_chars": 0,
+    # --- license-record fields added in schema_version 2 -------------------------------
+    "provider": "",
+    "license_url": None,
+    "license_verified": False,
+    "license_evidence": "",
+    "domain": "",
+    "synthetic": False,
+    "synthetic_notes": "",
+    "acquisition": {},
+    "download_method": "",
+    "commercial_use": "unknown",
+    "derivatives": "unknown",
+    "model_training_allowed": False,
+    "attribution_required": True,
+    "share_alike": "unknown",
+    "provenance": "",
+    "reason": "",
+    "needs_review_reason": "",
+    "review_action": "",
 }
 
 ERROR = "error"
@@ -217,10 +236,44 @@ def validate_manifest(
         if not isinstance(langs, list) or not all(isinstance(x, str) and x for x in langs):
             err("G0-bad-languages", "languages must be a non-empty list of BCP-47-ish tags", sid)
 
-        if status == "blocked" and not str(raw.get("blocked_reason") or "").strip():
+        if status == "blocked" and not str(raw.get("blocked_reason") or raw.get("reason") or "").strip():
             err("G4-blocked-needs-reason", "status: blocked requires blocked_reason", sid)
-        if status == "rejected" and not str(raw.get("rejected_reason") or "").strip():
+        if status == "rejected" and not str(raw.get("rejected_reason") or raw.get("reason") or "").strip():
             err("G4-rejected-needs-reason", "status: rejected requires rejected_reason", sid)
+        if status == "needs_review" and not str(raw.get("needs_review_reason") or raw.get("reason") or "").strip():
+            err(
+                "G4-needs-review-needs-reason",
+                "status: needs_review requires needs_review_reason (what exactly is unverified)",
+                sid,
+            )
+
+        # G1 — training-permission gate (schema_version 2). "Downloadable" is not permission.
+        # A source may only be *available* if the license was read (license_verified) AND that
+        # license permits model training (model_training_allowed).
+        require_permission = bool((manifest.policy or {}).get("require_training_permission", True))
+        if require_permission and status == "available":
+            if not bool(raw.get("license_verified")):
+                err(
+                    "G1-license-not-verified",
+                    "status: available requires license_verified: true — quote the license text in "
+                    "license_evidence; an unread license is not a license",
+                    sid,
+                )
+            if not bool(raw.get("model_training_allowed")):
+                err(
+                    "G1-no-training-permission",
+                    "status: available requires model_training_allowed: true — publicly accessible "
+                    "is not the same as licensed for model training",
+                    sid,
+                )
+            if not str(raw.get("provenance") or "").strip():
+                err("G2-no-provenance", "status: available requires a provenance string", sid)
+            if not str(raw.get("license_evidence") or "").strip():
+                warn(
+                    "G1-no-license-evidence",
+                    "license_verified: true but license_evidence is empty — say where it was read",
+                    sid,
+                )
 
         # G2 — license gate
         if not src.license_ok:
@@ -342,6 +395,49 @@ def _git_commit() -> str:
         )
     except Exception:
         return "unknown"
+
+
+def verify_acquisition_integrity(
+    only: set[str] | None = None,
+    *,
+    artifacts_dir: Path | None = None,
+) -> list[dict[str, Any]]:
+    """Re-hash every artifact recorded in the per-source ledgers and compare with the recorded SHA-256.
+
+    This is gate G3: it answers "are the bytes still the bytes that were licensed and measured?".
+    A missing file is *not* silently skipped — it is a failure, because a corpus built from files
+    that no longer exist cannot be reproduced.
+    """
+    ledger_dir = artifacts_dir or (REPO_ROOT / "data" / "manifests" / "artifacts")
+    out: list[dict[str, Any]] = []
+    for ledger in sorted(ledger_dir.glob("*.jsonl")):
+        sid = ledger.stem
+        if only is not None and sid not in only:
+            continue
+        for line in ledger.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            if rec.get("skipped"):
+                continue
+            path = Path(rec["path"])
+            full = path if path.is_absolute() else REPO_ROOT / path
+            if not full.exists():
+                status, got = "missing", ""
+            else:
+                got = sha256_file(full)
+                status = "ok" if got == rec.get("sha256") else "sha256-mismatch"
+            out.append(
+                {
+                    "source_id": sid,
+                    "path": str(path),
+                    "recorded": rec.get("sha256"),
+                    "recomputed": got,
+                    "bytes": rec.get("bytes"),
+                    "status": status,
+                }
+            )
+    return out
 
 
 def record_acquisition(
