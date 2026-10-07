@@ -120,3 +120,18 @@ Each planned module is scaffolded as an empty directory with `.gitkeep` so bound
 - Not a capability claim. No Hindi fluency, no reasoning scores, no comparison with external models.
 - Numbers here refer to the smoke run (fixture corpus, 0.9M params) and are labelled provisional.
 
+
+
+## Human Development & Growth Architecture
+
+SIR is developed through a staged cognitive-development program rather than a simple parameter ladder. The generation sequence is:
+
+`SIR-Nano → SIR-Lite → SIR-Flash Lite → SIR-Flash → SIR-Pro → SIR-Pro+ → SIR-Pro Max → SIR-Ultra → SIR-Expert`
+
+The developmental contract is defined in `docs/human-development.md` and `configs/sir_human_development.yaml`.
+
+Each generation must grow across knowledge, understanding, reasoning, application, verification, experience, transfer, continual learning, and brainstorming. Generation promotion requires measured evaluation; model size alone is insufficient.
+
+The long-term curriculum progresses from complete Class 1–10 broad education through Class 11–12, undergraduate foundations, advanced/professional study, research methodology, and domain specialization.
+
+The target signature capability is **master brainstorming**: decompose problems, generate diverse hypotheses, connect domains, compare alternatives, challenge assumptions, verify, and synthesize. This remains an engineering objective and must not be reported as achieved until evaluated.
