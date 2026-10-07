@@ -1,0 +1,132 @@
+schema_version: 1
+
+project:
+  name: SIR
+  program: human_development_growth
+  objective: >
+    Develop SIR as a continuously maturing multidisciplinary intelligence.
+    Generation labels represent developmental capability stages, not merely model size.
+
+generations:
+  - id: nano
+    name: SIR-Nano
+    stage: foundation
+    curriculum: class_1_to_10_foundation
+  - id: lite
+    name: SIR-Lite
+    stage: school_mastery
+    curriculum: class_1_to_10_mastery
+  - id: flash_lite
+    name: SIR-Flash Lite
+    stage: higher_education
+    curriculum: class_11_12_undergraduate
+  - id: flash
+    name: SIR-Flash
+    stage: advanced_general
+    curriculum: advanced_multidisciplinary
+  - id: pro
+    name: SIR-Pro
+    stage: professional
+    curriculum: professional_generalist
+  - id: pro_plus
+    name: SIR-Pro+
+    stage: advanced_professional
+    curriculum: multidisciplinary_advanced
+  - id: pro_max
+    name: SIR-Pro Max
+    stage: deep_problem_solving
+    curriculum: novel_complex_problem_solving
+  - id: ultra
+    name: SIR-Ultra
+    stage: research_oriented
+    curriculum: research_and_discovery
+  - id: expert
+    name: SIR-Expert
+    stage: specialist_research
+    curriculum: domain_specialization
+
+development_axes:
+  - knowledge
+  - understanding
+  - reasoning
+  - application
+  - verification
+  - experience
+  - transfer
+  - continual_learning
+  - brainstorming
+
+brainstorming:
+  enabled_from: nano
+  maturity_target: expert
+  workflow:
+    - clarify
+    - decompose
+    - retrieve
+    - generate
+    - cross_domain_connect
+    - compare
+    - challenge
+    - verify
+    - synthesize
+    - communicate
+  quality_dimensions:
+    - novelty
+    - relevance
+    - feasibility
+    - correctness
+    - diversity
+    - verification
+
+curriculum:
+  foundation:
+    class_1_to_10:
+      subjects:
+        - mathematics
+        - science
+        - social_science
+        - hindi
+        - english
+        - computer_science
+        - logical_reasoning
+        - general_knowledge
+        - scientific_thinking
+        - indian_knowledge
+        - world_knowledge
+        - indian_languages
+  advanced:
+    - class_11_12
+    - undergraduate
+    - advanced_mathematics
+    - advanced_science
+    - computer_science
+    - ai_ml
+    - engineering
+    - research_methodology
+    - interdisciplinary_reasoning
+
+learning_loop:
+  - learn
+  - practice
+  - error_diagnosis
+  - correction
+  - application
+  - explanation
+  - verification
+  - transfer
+  - review
+  - progression
+
+gates:
+  no_fake_metrics: true
+  no_unverified_capability_claims: true
+  require_data_provenance: true
+  require_evaluation_before_generation_promotion: true
+  preserve_reproducibility: true
+  no_external_model_as_runtime_substitute: true
+
+current_state:
+  nano_smoke_params: 897152
+  nano_target_params: 25000000
+  nano_target_trained: false
+  next_priority: curriculum_and_evaluation_infrastructure
