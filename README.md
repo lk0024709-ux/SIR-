@@ -67,11 +67,12 @@ Kept deliberately separate so that nothing below is mistaken for a feature.
 
 ### ✅ Available today
 
-- A public Git repository with implemented pipeline (71 tests, all passing) and defined module layout (see [Repository Structure](#repository-structure)).
+- A public Git repository with implemented pipeline (308 hermetic tests: 305 passed, 3 skipped, CPU-only, no network) and a defined module layout (see [Repository Structure](#repository-structure)).
 - A written system design: architecture, training pipeline, retrieval flow, agent flow, memory model — now accompanied by executed code and measured artifacts.
 - Written **policies** that bind the project: no invented sources (G1-G5 manifest gates), web pages are data not instructions, no private user data in training without consent, no secrets in weights or APKs, honest reproducible evaluation.
 - A reproducible smoke run: `configs/sir_nano_smoke.yaml` → fixture → tokenizer bake-off → tokenize → train (60 steps, 0.9M) → evaluate → infer, with provenance and JSON results in `evaluation/results/` and `data/processed/smoke/`.
 - Docs: `docs/architecture.md`, `docs/dataset-policy.md`, `docs/training.md`, `docs/evaluation.md`, `docs/model-card.md`, `docs/tokenizer-evaluation.md` (all generated/measured, not aspirational).
+- A **development layer** for staged growth (`curriculum/`, `teachers/`, `development/`, `evaluation/suite.py`): a 178-node prerequisite curriculum graph with machine-checked requirements and assessment-driven coverage states, an offline teacher/critic/verifier pipeline with multi-teacher consensus and provenance policy, machine-readable generation contracts for all nine generations, promotion/regression/readiness gates, experiment records, a 12-category error-learning loop and a weighted brainstorming rubric. Docs: `docs/curriculum.md`, `docs/curriculum-data-pipeline.md`, `docs/generation-contract.md`, `docs/error-learning.md`, `docs/brainstorming.md`, `docs/experiments.md`. **Nothing in this layer claims a trained model**: SIR-Nano is still UNTRAINED, all nine generations are UNVERIFIED, and the readiness gate reports `NOT_READY`.
 - The first working milestone, still defined with acceptance criteria: [M1](#first-working-milestone-m1) — smoke validates the machinery, not the milestone.
 
 ### 🔬 Open research decisions (nothing chosen yet)
@@ -479,6 +480,7 @@ grant with a recorded audit entry.
 
 A major goal is to make smaller SIR models usable on Android and other edge devices.
 
+- **Android build foundation:** a minimal Kotlin/JNI APK scaffold and pinned GitHub Actions build are documented in [`docs/android-build.md`](docs/android-build.md). This validates build plumbing only; SIR-Nano Android inference is not implemented.
 - **Candidate runtimes:** GGUF · llama.cpp · ONNX Runtime · ExecuTorch · LiteRT · Android acceleration APIs
 - **Deployment targets** depend on model size and device hardware; no device is assumed today.
 - **Metrics that must be reported for every quantized build:** RAM usage · model size · tokens/sec ·
@@ -545,7 +547,10 @@ SIR/
 │
 ├── tokenizer/             # ✅ api.py, train_tokenizer.py, evaluate_tokenizer.py, artifacts/smoke/ (6 candidates)
 ├── model/                 # ✅ config.py, transformer.py (0.9M smoke, 25M target)
-├── training/              # ✅ data/ (clean, dedup, split, validate, pipeline), dataset.py, tokenize_corpus.py, train.py, checkpoint.py
+├── training/              # ✅ data/ (clean, dedup, split, validate, pipeline, records.py provenance policy), dataset.py, tokenize_corpus.py, train.py, checkpoint.py
+├── curriculum/            # ✅ graph, requirements, coverage states, spaced review, curriculum sampler
+├── teachers/              # ✅ provider registry (recorded transcripts), critics, consensus, verifier (offline only)
+├── development/           # ✅ generation contracts, regression/promotion/readiness gates, experiments, error learning, brainstorming
 ├── instruction_tuning/    # ⬜ empty — Phase 2+
 ├── reasoning/             # ⬜ empty — Phase 3
 ├── evaluation/            # ✅ probes (50), scripts (leakage, lm, probe, reproducibility), results/ (json)
@@ -556,11 +561,11 @@ SIR/
 ├── voice/                 # ⬜ empty — Phase 5
 ├── agent/                 # ⬜ empty — Phase 6
 ├── safety/                # ⬜ empty — policies and probes
-├── android/               # ⬜ empty — Phase 7
+├── android/               # ✅ Gradle/APK build foundation (CI builds a debug APK; no on-device inference yet)
 ├── scripts/               # ✅ build_fixture_corpus.py (deterministic, CC0)
-├── tests/                 # ✅ 71 tests (manifest, cleaning, dedup, split, tokenizer, model, training, inference)
+├── tests/                 # ✅ 308 tests (pipeline, tokenizer, model, training, inference, curriculum, teachers, gates, suites)
 │
-└── docs/                  # ✅ architecture.md, dataset-policy.md, training.md, evaluation.md, model-card.md, tokenizer-evaluation.md
+└── docs/                  # ✅ architecture, dataset-policy, training, evaluation, model-card, tokenizer-evaluation, curriculum, curriculum-data-pipeline, generation-contract, error-learning, brainstorming, experiments
 ```
 
 Scaffold directories for planned modules remain empty (with `.gitkeep`) so boundaries are visible to reviewers; implemented modules contain audited, tested code and measured artifacts.

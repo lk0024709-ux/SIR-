@@ -1,0 +1,45 @@
+name: Python tests
+
+on:
+  pull_request:
+    paths-ignore:
+      - "android/**"
+      - "**/*.md"
+  push:
+    branches:
+      - main
+      - arena/01a10c78-sir
+    paths-ignore:
+      - "android/**"
+      - "**/*.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: python-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pytest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+          # no pip cache: this repository has no requirements/pyproject file for setup-python to key on
+
+      - name: Install test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install "numpy<3" pyyaml pytest sentencepiece tokenizers
+          python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+      # Every test is CPU-only and hermetic (fixtures, no network, no downloads), so a green run
+      # here is evidence the repository's own claims hold — not a smoke test of a development box.
+      - name: Run the test suite
+        run: python -m pytest -q

@@ -60,6 +60,32 @@ Full table: `docs/tokenizer-evaluation.md` (generated, do not hand-edit).
 - **Probes**: `evaluation/probes/m1_probe_v0.jsonl` (50 prompts, CC0, held-out only, must never be trained on — enforced in `training/tokenize_corpus.py` probe guard). Categories: hindi_completion 12, english_completion 10, hinglish_completion 12, factual_short 8, reasoning_simple 8.
 - **Future**: frozen test sets for Phase 1 need to be committed, versioned, and never used for training. Building them is on the critical path.
 
+## Curated Suites (2026-10-07)
+
+`evaluation/suite.py` evaluates *task behaviour* on curated cases, across the eleven axes the
+promotion gate requires (knowledge, mathematics, science, language, reasoning, coding, application,
+transfer, verification, brainstorming, reliability). Cases live in `evaluation/suites/*.jsonl`
+(currently `dev_smoke_suite.jsonl`, 33 self-authored cases, all eleven axes covered).
+
+Scoring honesty rules:
+
+- every case declares a verification mode; deterministic modes (`exact`, `numeric`, `set`,
+  `arithmetic_claims`, `integrity_only`) are scored offline through `teachers/verify.py`;
+- `manual`/`none` cases are **UNSCORED** — counted, reported, excluded from the axis score, and never
+  treated as passes;
+- a case whose answerer crashes is recorded as `error`, not as a wrong answer;
+- `verified_evidence: true` only when every *scored* case used a deterministic mode, so a promotion
+  gate can distinguish execution-checked evidence from reviewer-graded evidence;
+- `suite_hash` identifies the exact case set, and the regression gate refuses to compare runs with
+  different hashes.
+
+```bash
+python -m evaluation.suite --suite evaluation/suites/dev_smoke_suite.jsonl --answers <answer_sheet.json>
+```
+
+Model answers come from a local checkpoint through `inference/` (`--checkpoint`) or from a recorded
+answer sheet; there is no network path in this module.
+
 ## Reproducing
 
 ```bash

@@ -1,0 +1,118 @@
+{
+  "tool": "development/readiness.py",
+  "generation_id": "nano",
+  "level": "NOT_READY",
+  "ready_for_serious_pretraining": false,
+  "measured": {
+    "curriculum_nodes": 178,
+    "corpus_report": "evaluation/results/corpus_report.json",
+    "measured_tokens": 0,
+    "failing_provenance_gates": [
+      "G5"
+    ],
+    "evaluation_suites": [
+      "evaluation/suites/dev_smoke_suite.jsonl"
+    ],
+    "evaluation_axes_covered": [
+      "application",
+      "brainstorming",
+      "coding",
+      "knowledge",
+      "language",
+      "mathematics",
+      "reasoning",
+      "reliability",
+      "science",
+      "transfer",
+      "verification"
+    ],
+    "assessed_curriculum_nodes": null
+  },
+  "thresholds": {
+    "serious_pretraining_min_train_tokens": 200000000,
+    "partial_training_min_train_tokens": 50000000,
+    "min_curriculum_requirement_pass": true,
+    "min_coverage_nodes_assessed": 1,
+    "require_experiment_tracking": true,
+    "require_regression_baseline": false
+  },
+  "checks": [
+    {
+      "check": "curriculum_requirements",
+      "requirement": "curriculum graph validates and satisfies the requirement contract",
+      "status": "MET",
+      "blocking": true,
+      "detail": "178 nodes; 0 requirement violation(s)",
+      "evidence": "configs/curriculum_requirements.yaml"
+    },
+    {
+      "check": "generation_contracts",
+      "requirement": "generation contracts are valid and match the program",
+      "status": "MET",
+      "blocking": true,
+      "detail": "9 contracts; 0 problem(s)",
+      "evidence": ""
+    },
+    {
+      "check": "dataset_provenance",
+      "requirement": "every training source carries a verified licence and provenance record",
+      "status": "NOT_MET",
+      "blocking": true,
+      "detail": "failing gates: ['G5']",
+      "evidence": "evaluation/results/corpus_report.json"
+    },
+    {
+      "check": "measured_tokens_floor",
+      "requirement": "measured train tokens >= 50,000,000 (partial) and >= 200,000,000 (serious)",
+      "status": "NOT_MET",
+      "blocking": true,
+      "detail": "measured 0 tokens",
+      "evidence": "evaluation/results/corpus_report.json"
+    },
+    {
+      "check": "tokenizer_available",
+      "requirement": "the configured tokenizer artifact exists and matches the tokenized data",
+      "status": "NOT_MET",
+      "blocking": true,
+      "detail": "spec=None exists=False; tokenized data records tokenizer_sha256=None",
+      "evidence": ""
+    },
+    {
+      "check": "evaluation_suite_present",
+      "requirement": "at least one curated evaluation suite exists with cases",
+      "status": "MET",
+      "blocking": true,
+      "detail": "1 suite file(s), axes: ['application', 'brainstorming', 'coding', 'knowledge', 'language', 'mathematics', 'reasoning', 'reliability', 'science', 'transfer', 'verification']",
+      "evidence": "evaluation/suites"
+    },
+    {
+      "check": "coverage_measured",
+      "requirement": "curriculum coverage measured on >= 1 node(s)",
+      "status": "NOT_MET",
+      "blocking": true,
+      "detail": "no coverage report yet",
+      "evidence": "evaluation/results/curriculum_coverage.json"
+    },
+    {
+      "check": "experiment_tracking",
+      "requirement": "experiment records directory exists with at least one record",
+      "status": "NOT_MET",
+      "blocking": true,
+      "detail": "0 record(s) in experiments/records",
+      "evidence": "experiments/records"
+    }
+  ],
+  "blocking_failures": [
+    "dataset_provenance",
+    "measured_tokens_floor",
+    "tokenizer_available",
+    "coverage_measured",
+    "experiment_tracking"
+  ],
+  "notes": [
+    "0 measured tokens is below the 50,000,000 partial threshold: pretraining at this scale would produce a model whose failures cannot be attributed to architecture rather than data. The correct action is more data, not a longer run.",
+    "no experiment records yet: run `python -m development.experiments --from-train-log runs/<run>/train_log.json` after any training run so the run is reproducible from the repository",
+    "level=NOT_READY: this generation is not cleared for a serious pretraining run; report it as a pilot/readiness state, never as a trained model"
+  ],
+  "note": "This gate reports readiness for a training run. It is not evidence that any model was trained, and it never substitutes for evaluation after training."
+}

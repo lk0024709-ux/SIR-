@@ -1,0 +1,246 @@
+# SIR curriculum requirements — the contract a curriculum graph must satisfy.
+#
+# This file is the *requirement*, data/curriculum/curriculum_graph.yaml is the *implementation*.
+# curriculum/requirements.py checks one against the other, so a topic listed in a task brief cannot
+# silently disappear from the graph: either a node carries the topic tag, or validation fails.
+#
+# Adding a requirement here without adding graph coverage is a failing build, not a warning.
+
+schema_version: 1
+
+# Every subject below must appear in the graph and expose these topic tags somewhere.
+required_topics:
+  mathematics:
+    - numbers
+    - arithmetic
+    - fractions
+    - decimals
+    - percentages
+    - ratio_proportion
+    - algebra
+    - geometry
+    - mensuration
+    - statistics
+    - probability
+    - coordinate_geometry
+    - equations
+    - graphs
+    - mathematical_reasoning
+    - word_problems
+    - calculus
+    - linear_algebra
+    - discrete_mathematics
+    - optimization
+    - numerical_methods
+  science:
+    - physics_fundamentals
+    - chemistry_fundamentals
+    - biology_fundamentals
+    - scientific_observation
+    - experiments
+    - measurement
+    - scientific_reasoning
+    - mechanics
+    - electromagnetism
+    - thermodynamics
+    - statistical_mechanics
+    - optics
+    - quantum_mechanics
+    - relativity
+    - modern_physics
+    - inorganic_chemistry
+    - organic_chemistry
+    - physical_chemistry
+    - analytical_chemistry
+    - genetics
+    - molecular_biology
+    - microbiology
+    - biotechnology
+    - evolution
+    - ecology
+    - physiology
+  social_science:
+    - history
+    - geography
+    - civics
+    - political_science
+    - economics
+    - society_culture
+  hindi:
+    - grammar
+    - vocabulary
+    - reading_comprehension
+    - writing
+    - translation
+    - semantic_understanding
+  english:
+    - grammar
+    - vocabulary
+    - reading_comprehension
+    - writing
+    - translation
+    - semantic_understanding
+  indian_languages:
+    - grammar
+    - vocabulary
+    - reading_comprehension
+    - writing
+    - translation
+    - literature
+    - semantic_understanding
+  hinglish:
+    - code_mixing
+    - vocabulary
+    - reading_comprehension
+    - writing
+    - translation
+    - semantic_understanding
+  computer_science:
+    - computer_fundamentals
+    - computational_thinking
+    - algorithms
+    - programming
+    - data_structures
+    - databases
+    - networking
+    - internet_basics
+    - software_engineering
+    - security_basics
+    - machine_learning
+    - deep_learning
+    - nlp
+    - computer_vision
+  reasoning:
+    - logical_reasoning
+    - mathematical_reasoning
+    - verbal_reasoning
+    - abstract_reasoning
+    - pattern_recognition
+    - causal_reasoning
+    - planning
+    - problem_decomposition
+  general_knowledge:
+    - india
+    - world
+    - science
+    - technology
+    - culture
+    - geography
+    - history
+    - institutions
+    - important_concepts
+  scientific_thinking:
+    - observation
+    - hypothesis
+    - experiment
+    - evidence
+    - analysis
+    - conclusion
+    - scientific_reasoning
+    - transfer
+  indian_knowledge:
+    - indian_history
+    - indian_geography
+    - indian_culture
+    - indian_languages
+    - indian_philosophy
+    - indian_science_mathematics
+    - constitutional_knowledge
+    - literature
+    - indian_arts
+    - indian_knowledge_systems
+    - provenance
+  world_knowledge:
+    - world_geography
+    - world_history
+    - institutions
+    - economics
+    - world_affairs
+    - global_change
+    - comparative_knowledge
+  engineering:
+    - electrical_engineering
+    - electronics
+    - mechanical_engineering
+    - civil_engineering
+    - computer_engineering
+    - systems_engineering
+  research:
+    - scientific_method
+    - research_methodology
+    - literature_analysis
+    - hypothesis_formation
+    - experimental_design
+    - statistical_reasoning
+    - reproducibility
+    - citation
+    - peer_review
+    - research_communication
+
+# Capabilities that are cross-cutting rather than school subjects.
+required_capability_topics:
+  - brainstorming
+  - idea_generation
+  - synthesis
+  - problem_decomposition
+  - planning
+  - cross_domain_connections
+  - verification
+  - transfer
+  - error_analysis
+
+# Subjects whose foundation ladder must cover these grades (inclusive).
+required_grade_coverage:
+  mathematics: [1, 10]
+  science: [1, 10]
+  social_science: [1, 10]
+  hindi: [1, 10]
+  english: [1, 10]
+  indian_languages: [1, 10]
+  computer_science: [1, 10]
+  reasoning: [1, 10]
+  general_knowledge: [1, 10]
+
+# Ordered chains that must exist as real dependencies, not as prose.
+required_sequences:
+  scientific_thinking:
+    - st.g04
+    - st.g05
+    - st.g06
+    - st.g07
+    - st.g08
+    - st.g09
+    - st.g10
+
+# The human-like learning loop. These stage names must be usable as record kinds and as
+# assessment kinds, so the loop is executable rather than aspirational.
+learning_loop:
+  - learn
+  - practice
+  - error_diagnosis
+  - correction
+  - application
+  - explanation
+  - verification
+  - transfer
+  - review
+  - progression
+
+# Development generations. Order is contractual: no generation may be skipped and ids are stable.
+generation_order:
+  - nano
+  - lite
+  - flash_lite
+  - flash
+  - pro
+  - pro_plus
+  - pro_max
+  - ultra
+  - expert
+
+# Tracks that must be non-empty for the program to be considered wired up.
+required_tracks:
+  - foundation
+  - bridge
+  - advanced
+  - meta

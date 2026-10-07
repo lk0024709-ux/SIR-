@@ -1,0 +1,71 @@
+# Brainstorming rubric v0 — what "good brainstorming" means, written down before measuring.
+#
+# SIR's signature long-term capability is structured brainstorming: not "generate many ideas", but
+# generate ideas, connect domains, compare trade-offs, challenge assumptions, verify, and synthesise
+# the strongest option. This rubric makes the dimensions explicit and weighted, so a score can be
+# argued with rather than merely asserted.
+#
+# IMPORTANT: the signals below are *lexical, mechanical proxies*. They can be computed offline and
+# deterministically, which is why they are used for gating; they cannot judge whether an idea is
+# genuinely novel or feasible. `novelty` is therefore reported as UNSCORED when no reference set is
+# supplied, and any published brainstorming number must state which dimensions were scored
+# mechanically and which still require human/model review.
+
+schema_version: 1
+rubric_id: brainstorming_v0
+
+workflow:
+  - problem
+  - clarify_objective
+  - identify_constraints
+  - decompose
+  - retrieve_knowledge
+  - generate_hypotheses
+  - cross_domain_connect
+  - alternative_approaches
+  - compare_tradeoffs
+  - challenge_assumptions
+  - adversarial_critique
+  - verify
+  - synthesize
+  - actionable_answer
+
+dimensions:
+  diversity:
+    weight: 0.15
+    description: ideas differ from each other rather than restating one thought
+    signals: [distinct_idea_ratio, vocabulary_spread]
+  relevance:
+    weight: 0.15
+    description: ideas address the stated problem
+    signals: [problem_keyword_overlap]
+  novelty:
+    weight: 0.10
+    description: ideas are not near-copies of a reference set (UNSCORED without a reference set)
+    signals: [max_similarity_to_reference]
+    requires_reference_set: true
+  feasibility:
+    weight: 0.15
+    description: ideas are concrete and implementable (resources, quantities, steps)
+    signals: [concrete_quantities, resource_mentions, implementation_steps]
+  reasoning_quality:
+    weight: 0.15
+    description: ideas explain why, not only what
+    signals: [causal_connectives, explicit_assumptions]
+  constraint_adherence:
+    weight: 0.10
+    description: declared constraints are respected and referenced
+    signals: [constraint_keyword_coverage, constraint_violation_flags]
+  verification:
+    weight: 0.10
+    description: claims are checked (estimates, units, sources, tests)
+    signals: [verification_verbs, units_or_estimates, source_references]
+  synthesis:
+    weight: 0.10
+    description: a recommendation is made with comparison and decision criteria
+    signals: [recommendation_present, option_comparison, decision_criteria]
+
+reporting:
+  # Anything below this is reported as UNSCORED rather than silently counted as zero.
+  min_items_for_scoring: 2
+  unscored_dimensions_must_be_stated: true

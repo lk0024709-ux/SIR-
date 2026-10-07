@@ -3,13 +3,13 @@
 include(FetchContent)
 
 set(SIR_LLAMA_CPP_GIT_REPOSITORY "https://github.com/ggml-org/llama.cpp.git" CACHE STRING "llama.cpp repository")
-set(SIR_LLAMA_CPP_GIT_TAG "9871df5" CACHE STRING "Pinned llama.cpp commit")
+# Keep a full commit SHA. CMake's GIT_SHALLOW mode only accepts branch/tag names, not raw commit IDs.
+set(SIR_LLAMA_CPP_GIT_TAG "9871df5911a03a813518bcd623ee2eba91bf32aa" CACHE STRING "Pinned llama.cpp commit")
 
 FetchContent_Declare(
     llama_cpp
     GIT_REPOSITORY ${SIR_LLAMA_CPP_GIT_REPOSITORY}
     GIT_TAG        ${SIR_LLAMA_CPP_GIT_TAG}
-    GIT_SHALLOW    TRUE
 )
 
 # Disable optional heavyweight backends for the initial CPU/Android integration.

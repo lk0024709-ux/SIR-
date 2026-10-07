@@ -111,6 +111,23 @@ Each stage writes a report (`dedup_report.json`, `split_report.json`, `provenanc
 - Blocked: `dumps.wikimedia.org`, `*.wikipedia.org`, `api.wikimedia.org`, `huggingface.co` (egress allowlist, TLS closed)
 - Consequence: no natural web corpus could be obtained; all web sources are `blocked` with the exact command that would work once egress is available. Nothing was silently substituted.
 
+## Record-Level Provenance (2026-10-07)
+
+The corpus gates above govern *documents*. Curriculum and synthetic material is governed at
+*record* level by `training/data/records.py`: every record carries `domain`, `subject`, `grade_level`,
+`difficulty`, `language`, `source`, `provenance`, `teacher_models`, `verification_status`,
+`error_tags`, `curriculum_node` and `license_status`, and nothing reaches a training split by default.
+
+| Partition | Qualification |
+|-----------|---------------|
+| `trainable` | provenance in {self_authored, licensed, synthetic, public_domain} **and** licence cleared **and** verification not `unverified`/`rejected` |
+| `quarantine` | uncertain provenance, unknown licence, or content nobody has verified yet |
+| `rejected` | provenance/licence/verification explicitly rejected |
+
+Synthetic records must name their `teacher_models`; identical content never straddles the train/val
+split; and `check_against_graph` refuses records whose node or subject contradicts the curriculum
+graph. Generated teacher-pipeline output lives in `data/generated/` and is not committed.
+
 ## What Is Still Missing
 
 - A licensed natural Hindi/English/Hinglish corpus (≥200M tokens for M1).
