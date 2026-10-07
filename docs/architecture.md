@@ -48,7 +48,27 @@ SIR Brain is the only component every other module may depend on.
 | Checkpoint | `training/checkpoint.py` | ✅ Implemented | Self-contained checkpoints with config, tokenizer sha, git commit, env. |
 | Inference | `inference/` | ✅ Implemented | Greedy/sampling generation, no KV cache (O(t²), honest about it), CPU bench. |
 | Evaluation | `evaluation/scripts/` | ✅ Implemented | LM perplexity, leakage (8-gram + near-dup + probe contamination), probe generation (50 prompts), reproducibility harness, CPU latency. |
-| Tests | `tests/` | ✅ Implemented | 71 tests, CPU-only, hermetic. |
+| Tests | `tests/` | ✅ Implemented | 305 tests (305 passed, 3 skipped at this commit), CPU-only, hermetic. |
+
+## Development Layer (2026-10-07)
+
+| Module | Path | Status | What it does |
+|--------|------|--------|--------------|
+| Curriculum graph | `curriculum/graph.py`, `data/curriculum/curriculum_graph.yaml` | ✅ Implemented, ✅ Verified | 178 nodes / 221 edges / 254 topics; ladder, prerequisite and epistemic-note validation. |
+| Requirement contract | `curriculum/requirements.py` | ✅ Implemented, ✅ Verified | Checks the graph against `configs/curriculum_requirements.yaml` (0 violations). |
+| Coverage states | `curriculum/coverage.py` | ✅ Implemented, ✅ Verified | Assessment-driven `NOT_STARTED…MASTERED` / `REVIEW_REQUIRED`, with per-node blockers. |
+| Spaced review | `curriculum/review.py` | ✅ Implemented, ✅ Verified | Interval schedule + stated forgetting-risk heuristic. |
+| Curriculum sampler | `curriculum/sampler.py` | ✅ Implemented, ✅ Verified | Seeded, config-driven batch plan with honest shortfall reporting. |
+| Teacher / critic / verifier pipeline | `teachers/` | ✅ Implemented, ✅ Verified | Recorded-transcript providers, deterministic critics, multi-teacher consensus, executable verification. No network client. |
+| Training-record schema | `training/data/records.py` | ✅ Implemented, ✅ Verified | Metadata + provenance policy: nothing is trainable by default; unverified content is quarantined. |
+| Generation contracts | `configs/generation_contracts.yaml`, `development/generations.py` | ✅ Implemented, ✅ Verified | Machine-readable promises for 9 generations; 9/9 UNVERIFIED, none trained. |
+| Gates | `development/{regression,promotion,readiness,experiments}.py` | ✅ Implemented, ✅ Verified | Suite-hash-checked regression, evidence-only promotion, readiness levels, experiment records. |
+| Error learning | `development/errors.py`, `data/errors/` | ✅ Implemented, ✅ Verified | 12-category taxonomy, 7-stage chain, skeleton flow; 8 committed cases, all unverified. |
+| Brainstorming rubric | `development/brainstorming.py`, `evaluation/rubrics/` | ✅ Implemented, ✅ Verified | Weighted mechanical rubric with explicit UNSCORED semantics. |
+| Curated evaluation suites | `evaluation/suite.py`, `evaluation/suites/` | ✅ Implemented, ✅ Verified | 33-case self-authored suite across 11 axes; unscored/error counts never become passes. |
+
+See `docs/curriculum.md`, `docs/curriculum-data-pipeline.md`, `docs/generation-contract.md`,
+`docs/error-learning.md`, `docs/brainstorming.md` and `docs/experiments.md`.
 
 ## Planned / Not Implemented
 

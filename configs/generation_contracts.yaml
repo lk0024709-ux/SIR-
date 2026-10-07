@@ -1,0 +1,294 @@
+# SIR generation contracts — what each developmental generation must be and must prove.
+#
+# A generation label (SIR-Nano → SIR-Expert) is a *developmental stage*, not a parameter count and
+# not a marketing tier. Nothing here is an achievement claim: `training_status` and
+# `verification_status` say what is actually true today, and `development/generations.py` refuses
+# configurations whose status vocabulary would let a reader believe otherwise.
+#
+# Honesty rules enforced by code (see development/generations.py):
+#   * a status that claims training requires evidence paths;
+#   * TRAINED_VERIFIED requires verification_status: VERIFIED;
+#   * PLANNED / ARCHITECTURE_ONLY must state known limitations;
+#   * generation ids and names must match configs/sir_human_development.yaml exactly (stable labels).
+
+schema_version: 1
+namespace: sir
+
+# Evaluation axes used by promotion gates (evaluation/suite.py produces results per axis).
+evaluation_axes:
+  knowledge: "factual and curriculum QA, including multilingual items"
+  mathematics: "arithmetic, algebra, geometry, probability, calculus"
+  science: "physics, chemistry, biology fundamentals"
+  language: "Hindi, English, Hinglish, other Indian languages — comprehension and production"
+  reasoning: "logical, mathematical, causal, abstract, planning"
+  coding: "program understanding, debugging, algorithmic reasoning"
+  application: "real-world multi-step problems"
+  transfer: "same concept in an unseen context (the anti-memorisation axis)"
+  verification: "detecting wrong answers, hallucination traps, checking claims"
+  brainstorming: "diverse, feasible, verified idea generation and synthesis"
+  reliability: "uncertainty handling, contradiction handling, refusal to fabricate"
+
+generations:
+  - generation_id: nano
+    name: SIR-Nano
+    training_stage: foundation
+    model_config_ref: configs/sir_nano_v0_1.yaml
+    target_params: 25000000
+    curriculum_scope:
+      tracks: [foundation, meta]
+      bands: [primary, middle, secondary, cross_cutting]
+      grades: [1, 10]
+    target_capabilities:
+      - basic language (Hindi, English, Hinglish) comprehension and simple generation
+      - simple arithmetic and word problems
+      - pattern recognition and short structured reasoning
+      - short, concise explanations with a stated answer
+      - honest "I am not sure" behaviour instead of fabricated answers
+    required_evaluations: [knowledge, mathematics, language, reasoning, transfer, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 5
+      min_axis_scores: {knowledge: 0.35, mathematics: 0.35, language: 0.35, reasoning: 0.30, transfer: 0.25, reliability: 0.50}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - 25M parameters cannot hold the full Class 1-10 curriculum; coverage will be partial and must be reported per node
+      - long-form reasoning and multi-step planning will be unreliable at this size
+      - factual breadth will be limited to what the licensed corpus actually contains
+    training_status: UNTRAINED
+    verification_status: UNVERIFIED
+    evidence:
+      - evaluation/results/lm_eval.json
+      - evaluation/results/generation_probes.json
+    evidence_note: >
+      These two files are smoke-run pipeline validation (0.9M parameters, fixture corpus). They prove
+      the machinery runs; they are NOT evidence for the 25M Nano target and must not be cited as
+      capability evidence for any generation.
+
+  - generation_id: lite
+    name: SIR-Lite
+    training_stage: school_mastery
+    model_config_ref: null
+    target_params: null
+    curriculum_scope:
+      tracks: [foundation, bridge]
+      bands: [primary, middle, secondary, higher_secondary]
+      grades: [1, 12]
+    target_capabilities:
+      - broad school mathematics, science and languages with transfer evidence
+      - multi-step word problems with checked arithmetic
+      - cross-domain reasoning between school subjects
+      - structured explanations and error diagnosis
+    required_evaluations: [knowledge, mathematics, science, language, reasoning, application, transfer, verification, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 10
+      min_axis_scores: {knowledge: 0.50, mathematics: 0.50, science: 0.45, language: 0.50, reasoning: 0.45, application: 0.40, transfer: 0.40, verification: 0.45, reliability: 0.60}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - no generation of SIR-Lite exists yet; this contract is a target, not a description
+    training_status: PLANNED
+    verification_status: UNVERIFIED
+    evidence: []
+
+  - generation_id: flash_lite
+    name: SIR-Flash Lite
+    training_stage: higher_education
+    model_config_ref: null
+    target_params: null
+    curriculum_scope:
+      tracks: [bridge, advanced]
+      bands: [higher_secondary, undergraduate]
+      grades: null
+    target_capabilities:
+      - Class 11-12 and undergraduate foundations across mathematics, science and computing
+      - formal reasoning: proofs, limits, structured derivations
+      - programming fundamentals with debugging
+    required_evaluations: [knowledge, mathematics, science, language, reasoning, coding, application, transfer, verification, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 10
+      min_axis_scores: {knowledge: 0.55, mathematics: 0.55, science: 0.50, language: 0.50, reasoning: 0.55, coding: 0.45, application: 0.50, transfer: 0.50, verification: 0.55, reliability: 0.65}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - no generation of SIR-Flash Lite exists yet; this contract is a target, not a description
+    training_status: PLANNED
+    verification_status: UNVERIFIED
+    evidence: []
+
+  - generation_id: flash
+    name: SIR-Flash
+    training_stage: advanced_general
+    model_config_ref: null
+    target_params: null
+    curriculum_scope:
+      tracks: [advanced]
+      bands: [undergraduate, advanced]
+      grades: null
+    target_capabilities:
+      - multidisciplinary reasoning across science, mathematics, computing and research method
+      - structured problem solving with explicit verification steps
+      - research assistance: literature-grounded synthesis with provenance
+      - brainstorming across domains with trade-off comparison
+    required_evaluations: [knowledge, mathematics, science, language, reasoning, coding, application, transfer, verification, brainstorming, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 12
+      min_axis_scores: {knowledge: 0.60, mathematics: 0.60, science: 0.55, language: 0.55, reasoning: 0.60, coding: 0.55, application: 0.55, transfer: 0.55, verification: 0.60, brainstorming: 0.50, reliability: 0.70}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - no generation of SIR-Flash exists yet; this contract is a target, not a description
+    training_status: PLANNED
+    verification_status: UNVERIFIED
+    evidence: []
+
+  - generation_id: pro
+    name: SIR-Pro
+    training_stage: professional
+    model_config_ref: null
+    target_params: null
+    curriculum_scope:
+      tracks: [advanced]
+      bands: [undergraduate, advanced, research]
+      grades: null
+    target_capabilities:
+      - professional workflows: long-form analysis, planning, robust code
+      - tool-appropriate problem framing and constraint handling
+      - reliable verification habits on quantitative work
+    required_evaluations: [knowledge, mathematics, science, language, reasoning, coding, application, transfer, verification, brainstorming, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 15
+      min_axis_scores: {knowledge: 0.68, mathematics: 0.68, science: 0.62, language: 0.62, reasoning: 0.68, coding: 0.65, application: 0.65, transfer: 0.62, verification: 0.68, brainstorming: 0.60, reliability: 0.78}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - no generation of SIR-Pro exists yet; this contract is a target, not a description
+    training_status: PLANNED
+    verification_status: UNVERIFIED
+    evidence: []
+
+  - generation_id: pro_plus
+    name: SIR-Pro+
+    training_stage: advanced_professional
+    model_config_ref: null
+    target_params: null
+    curriculum_scope:
+      tracks: [advanced]
+      bands: [advanced, research]
+      grades: null
+    target_capabilities:
+      - deep multidisciplinary reasoning with explicit assumption challenge
+      - complex project decomposition and technical synthesis
+      - stronger verification: independent re-derivation of results
+    required_evaluations: [knowledge, mathematics, science, language, reasoning, coding, application, transfer, verification, brainstorming, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 15
+      min_axis_scores: {knowledge: 0.74, mathematics: 0.74, science: 0.70, language: 0.68, reasoning: 0.74, coding: 0.72, application: 0.72, transfer: 0.70, verification: 0.75, brainstorming: 0.68, reliability: 0.82}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - no generation of SIR-Pro+ exists yet; this contract is a target, not a description
+    training_status: PLANNED
+    verification_status: UNVERIFIED
+    evidence: []
+
+  - generation_id: pro_max
+    name: SIR-Pro Max
+    training_stage: deep_problem_solving
+    model_config_ref: null
+    target_params: null
+    curriculum_scope:
+      tracks: [advanced]
+      bands: [advanced, research]
+      grades: null
+    target_capabilities:
+      - difficult novel problems under long reasoning workloads
+      - high-quality comparison of competing solutions
+      - explicit uncertainty reporting and escalation
+    required_evaluations: [knowledge, mathematics, science, language, reasoning, coding, application, transfer, verification, brainstorming, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 20
+      min_axis_scores: {knowledge: 0.78, mathematics: 0.80, science: 0.75, language: 0.72, reasoning: 0.80, coding: 0.78, application: 0.78, transfer: 0.76, verification: 0.80, brainstorming: 0.75, reliability: 0.85}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - no generation of SIR-Pro Max exists yet; this contract is a target, not a description
+    training_status: PLANNED
+    verification_status: UNVERIFIED
+    evidence: []
+
+  - generation_id: ultra
+    name: SIR-Ultra
+    training_stage: research_oriented
+    model_config_ref: null
+    target_params: null
+    curriculum_scope:
+      tracks: [advanced]
+      bands: [research]
+      grades: null
+    target_capabilities:
+      - hypothesis generation grounded in literature with citations
+      - experimental design and reproducibility discipline
+      - multi-step research workflows with honest negative results
+    required_evaluations: [knowledge, mathematics, science, language, reasoning, coding, application, transfer, verification, brainstorming, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 20
+      min_axis_scores: {knowledge: 0.82, mathematics: 0.84, science: 0.80, language: 0.76, reasoning: 0.84, coding: 0.82, application: 0.82, transfer: 0.80, verification: 0.85, brainstorming: 0.80, reliability: 0.88}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - no generation of SIR-Ultra exists yet; this contract is a target, not a description
+    training_status: PLANNED
+    verification_status: UNVERIFIED
+    evidence: []
+
+  - generation_id: expert
+    name: SIR-Expert
+    training_stage: specialist_research
+    model_config_ref: null
+    target_params: null
+    curriculum_scope:
+      tracks: [advanced]
+      bands: [research]
+      grades: null
+    target_capabilities:
+      - domain specialisation layered over the general brain
+      - expert-level verification inside the domain, with explicit scope limits
+      - research communication at peer standard
+    required_evaluations: [knowledge, mathematics, science, language, reasoning, coding, application, transfer, verification, brainstorming, reliability]
+    promotion_requirements:
+      min_cases_per_axis: 25
+      min_axis_scores: {knowledge: 0.86, mathematics: 0.88, science: 0.85, language: 0.80, reasoning: 0.88, coding: 0.86, application: 0.86, transfer: 0.85, verification: 0.90, brainstorming: 0.85, reliability: 0.92}
+      require_verified_evidence: true
+      require_no_leakage: true
+      require_reproducibility: true
+      require_no_axis_regression: true
+      regression_tolerance: 0.02
+    known_limitations:
+      - no generation of SIR-Expert exists yet; this contract is a target, not a description
+    training_status: PLANNED
+    verification_status: UNVERIFIED
+    evidence: []

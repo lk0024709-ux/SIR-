@@ -20,6 +20,13 @@ data/**/*.arrow
 # acquisition log and blocked-host records. These are evidence, not corpus text.
 !data/manifests/**
 
+# Curated, self-authored error-learning cases are source material (provenance in data/errors/CARD.md),
+# unlike raw/derived corpus text, so they survive the JSONL exclusion above.
+!data/errors/**
+
+# Generated teacher-pipeline output (records/quarantine/qc reports) is derived, not source.
+data/generated/
+
 # Trained tokenizer artifacts (regenerable via tokenizer.train_tokenizer; may embed corpus text)
 tokenizer/artifacts/
 
