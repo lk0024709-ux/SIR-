@@ -1,260 +1,3034 @@
-# SIR Curriculum Graph — sir_curriculum_v0
-#
-# Authored for this repository (see data/curriculum/CARD.md). NO textbook or syllabus text is
-# reproduced here; this is a dependency structure of learning nodes, not curriculum content.
-#
-# Node status is NOT stored in this file. Whether a node is NOT_STARTED / LEARNING / PRACTICE /
-# ASSESSED / MASTERED / REVIEW_REQUIRED is computed from assessment records by
-# curriculum/coverage.py. A graph file can never claim that SIR learned something.
-#
-# Validation (curriculum/graph.py) enforces: unique ids, existing dependencies, acyclicity,
-# a continuous same-subject grade ladder, no forward cross-subject dependencies inside the
-# foundation track, declared subjects, and the required-topic contract in
-# configs/curriculum_requirements.yaml.
-
 schema_version: 1
 graph_id: sir_curriculum_v0
 card: data/curriculum/CARD.md
-
 subjects:
-  - {id: mathematics, title: Mathematics}
-  - {id: science, title: Science}
-  - {id: social_science, title: Social Science}
-  - {id: hindi, title: Hindi}
-  - {id: english, title: English}
-  - {id: indian_languages, title: Indian Languages (non-Hindi)}
-  - {id: hinglish, title: Hinglish / Code-mixed Indic}
-  - {id: computer_science, title: Computer Science}
-  - {id: reasoning, title: Reasoning}
-  - {id: general_knowledge, title: General Knowledge}
-  - {id: scientific_thinking, title: Scientific Thinking}
-  - {id: indian_knowledge, title: Indian Knowledge}
-  - {id: world_knowledge, title: World Knowledge}
-  - {id: engineering, title: Engineering}
-  - {id: research, title: Research & Methodology}
-  - {id: bridge, title: Educational Bridge (Class 11-12 / Undergraduate)}
-
+- id: mathematics
+  title: Mathematics
+- id: science
+  title: Science
+- id: social_science
+  title: Social Science
+- id: hindi
+  title: Hindi
+- id: english
+  title: English
+- id: indian_languages
+  title: Indian Languages (non-Hindi)
+- id: hinglish
+  title: Hinglish / Code-mixed Indic
+- id: computer_science
+  title: Computer Science
+- id: reasoning
+  title: Reasoning
+- id: general_knowledge
+  title: General Knowledge
+- id: scientific_thinking
+  title: Scientific Thinking
+- id: indian_knowledge
+  title: Indian Knowledge
+- id: world_knowledge
+  title: World Knowledge
+- id: engineering
+  title: Engineering
+- id: research
+  title: Research & Methodology
+- id: bridge
+  title: Educational Bridge (Class 11-12 / Undergraduate)
 nodes:
-  # ------------------------------------------------------------------ mathematics (Class 1-10)
-  - {id: math.g01, title: "Numbers, counting and place value", subject: mathematics, track: foundation, band: primary, grade: 1, depends_on: [], topics: [numbers, counting, place_value], skills: [number_sense], language: multi, provenance: self_authored}
-  - {id: math.g02, title: "Addition, subtraction and word problems", subject: mathematics, track: foundation, band: primary, grade: 2, depends_on: [math.g01], topics: [arithmetic, word_problems], skills: [computation, problem_reading], language: multi, provenance: self_authored}
-  - {id: math.g03, title: "Multiplication, division and simple fractions", subject: mathematics, track: foundation, band: primary, grade: 3, depends_on: [math.g02], topics: [arithmetic, multiplication, division, fractions], skills: [computation], language: multi, provenance: self_authored}
-  - {id: math.g04, title: "Fractions, decimals and measurement", subject: mathematics, track: foundation, band: primary, grade: 4, depends_on: [math.g03], topics: [fractions, decimals, measurement], skills: [computation, unit_handling], language: multi, provenance: self_authored}
-  - {id: math.g05, title: "Percentages, ratio and proportion", subject: mathematics, track: foundation, band: primary, grade: 5, depends_on: [math.g04], topics: [percentages, ratio_proportion, arithmetic], skills: [proportional_reasoning], language: multi, provenance: self_authored}
-  - {id: math.g06, title: "Integers, basic algebra and geometry", subject: mathematics, track: foundation, band: middle, grade: 6, depends_on: [math.g05], topics: [integers, algebra, geometry], skills: [symbolic_reasoning], language: multi, provenance: self_authored}
-  - {id: math.g07, title: "Algebraic expressions, equations and shapes", subject: mathematics, track: foundation, band: middle, grade: 7, depends_on: [math.g06], topics: [algebra, equations, geometry, mensuration], skills: [symbolic_reasoning], language: multi, provenance: self_authored}
-  - {id: math.g08, title: "Linear equations, mensuration and graphs", subject: mathematics, track: foundation, band: middle, grade: 8, depends_on: [math.g07], topics: [equations, mensuration, graphs], skills: [graph_reading, modelling], language: multi, provenance: self_authored}
-  - {id: math.g09, title: "Coordinate geometry, statistics and polynomials", subject: mathematics, track: foundation, band: secondary, grade: 9, depends_on: [math.g08], topics: [coordinate_geometry, statistics, polynomials, mensuration], skills: [data_interpretation, proof_basics], language: multi, provenance: self_authored}
-  - {id: math.g10, title: "Trigonometry, probability and quadratic equations", subject: mathematics, track: foundation, band: secondary, grade: 10, depends_on: [math.g09], topics: [trigonometry, probability, quadratic_equations, mathematical_reasoning], skills: [proof_basics, mathematical_reasoning], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ science (Class 1-10)
-  - {id: science.g01, title: "Observing the living and non-living world", subject: science, track: foundation, band: primary, grade: 1, depends_on: [], topics: [scientific_observation, living_things], skills: [observation], language: multi, provenance: self_authored}
-  - {id: science.g02, title: "Plants, animals and the human body", subject: science, track: foundation, band: primary, grade: 2, depends_on: [science.g01], topics: [biology_fundamentals, scientific_observation], skills: [observation, classification], language: multi, provenance: self_authored}
-  - {id: science.g03, title: "Air, water, weather and materials", subject: science, track: foundation, band: primary, grade: 3, depends_on: [science.g02], topics: [matter_basics, measurement, scientific_observation], skills: [observation, measurement], language: multi, provenance: self_authored}
-  - {id: science.g04, title: "Food, digestion and simple machines", subject: science, track: foundation, band: primary, grade: 4, depends_on: [science.g03], topics: [biology_fundamentals, physics_fundamentals, measurement], skills: [observation], language: multi, provenance: self_authored}
-  - {id: science.g05, title: "States of matter, force and energy", subject: science, track: foundation, band: primary, grade: 5, depends_on: [science.g04], topics: [matter_basics, physics_fundamentals, measurement, experiments], skills: [measurement, experiment_basics], language: multi, provenance: self_authored}
-  - {id: science.g06, title: "Separation of substances, light and electricity", subject: science, track: foundation, band: middle, grade: 6, depends_on: [science.g05], topics: [chemistry_fundamentals, physics_fundamentals, experiments], skills: [experiment_basics], language: multi, provenance: self_authored}
-  - {id: science.g07, title: "Nutrition, heat and chemical changes", subject: science, track: foundation, band: middle, grade: 7, depends_on: [science.g06], topics: [biology_fundamentals, chemistry_fundamentals, physics_fundamentals, experiments], skills: [experiment_basics], language: multi, provenance: self_authored}
-  - {id: science.g08, title: "Cells, microorganisms, sound and electric effects", subject: science, track: foundation, band: middle, grade: 8, depends_on: [science.g07], topics: [biology_fundamentals, chemistry_fundamentals, physics_fundamentals, experiments], skills: [experiment_basics, scientific_reasoning], language: multi, provenance: self_authored}
-  - {id: science.g09, title: "Motion, atoms and molecules, tissues", subject: science, track: foundation, band: secondary, grade: 9, depends_on: [science.g08], topics: [physics_fundamentals, chemistry_fundamentals, biology_fundamentals, scientific_reasoning], skills: [scientific_reasoning], language: multi, provenance: self_authored}
-  - {id: science.g10, title: "Life processes, chemical reactions, light and electricity", subject: science, track: foundation, band: secondary, grade: 10, depends_on: [science.g09], topics: [biology_fundamentals, chemistry_fundamentals, physics_fundamentals, experiments, scientific_reasoning], skills: [scientific_reasoning, experiment_design_basics], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ social science (Class 1-10)
-  - {id: ss.g01, title: "Family, neighbourhood and community", subject: social_science, track: foundation, band: primary, grade: 1, depends_on: [], topics: [society_culture], skills: [civic_awareness], language: multi, provenance: self_authored}
-  - {id: ss.g02, title: "Community life and local surroundings", subject: social_science, track: foundation, band: primary, grade: 2, depends_on: [ss.g01], topics: [society_culture, geography], skills: [civic_awareness], language: multi, provenance: self_authored}
-  - {id: ss.g03, title: "Villages, towns and early communities", subject: social_science, track: foundation, band: primary, grade: 3, depends_on: [ss.g02], topics: [society_culture, history, geography], skills: [civic_awareness], language: multi, provenance: self_authored}
-  - {id: ss.g04, title: "India: rivers, states and ancient civilisations", subject: social_science, track: foundation, band: primary, grade: 4, depends_on: [ss.g03], topics: [geography, history], skills: [map_reading], language: multi, provenance: self_authored}
-  - {id: ss.g05, title: "Maps, climate and early kingdoms", subject: social_science, track: foundation, band: primary, grade: 5, depends_on: [ss.g04], topics: [geography, history, civics], skills: [map_reading], language: multi, provenance: self_authored}
-  - {id: ss.g06, title: "Government, diversity and trade", subject: social_science, track: foundation, band: middle, grade: 6, depends_on: [ss.g05], topics: [civics, society_culture, economics], skills: [civic_awareness], language: multi, provenance: self_authored}
-  - {id: ss.g07, title: "Medieval India, environment and local government", subject: social_science, track: foundation, band: middle, grade: 7, depends_on: [ss.g06], topics: [history, geography, civics], skills: [civic_awareness], language: multi, provenance: self_authored}
-  - {id: ss.g08, title: "Modern India, resources and the constitution", subject: social_science, track: foundation, band: middle, grade: 8, depends_on: [ss.g07], topics: [history, civics, economics, geography], skills: [source_reading], language: multi, provenance: self_authored}
-  - {id: ss.g09, title: "Democracy, economy and global history", subject: social_science, track: foundation, band: secondary, grade: 9, depends_on: [ss.g08], topics: [civics, political_science, economics, history], skills: [source_reading, argumentation], language: multi, provenance: self_authored}
-  - {id: ss.g10, title: "Nationalism, resources and development", subject: social_science, track: foundation, band: secondary, grade: 10, depends_on: [ss.g09], topics: [history, civics, political_science, economics, geography], skills: [argumentation], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ hindi (Class 1-10)
-  - {id: hindi.g01, title: "वर्णमाला, मात्राएँ और सरल शब्द", subject: hindi, track: foundation, band: primary, grade: 1, depends_on: [], topics: [grammar, vocabulary, reading], skills: [decoding], language: hi, provenance: self_authored}
-  - {id: hindi.g02, title: "वाक्य, संज्ञा और सरल पठन", subject: hindi, track: foundation, band: primary, grade: 2, depends_on: [hindi.g01], topics: [grammar, vocabulary, reading_comprehension], skills: [decoding], language: hi, provenance: self_authored}
-  - {id: hindi.g03, title: "सर्वनाम, विशेषण और अनुच्छेद लेखन", subject: hindi, track: foundation, band: primary, grade: 3, depends_on: [hindi.g02], topics: [grammar, vocabulary, writing], skills: [composition], language: hi, provenance: self_authored}
-  - {id: hindi.g04, title: "क्रिया, काल और अपठित गद्य", subject: hindi, track: foundation, band: primary, grade: 4, depends_on: [hindi.g03], topics: [grammar, reading_comprehension, writing], skills: [composition], language: hi, provenance: self_authored}
-  - {id: hindi.g05, title: "लिंग, वचन, संधि और पत्र लेखन", subject: hindi, track: foundation, band: primary, grade: 5, depends_on: [hindi.g04], topics: [grammar, writing, vocabulary], skills: [composition], language: hi, provenance: self_authored}
-  - {id: hindi.g06, title: "समास, उपसर्ग-प्रत्यय और निबंध", subject: hindi, track: foundation, band: middle, grade: 6, depends_on: [hindi.g05], topics: [grammar, writing, vocabulary], skills: [composition, semantic_understanding], language: hi, provenance: self_authored}
-  - {id: hindi.g07, title: "मुहावरे, काव्य और व्याकरण", subject: hindi, track: foundation, band: middle, grade: 7, depends_on: [hindi.g06], topics: [grammar, vocabulary, literature], skills: [literary_reading], language: hi, provenance: self_authored}
-  - {id: hindi.g08, title: "रचना, अनुवाद और बोध", subject: hindi, track: foundation, band: middle, grade: 8, depends_on: [hindi.g07], topics: [writing, translation, reading_comprehension], skills: [translation, composition], language: hi, provenance: self_authored}
-  - {id: hindi.g09, title: "साहित्य, अलंकार और निबंध लेखन", subject: hindi, track: foundation, band: secondary, grade: 9, depends_on: [hindi.g08], topics: [literature, grammar, writing], skills: [literary_reading, argumentation], language: hi, provenance: self_authored}
-  - {id: hindi.g10, title: "गद्य-पद्य विश्लेषण, अनुवाद और अर्थ", subject: hindi, track: foundation, band: secondary, grade: 10, depends_on: [hindi.g09], topics: [literature, translation, semantic_understanding, writing], skills: [semantic_understanding, translation], language: hi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ english (Class 1-10)
-  - {id: english.g01, title: "Letters, sounds and simple words", subject: english, track: foundation, band: primary, grade: 1, depends_on: [], topics: [grammar, vocabulary, reading], skills: [decoding], language: en, provenance: self_authored}
-  - {id: english.g02, title: "Sentences, nouns and reading aloud", subject: english, track: foundation, band: primary, grade: 2, depends_on: [english.g01], topics: [grammar, vocabulary, reading_comprehension], skills: [decoding], language: en, provenance: self_authored}
-  - {id: english.g03, title: "Verbs, tenses and short paragraphs", subject: english, track: foundation, band: primary, grade: 3, depends_on: [english.g02], topics: [grammar, writing, vocabulary], skills: [composition], language: en, provenance: self_authored}
-  - {id: english.g04, title: "Adjectives, adverbs and comprehension", subject: english, track: foundation, band: primary, grade: 4, depends_on: [english.g03], topics: [grammar, reading_comprehension, writing], skills: [composition], language: en, provenance: self_authored}
-  - {id: english.g05, title: "Tenses, punctuation and letter writing", subject: english, track: foundation, band: primary, grade: 5, depends_on: [english.g04], topics: [grammar, writing], skills: [composition], language: en, provenance: self_authored}
-  - {id: english.g06, title: "Clauses, word formation and essay writing", subject: english, track: foundation, band: middle, grade: 6, depends_on: [english.g05], topics: [grammar, writing, vocabulary], skills: [composition, semantic_understanding], language: en, provenance: self_authored}
-  - {id: english.g07, title: "Idioms, poetry and grammar revision", subject: english, track: foundation, band: middle, grade: 7, depends_on: [english.g06], topics: [grammar, vocabulary, literature], skills: [literary_reading], language: en, provenance: self_authored}
-  - {id: english.g08, title: "Composition, translation and comprehension", subject: english, track: foundation, band: middle, grade: 8, depends_on: [english.g07], topics: [writing, translation, reading_comprehension], skills: [translation, composition], language: en, provenance: self_authored}
-  - {id: english.g09, title: "Literature, figures of speech and essays", subject: english, track: foundation, band: secondary, grade: 9, depends_on: [english.g08], topics: [literature, grammar, writing], skills: [literary_reading, argumentation], language: en, provenance: self_authored}
-  - {id: english.g10, title: "Prose and poetry analysis, translation and meaning", subject: english, track: foundation, band: secondary, grade: 10, depends_on: [english.g09], topics: [literature, translation, semantic_understanding, writing], skills: [semantic_understanding, translation], language: en, provenance: self_authored}
-
-  # ------------------------------------------------------------------ other Indian languages (Class 1-10)
-  - {id: il.g01, title: "Regional language: script and sounds", subject: indian_languages, track: foundation, band: primary, grade: 1, depends_on: [], topics: [grammar, vocabulary, reading], skills: [decoding], language: multi, provenance: self_authored}
-  - {id: il.g02, title: "Regional language: words and simple sentences", subject: indian_languages, track: foundation, band: primary, grade: 2, depends_on: [il.g01], topics: [grammar, vocabulary, reading_comprehension], skills: [decoding], language: multi, provenance: self_authored}
-  - {id: il.g03, title: "Regional language: reading and short writing", subject: indian_languages, track: foundation, band: primary, grade: 3, depends_on: [il.g02], topics: [grammar, vocabulary, writing], skills: [composition], language: multi, provenance: self_authored}
-  - {id: il.g04, title: "Regional language: grammar basics and comprehension", subject: indian_languages, track: foundation, band: primary, grade: 4, depends_on: [il.g03], topics: [grammar, reading_comprehension, writing], skills: [composition], language: multi, provenance: self_authored}
-  - {id: il.g05, title: "Regional language: composition and vocabulary", subject: indian_languages, track: foundation, band: primary, grade: 5, depends_on: [il.g04], topics: [grammar, vocabulary, writing], skills: [composition], language: multi, provenance: self_authored}
-  - {id: il.g06, title: "Regional language: advanced grammar and essays", subject: indian_languages, track: foundation, band: middle, grade: 6, depends_on: [il.g05], topics: [grammar, writing, vocabulary], skills: [composition], language: multi, provenance: self_authored}
-  - {id: il.g07, title: "Regional language: literature and idioms", subject: indian_languages, track: foundation, band: middle, grade: 7, depends_on: [il.g06], topics: [literature, grammar, vocabulary], skills: [literary_reading], language: multi, provenance: self_authored}
-  - {id: il.g08, title: "Regional language: translation and comprehension", subject: indian_languages, track: foundation, band: middle, grade: 8, depends_on: [il.g07], topics: [translation, reading_comprehension, writing], skills: [translation], language: multi, provenance: self_authored}
-  - {id: il.g09, title: "Regional language: literary analysis", subject: indian_languages, track: foundation, band: secondary, grade: 9, depends_on: [il.g08], topics: [literature, grammar, writing], skills: [literary_reading], language: multi, provenance: self_authored}
-  - {id: il.g10, title: "Regional language: semantics and cross-lingual transfer", subject: indian_languages, track: foundation, band: secondary, grade: 10, depends_on: [il.g09], topics: [semantic_understanding, translation, literature], skills: [semantic_understanding, cross_lingual_transfer], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ hinglish (Class 6-10, code-mixed)
-  - {id: hinglish.g06, title: "Hinglish: roman script and everyday sentences", subject: hinglish, track: foundation, band: middle, grade: 6, depends_on: [hindi.g06, english.g06], topics: [code_mixing, vocabulary, reading], skills: [code_switching], language: hinc-latn, provenance: self_authored}
-  - {id: hinglish.g07, title: "Hinglish: conversation and informal writing", subject: hinglish, track: foundation, band: middle, grade: 7, depends_on: [hinglish.g06], topics: [code_mixing, writing, vocabulary], skills: [code_switching, composition], language: hinc-latn, provenance: self_authored}
-  - {id: hinglish.g08, title: "Hinglish: comprehension and translation", subject: hinglish, track: foundation, band: middle, grade: 8, depends_on: [hinglish.g07], topics: [code_mixing, reading_comprehension, translation], skills: [code_switching, translation], language: hinc-latn, provenance: self_authored}
-  - {id: hinglish.g09, title: "Hinglish: formal contexts and transliteration", subject: hinglish, track: foundation, band: secondary, grade: 9, depends_on: [hinglish.g08], topics: [code_mixing, translation, writing], skills: [transliteration], language: hinc-latn, provenance: self_authored}
-  - {id: hinglish.g10, title: "Hinglish: semantics and code-switch understanding", subject: hinglish, track: foundation, band: secondary, grade: 10, depends_on: [hinglish.g09], topics: [code_mixing, semantic_understanding, translation], skills: [semantic_understanding, code_switching], language: hinc-latn, provenance: self_authored}
-
-  # ------------------------------------------------------------------ computer science (Class 1-10)
-  - {id: cs.g01, title: "Computational thinking with patterns and sequences", subject: computer_science, track: foundation, band: primary, grade: 1, depends_on: [], topics: [computational_thinking], skills: [sequencing], language: multi, provenance: self_authored}
-  - {id: cs.g02, title: "Stepwise instructions and simple algorithms", subject: computer_science, track: foundation, band: primary, grade: 2, depends_on: [cs.g01], topics: [computational_thinking, algorithms], skills: [sequencing, decomposition], language: multi, provenance: self_authored}
-  - {id: cs.g03, title: "Block-based programming ideas", subject: computer_science, track: foundation, band: primary, grade: 3, depends_on: [cs.g02], topics: [programming, computational_thinking], skills: [sequencing], language: multi, provenance: self_authored}
-  - {id: cs.g04, title: "Input, output and variables", subject: computer_science, track: foundation, band: primary, grade: 4, depends_on: [cs.g03], topics: [programming, computer_fundamentals], skills: [debugging], language: multi, provenance: self_authored}
-  - {id: cs.g05, title: "Conditionals, loops and debugging", subject: computer_science, track: foundation, band: primary, grade: 5, depends_on: [cs.g04], topics: [programming, algorithms], skills: [debugging], language: multi, provenance: self_authored}
-  - {id: cs.g06, title: "Computer fundamentals and file systems", subject: computer_science, track: foundation, band: middle, grade: 6, depends_on: [cs.g05], topics: [computer_fundamentals, programming], skills: [systems_literacy], language: multi, provenance: self_authored}
-  - {id: cs.g07, title: "Algorithms, flowcharts and decomposition", subject: computer_science, track: foundation, band: middle, grade: 7, depends_on: [cs.g06, reasoning.g07], topics: [algorithms, programming, decomposition], skills: [decomposition, algorithmic_thinking], language: multi, provenance: self_authored}
-  - {id: cs.g08, title: "Introduction to Python programming", subject: computer_science, track: foundation, band: middle, grade: 8, depends_on: [cs.g07], topics: [programming, data_structures], skills: [coding, debugging], language: multi, provenance: self_authored}
-  - {id: cs.g09, title: "Data structures and databases basics", subject: computer_science, track: foundation, band: secondary, grade: 9, depends_on: [cs.g08], topics: [data_structures, databases, programming], skills: [coding, data_modelling], language: multi, provenance: self_authored}
-  - {id: cs.g10, title: "Networks, internet basics and software engineering", subject: computer_science, track: foundation, band: secondary, grade: 10, depends_on: [cs.g09], topics: [networking, internet_basics, software_engineering, security_basics], skills: [systems_literacy, engineering_practice], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ reasoning (Class 1-10)
-  - {id: reasoning.g01, title: "Picture patterns and sequences", subject: reasoning, track: foundation, band: primary, grade: 1, depends_on: [], topics: [pattern_recognition, abstract_reasoning], skills: [pattern_recognition], language: multi, provenance: self_authored}
-  - {id: reasoning.g02, title: "Odd-one-out and simple analogies", subject: reasoning, track: foundation, band: primary, grade: 2, depends_on: [reasoning.g01], topics: [pattern_recognition, analogy, abstract_reasoning], skills: [classification], language: multi, provenance: self_authored}
-  - {id: reasoning.g03, title: "Classification, ordering and comparison", subject: reasoning, track: foundation, band: primary, grade: 3, depends_on: [reasoning.g02], topics: [abstract_reasoning, pattern_recognition], skills: [classification], language: multi, provenance: self_authored}
-  - {id: reasoning.g04, title: "Verbal analogies and simple logic", subject: reasoning, track: foundation, band: primary, grade: 4, depends_on: [reasoning.g03], topics: [verbal_reasoning, logical_reasoning, analogy], skills: [verbal_reasoning], language: multi, provenance: self_authored}
-  - {id: reasoning.g05, title: "Direction, ranking and coding-decoding", subject: reasoning, track: foundation, band: primary, grade: 5, depends_on: [reasoning.g04], topics: [logical_reasoning, verbal_reasoning], skills: [spatial_reasoning], language: multi, provenance: self_authored}
-  - {id: reasoning.g06, title: "Series, relations and syllogisms", subject: reasoning, track: foundation, band: middle, grade: 6, depends_on: [reasoning.g05], topics: [logical_reasoning, pattern_recognition, analogy], skills: [deduction], language: multi, provenance: self_authored}
-  - {id: reasoning.g07, title: "Syllogisms, puzzles and planning", subject: reasoning, track: foundation, band: middle, grade: 7, depends_on: [reasoning.g06], topics: [logical_reasoning, planning], skills: [deduction, planning], language: multi, provenance: self_authored}
-  - {id: reasoning.g08, title: "Mathematical reasoning and data interpretation", subject: reasoning, track: foundation, band: middle, grade: 8, depends_on: [reasoning.g07, math.g08], topics: [mathematical_reasoning, data_interpretation], skills: [mathematical_reasoning, data_interpretation], language: multi, provenance: self_authored}
-  - {id: reasoning.g09, title: "Causal reasoning and counterexamples", subject: reasoning, track: foundation, band: secondary, grade: 9, depends_on: [reasoning.g08], topics: [causal_reasoning, logical_reasoning], skills: [causal_reasoning, falsification], language: multi, provenance: self_authored}
-  - {id: reasoning.g10, title: "Multi-step planning and problem decomposition", subject: reasoning, track: foundation, band: secondary, grade: 10, depends_on: [reasoning.g09], topics: [planning, problem_decomposition, logical_reasoning], skills: [planning, decomposition], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ general knowledge (Class 1-10)
-  - {id: gk.g01, title: "Surroundings, family and festivals", subject: general_knowledge, track: foundation, band: primary, grade: 1, depends_on: [], topics: [india, culture], skills: [recall], language: multi, provenance: self_authored}
-  - {id: gk.g02, title: "Plants, animals and our country", subject: general_knowledge, track: foundation, band: primary, grade: 2, depends_on: [gk.g01], topics: [india, geography, science], skills: [recall], language: multi, provenance: self_authored}
-  - {id: gk.g03, title: "States, capitals and monuments", subject: general_knowledge, track: foundation, band: primary, grade: 3, depends_on: [gk.g02], topics: [india, geography, culture], skills: [recall], language: multi, provenance: self_authored}
-  - {id: gk.g04, title: "India's rivers, mountains and states", subject: general_knowledge, track: foundation, band: primary, grade: 4, depends_on: [gk.g03], topics: [india, geography], skills: [recall, map_reading], language: multi, provenance: self_authored}
-  - {id: gk.g05, title: "World continents, oceans and countries", subject: general_knowledge, track: foundation, band: primary, grade: 5, depends_on: [gk.g04, ss.g05], topics: [world, geography], skills: [map_reading], language: multi, provenance: self_authored}
-  - {id: gk.g06, title: "Science and technology around us", subject: general_knowledge, track: foundation, band: middle, grade: 6, depends_on: [gk.g05], topics: [science, technology, world], skills: [recall], language: multi, provenance: self_authored}
-  - {id: gk.g07, title: "Institutions, sports and culture", subject: general_knowledge, track: foundation, band: middle, grade: 7, depends_on: [gk.g06], topics: [institutions, culture, india], skills: [recall], language: multi, provenance: self_authored}
-  - {id: gk.g08, title: "Indian polity, economy and science", subject: general_knowledge, track: foundation, band: middle, grade: 8, depends_on: [gk.g07], topics: [india, institutions, science, technology], skills: [recall], language: multi, provenance: self_authored}
-  - {id: gk.g09, title: "World history, organisations and technology", subject: general_knowledge, track: foundation, band: secondary, grade: 9, depends_on: [gk.g08], topics: [world, history, institutions, technology], skills: [recall], language: multi, provenance: self_authored}
-  - {id: gk.g10, title: "Current concepts, institutions and global affairs", subject: general_knowledge, track: foundation, band: secondary, grade: 10, depends_on: [gk.g09], topics: [world, india, institutions, important_concepts, science], skills: [recall, synthesis], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ scientific thinking (Class 4-10)
-  - {id: st.g04, title: "Observation and questioning", subject: scientific_thinking, track: foundation, band: primary, grade: 4, depends_on: [science.g04], topics: [observation, questioning], skills: [observation, questioning], language: multi, provenance: self_authored}
-  - {id: st.g05, title: "Hypothesis and prediction", subject: scientific_thinking, track: foundation, band: primary, grade: 5, depends_on: [st.g04], topics: [hypothesis, prediction], skills: [hypothesis_generation], language: multi, provenance: self_authored}
-  - {id: st.g06, title: "Experiments and controls", subject: scientific_thinking, track: foundation, band: middle, grade: 6, depends_on: [st.g05], topics: [experiment, controls], skills: [experiment_design_basics], language: multi, provenance: self_authored}
-  - {id: st.g07, title: "Evidence and measurement", subject: scientific_thinking, track: foundation, band: middle, grade: 7, depends_on: [st.g06], topics: [evidence, measurement], skills: [measurement, evidence_evaluation], language: multi, provenance: self_authored}
-  - {id: st.g08, title: "Analysis and error", subject: scientific_thinking, track: foundation, band: middle, grade: 8, depends_on: [st.g07], topics: [analysis, error_analysis], skills: [error_analysis], language: multi, provenance: self_authored}
-  - {id: st.g09, title: "Conclusion and reporting", subject: scientific_thinking, track: foundation, band: secondary, grade: 9, depends_on: [st.g08], topics: [conclusion, reporting], skills: [scientific_writing], language: multi, provenance: self_authored}
-  - {id: st.g10, title: "Scientific reasoning in new contexts", subject: scientific_thinking, track: foundation, band: secondary, grade: 10, depends_on: [st.g09], topics: [scientific_reasoning, transfer], skills: [transfer, scientific_reasoning], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ Indian knowledge (Class 5-10)
-  - {id: ik.g05, title: "India's states, languages and diversity", subject: indian_knowledge, track: foundation, band: primary, grade: 5, depends_on: [ss.g05], topics: [indian_history, indian_geography, indian_languages], skills: [recall], language: multi, provenance: self_authored, epistemic_note: "Descriptive facts (state names, language families, geography) vs. community claims are labelled separately; no tradition is presented as verified history."}
-  - {id: ik.g06, title: "Ancient Indian science and mathematics", subject: indian_knowledge, track: foundation, band: middle, grade: 6, depends_on: [ik.g05, science.g06], topics: [indian_science_mathematics, indian_history], skills: [recall, source_reading], language: multi, provenance: self_authored, epistemic_note: "Datable contributions (e.g. decimal place-value notation, early trigonometry) are separated from later attributions; dates carry sources and uncertainty."}
-  - {id: ik.g07, title: "Indian philosophy and literature", subject: indian_knowledge, track: foundation, band: middle, grade: 7, depends_on: [ik.g06], topics: [indian_philosophy, literature, indian_history], skills: [source_reading], language: multi, provenance: self_authored, epistemic_note: "Philosophical schools are presented as reasoned positions with named proponents, not as settled scientific findings."}
-  - {id: ik.g08, title: "Indian arts, culture and architecture", subject: indian_knowledge, track: foundation, band: middle, grade: 8, depends_on: [ik.g07], topics: [indian_arts, indian_culture], skills: [recall], language: multi, provenance: self_authored, epistemic_note: "Living traditions are described as practice and belief; architectural dating rests on evidence and is marked when uncertain."}
-  - {id: ik.g09, title: "Constitutional knowledge and institutions", subject: indian_knowledge, track: foundation, band: secondary, grade: 9, depends_on: [ik.g08, ss.g09], topics: [constitutional_knowledge, institutions], skills: [civic_awareness, source_reading], language: multi, provenance: self_authored, epistemic_note: "Constitutional text and legal provisions are cited by article; interpretation is labelled as interpretation."}
-  - {id: ik.g10, title: "Indian knowledge systems: synthesis and sources", subject: indian_knowledge, track: foundation, band: secondary, grade: 10, depends_on: [ik.g09], topics: [indian_knowledge_systems, provenance, indian_history], skills: [source_evaluation, provenance_tracking], language: multi, provenance: self_authored, epistemic_note: "Mythological narrative is never presented as historical fact; every claim is tagged as record, tradition, or interpretation, with its source."}
-
-  # ------------------------------------------------------------------ world knowledge (Class 5-10)
-  - {id: wk.g05, title: "World geography: continents and climate", subject: world_knowledge, track: foundation, band: primary, grade: 5, depends_on: [gk.g05], topics: [world_geography, climate], skills: [map_reading], language: multi, provenance: self_authored}
-  - {id: wk.g06, title: "World history: ancient civilisations", subject: world_knowledge, track: foundation, band: middle, grade: 6, depends_on: [wk.g05], topics: [world_history], skills: [source_reading], language: multi, provenance: self_authored}
-  - {id: wk.g07, title: "World history: medieval to modern", subject: world_knowledge, track: foundation, band: middle, grade: 7, depends_on: [wk.g06], topics: [world_history], skills: [source_reading], language: multi, provenance: self_authored}
-  - {id: wk.g08, title: "World institutions and economies", subject: world_knowledge, track: foundation, band: middle, grade: 8, depends_on: [wk.g07], topics: [institutions, economics, world_affairs], skills: [recall], language: multi, provenance: self_authored}
-  - {id: wk.g09, title: "Science, technology and global change", subject: world_knowledge, track: foundation, band: secondary, grade: 9, depends_on: [wk.g08], topics: [science, technology, global_change], skills: [synthesis], language: multi, provenance: self_authored}
-  - {id: wk.g10, title: "Global affairs and comparative knowledge", subject: world_knowledge, track: foundation, band: secondary, grade: 10, depends_on: [wk.g09], topics: [world_affairs, comparative_knowledge, institutions], skills: [synthesis, argumentation], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ bridge: Class 11-12 and undergraduate
-  - {id: bridge.c11_12, title: "Class 11-12 foundation", subject: bridge, track: bridge, band: higher_secondary, grade: null, depends_on: [math.g10, science.g10, ss.g10, hindi.g10, english.g10, cs.g10, reasoning.g10, gk.g10], topics: [senior_secondary_foundation], skills: [abstract_reasoning], language: multi, provenance: self_authored}
-  - {id: bridge.undergraduate, title: "Undergraduate foundation", subject: bridge, track: bridge, band: undergraduate, grade: null, depends_on: [bridge.c11_12], topics: [undergraduate_foundation], skills: [formal_reasoning], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ advanced mathematics
-  - {id: adv.math.calculus, title: "Calculus: limits, derivatives, integrals, multivariable", subject: mathematics, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, math.g10], topics: [calculus, limits, derivatives, integrals], skills: [formal_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.math.linear_algebra, title: "Linear algebra: vector spaces, matrices, eigenstructure", subject: mathematics, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, math.g10], topics: [linear_algebra, matrices, eigenvalues], skills: [formal_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.math.probability, title: "Probability theory", subject: mathematics, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, math.g10], topics: [probability, random_variables], skills: [probabilistic_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.math.statistics, title: "Mathematical statistics and inference", subject: mathematics, track: advanced, band: undergraduate, grade: null, depends_on: [adv.math.probability], topics: [statistics, estimation, hypothesis_testing], skills: [statistical_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.math.discrete, title: "Discrete mathematics and combinatorics", subject: mathematics, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, math.g10], topics: [discrete_mathematics, combinatorics, graph_theory, proofs], skills: [proof_writing, formal_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.math.optimization, title: "Optimization: convexity, gradients, constrained problems", subject: mathematics, track: advanced, band: advanced, grade: null, depends_on: [adv.math.calculus, adv.math.linear_algebra], topics: [optimization, convexity, gradients], skills: [modelling], language: multi, provenance: self_authored}
-  - {id: adv.math.numerical_methods, title: "Numerical methods and error analysis", subject: mathematics, track: advanced, band: advanced, grade: null, depends_on: [adv.math.calculus, adv.math.linear_algebra], topics: [numerical_methods, numerical_error, stability], skills: [numerical_reasoning], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ advanced physics
-  - {id: adv.phy.mechanics, title: "Classical mechanics", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, adv.math.calculus], topics: [mechanics, dynamics, energy], skills: [modelling], language: multi, provenance: self_authored}
-  - {id: adv.phy.electromagnetism, title: "Electromagnetism", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.phy.mechanics, adv.math.calculus], topics: [electromagnetism, maxwell_equations], skills: [modelling], language: multi, provenance: self_authored}
-  - {id: adv.phy.thermodynamics, title: "Thermodynamics", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.phy.mechanics], topics: [thermodynamics, entropy, heat], skills: [modelling], language: multi, provenance: self_authored}
-  - {id: adv.phy.statistical_mechanics, title: "Statistical mechanics", subject: science, track: advanced, band: advanced, grade: null, depends_on: [adv.phy.thermodynamics, adv.math.probability], topics: [statistical_mechanics, ensembles], skills: [statistical_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.phy.optics, title: "Optics: waves, interference, diffraction", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.phy.electromagnetism], topics: [optics, waves, interference], skills: [modelling], language: multi, provenance: self_authored}
-  - {id: adv.phy.quantum, title: "Quantum mechanics", subject: science, track: advanced, band: advanced, grade: null, depends_on: [adv.phy.electromagnetism, adv.math.linear_algebra], topics: [quantum_mechanics, wavefunctions, operators], skills: [formal_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.phy.relativity, title: "Special and general relativity", subject: science, track: advanced, band: advanced, grade: null, depends_on: [adv.phy.mechanics, adv.phy.electromagnetism], topics: [relativity, spacetime], skills: [formal_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.phy.modern_physics, title: "Modern physics: particles, condensed matter, cosmology", subject: science, track: advanced, band: research, grade: null, depends_on: [adv.phy.quantum, adv.phy.relativity], topics: [modern_physics, particle_physics, condensed_matter], skills: [synthesis], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ advanced chemistry
-  - {id: adv.chem.inorganic, title: "Inorganic chemistry", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12], topics: [inorganic_chemistry, periodic_trends, coordination], skills: [modelling], language: multi, provenance: self_authored}
-  - {id: adv.chem.physical, title: "Physical chemistry", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, adv.phy.thermodynamics], topics: [physical_chemistry, kinetics, equilibria], skills: [modelling], language: multi, provenance: self_authored}
-  - {id: adv.chem.organic, title: "Organic chemistry", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.chem.inorganic], topics: [organic_chemistry, reaction_mechanisms], skills: [mechanistic_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.chem.analytical, title: "Analytical chemistry", subject: science, track: advanced, band: advanced, grade: null, depends_on: [adv.chem.physical, adv.chem.organic], topics: [analytical_chemistry, spectroscopy, measurement_error], skills: [measurement, error_analysis], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ advanced biology
-  - {id: adv.bio.molecular_biology, title: "Molecular biology", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12], topics: [molecular_biology, dna, gene_expression], skills: [mechanistic_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.bio.genetics, title: "Genetics and heredity", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.bio.molecular_biology], topics: [genetics, inheritance, variation], skills: [probabilistic_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.bio.microbiology, title: "Microbiology", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.bio.molecular_biology], topics: [microbiology, microbes, culture], skills: [experiment_design_basics], language: multi, provenance: self_authored}
-  - {id: adv.bio.biotechnology, title: "Biotechnology", subject: science, track: advanced, band: advanced, grade: null, depends_on: [adv.bio.genetics, adv.bio.microbiology], topics: [biotechnology, recombinant_dna, bioprocess], skills: [engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.bio.evolution, title: "Evolution and population biology", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.bio.genetics], topics: [evolution, natural_selection, population_genetics], skills: [statistical_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.bio.ecology, title: "Ecology and ecosystems", subject: science, track: advanced, band: advanced, grade: null, depends_on: [adv.bio.evolution], topics: [ecology, ecosystems, biodiversity], skills: [systems_thinking], language: multi, provenance: self_authored}
-  - {id: adv.bio.physiology, title: "Physiology", subject: science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.bio.molecular_biology], topics: [physiology, organ_systems, homeostasis], skills: [systems_thinking], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ advanced computer science
-  - {id: adv.cs.data_structures, title: "Data structures and complexity", subject: computer_science, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, cs.g09], topics: [data_structures, complexity], skills: [coding, algorithmic_thinking], language: multi, provenance: self_authored}
-  - {id: adv.cs.algorithms, title: "Algorithms and algorithm design", subject: computer_science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.cs.data_structures, adv.math.discrete], topics: [algorithms, dynamic_programming, complexity], skills: [algorithmic_thinking, proof_writing], language: multi, provenance: self_authored}
-  - {id: adv.cs.operating_systems, title: "Operating systems", subject: computer_science, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, cs.g06], topics: [operating_systems, processes, memory], skills: [systems_thinking], language: multi, provenance: self_authored}
-  - {id: adv.cs.networking, title: "Computer networks", subject: computer_science, track: advanced, band: undergraduate, grade: null, depends_on: [bridge.c11_12, cs.g10], topics: [networking, protocols, tcp_ip], skills: [systems_thinking], language: multi, provenance: self_authored}
-  - {id: adv.cs.databases, title: "Database systems", subject: computer_science, track: advanced, band: undergraduate, grade: null, depends_on: [cs.g09, adv.cs.data_structures], topics: [databases, sql, transactions], skills: [data_modelling], language: multi, provenance: self_authored}
-  - {id: adv.cs.distributed_systems, title: "Distributed systems", subject: computer_science, track: advanced, band: advanced, grade: null, depends_on: [adv.cs.networking, adv.cs.operating_systems], topics: [distributed_systems, consistency, fault_tolerance], skills: [systems_thinking], language: multi, provenance: self_authored}
-  - {id: adv.cs.compilers, title: "Compilers and language implementation", subject: computer_science, track: advanced, band: advanced, grade: null, depends_on: [adv.cs.algorithms, adv.cs.data_structures], topics: [compilers, parsing, code_generation], skills: [formal_reasoning, engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.cs.software_engineering, title: "Software engineering practice", subject: computer_science, track: advanced, band: advanced, grade: null, depends_on: [cs.g10, adv.cs.algorithms], topics: [software_engineering, testing, version_control], skills: [engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.cs.security_fundamentals, title: "Security fundamentals", subject: computer_science, track: advanced, band: advanced, grade: null, depends_on: [adv.cs.networking, adv.cs.operating_systems], topics: [security, cryptography_basics, threat_models], skills: [adversarial_thinking], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ AI / machine learning
-  - {id: adv.ai.machine_learning, title: "Machine learning foundations", subject: computer_science, track: advanced, band: undergraduate, grade: null, depends_on: [adv.math.linear_algebra, adv.math.probability, adv.math.optimization], topics: [machine_learning, supervised_learning, evaluation], skills: [modelling, statistical_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.ai.deep_learning, title: "Deep learning", subject: computer_science, track: advanced, band: advanced, grade: null, depends_on: [adv.ai.machine_learning, adv.math.numerical_methods], topics: [deep_learning, neural_networks, training_dynamics], skills: [engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.ai.nlp, title: "Natural language processing", subject: computer_science, track: advanced, band: advanced, grade: null, depends_on: [adv.ai.deep_learning, hindi.g10, english.g10], topics: [nlp, tokenization, sequence_models], skills: [linguistic_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.ai.computer_vision, title: "Computer vision", subject: computer_science, track: advanced, band: advanced, grade: null, depends_on: [adv.ai.deep_learning], topics: [computer_vision, convolutional_models], skills: [engineering_practice], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ engineering fundamentals
-  - {id: adv.eng.electrical, title: "Electrical engineering fundamentals", subject: engineering, track: advanced, band: undergraduate, grade: null, depends_on: [adv.phy.electromagnetism], topics: [electrical_engineering, circuits], skills: [engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.eng.electronics, title: "Electronics fundamentals", subject: engineering, track: advanced, band: undergraduate, grade: null, depends_on: [adv.eng.electrical], topics: [electronics, semiconductors, signals], skills: [engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.eng.mechanical, title: "Mechanical engineering fundamentals", subject: engineering, track: advanced, band: undergraduate, grade: null, depends_on: [adv.phy.mechanics, adv.phy.thermodynamics], topics: [mechanical_engineering, materials, machines], skills: [engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.eng.civil, title: "Civil engineering fundamentals", subject: engineering, track: advanced, band: undergraduate, grade: null, depends_on: [adv.phy.mechanics, bridge.c11_12], topics: [civil_engineering, structures, materials], skills: [engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.eng.computer_engineering, title: "Computer engineering fundamentals", subject: engineering, track: advanced, band: advanced, grade: null, depends_on: [adv.cs.operating_systems, adv.eng.electronics], topics: [computer_engineering, architecture, embedded], skills: [engineering_practice], language: multi, provenance: self_authored}
-  - {id: adv.eng.systems_engineering, title: "Systems engineering", subject: engineering, track: advanced, band: advanced, grade: null, depends_on: [adv.eng.mechanical, adv.eng.electrical], topics: [systems_engineering, requirements, reliability], skills: [systems_thinking], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ research
-  - {id: adv.res.scientific_method, title: "Scientific method and evidence standards", subject: research, track: advanced, band: undergraduate, grade: null, depends_on: [st.g10, bridge.c11_12], topics: [scientific_method, evidence], skills: [evidence_evaluation], language: multi, provenance: self_authored}
-  - {id: adv.res.research_methodology, title: "Research methodology", subject: research, track: advanced, band: undergraduate, grade: null, depends_on: [adv.res.scientific_method], topics: [research_methodology, study_design], skills: [methodology_design], language: multi, provenance: self_authored}
-  - {id: adv.res.literature_analysis, title: "Literature analysis and synthesis", subject: research, track: advanced, band: advanced, grade: null, depends_on: [adv.res.research_methodology, english.g10], topics: [literature_analysis, synthesis], skills: [source_evaluation], language: multi, provenance: self_authored}
-  - {id: adv.res.hypothesis_formation, title: "Hypothesis formation and falsifiability", subject: research, track: advanced, band: advanced, grade: null, depends_on: [adv.res.research_methodology], topics: [hypothesis_formation, falsifiability], skills: [hypothesis_generation], language: multi, provenance: self_authored}
-  - {id: adv.res.statistical_reasoning, title: "Statistical reasoning for research", subject: research, track: advanced, band: advanced, grade: null, depends_on: [adv.math.statistics], topics: [statistical_reasoning, uncertainty, significance], skills: [statistical_reasoning], language: multi, provenance: self_authored}
-  - {id: adv.res.experimental_design, title: "Experimental design and controls", subject: research, track: advanced, band: advanced, grade: null, depends_on: [adv.res.hypothesis_formation, adv.math.statistics], topics: [experimental_design, controls, bias], skills: [experiment_design_basics], language: multi, provenance: self_authored}
-  - {id: adv.res.reproducibility, title: "Reproducibility and replication", subject: research, track: advanced, band: research, grade: null, depends_on: [adv.res.experimental_design], topics: [reproducibility, replication, reporting_standards], skills: [reproducibility_practice], language: multi, provenance: self_authored}
-  - {id: adv.res.citation_provenance, title: "Citation, provenance and attribution", subject: research, track: advanced, band: research, grade: null, depends_on: [adv.res.literature_analysis], topics: [citation, provenance, attribution], skills: [provenance_tracking], language: multi, provenance: self_authored}
-  - {id: adv.res.peer_review_reasoning, title: "Peer-review reasoning and critique", subject: research, track: advanced, band: research, grade: null, depends_on: [adv.res.literature_analysis, adv.res.statistical_reasoning], topics: [peer_review, critique, reviewer_standards], skills: [critique], language: multi, provenance: self_authored}
-  - {id: adv.res.research_communication, title: "Research communication", subject: research, track: advanced, band: research, grade: null, depends_on: [adv.res.research_methodology, english.g10], topics: [research_communication, writing, presentation], skills: [scientific_writing], language: multi, provenance: self_authored}
-
-  # ------------------------------------------------------------------ meta / cross-cutting capabilities
-  - {id: meta.brainstorming, title: "Structured brainstorming and idea synthesis", subject: reasoning, track: meta, band: cross_cutting, grade: null, depends_on: [], available_from: nano, topics: [brainstorming, idea_generation, synthesis], skills: [divergent_thinking, synthesis], language: multi, provenance: self_authored}
-  - {id: meta.problem_decomposition, title: "Problem decomposition", subject: reasoning, track: meta, band: cross_cutting, grade: null, depends_on: [reasoning.g10], topics: [problem_decomposition, decomposition], skills: [decomposition], language: multi, provenance: self_authored}
-  - {id: meta.planning, title: "Planning under constraints", subject: reasoning, track: meta, band: cross_cutting, grade: null, depends_on: [reasoning.g10], topics: [planning, constraints], skills: [planning], language: multi, provenance: self_authored}
-  - {id: meta.cross_domain_synthesis, title: "Cross-domain synthesis", subject: reasoning, track: meta, band: cross_cutting, grade: null, depends_on: [meta.brainstorming, meta.problem_decomposition], topics: [cross_domain_connections, synthesis], skills: [synthesis, transfer], language: multi, provenance: self_authored}
-  - {id: meta.verification, title: "Verification of own answers", subject: reasoning, track: meta, band: cross_cutting, grade: null, depends_on: [reasoning.g09, st.g09], topics: [verification, checking, uncertainty], skills: [verification], language: multi, provenance: self_authored}
-  - {id: meta.transfer, title: "Transfer to new contexts", subject: reasoning, track: meta, band: cross_cutting, grade: null, depends_on: [reasoning.g10], topics: [transfer, generalisation], skills: [transfer], language: multi, provenance: self_authored}
-  - {id: meta.error_correction, title: "Error diagnosis and correction", subject: reasoning, track: meta, band: cross_cutting, grade: null, depends_on: [st.g08], topics: [error_analysis, correction], skills: [error_analysis, self_correction], language: multi, provenance: self_authored}
+- id: math.g01
+  title: Numbers, counting and place value
+  subject: mathematics
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - numbers
+  - counting
+  - place_value
+  skills:
+  - number_sense
+  language: multi
+  provenance: self_authored
+- id: math.g02
+  title: Addition, subtraction and word problems
+  subject: mathematics
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - math.g01
+  topics:
+  - arithmetic
+  - word_problems
+  skills:
+  - computation
+  - problem_reading
+  language: multi
+  provenance: self_authored
+- id: math.g03
+  title: Multiplication, division and simple fractions
+  subject: mathematics
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - math.g02
+  topics:
+  - arithmetic
+  - multiplication
+  - division
+  - fractions
+  skills:
+  - computation
+  language: multi
+  provenance: self_authored
+- id: math.g04
+  title: Fractions, decimals and measurement
+  subject: mathematics
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - math.g03
+  topics:
+  - fractions
+  - decimals
+  - measurement
+  skills:
+  - computation
+  - unit_handling
+  language: multi
+  provenance: self_authored
+- id: math.g05
+  title: Percentages, ratio and proportion
+  subject: mathematics
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - math.g04
+  topics:
+  - percentages
+  - ratio_proportion
+  - arithmetic
+  skills:
+  - proportional_reasoning
+  language: multi
+  provenance: self_authored
+- id: math.g06
+  title: Integers, basic algebra and geometry
+  subject: mathematics
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - math.g05
+  topics:
+  - integers
+  - algebra
+  - geometry
+  skills:
+  - symbolic_reasoning
+  language: multi
+  provenance: self_authored
+- id: math.g07
+  title: Algebraic expressions, equations and shapes
+  subject: mathematics
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - math.g06
+  topics:
+  - algebra
+  - equations
+  - geometry
+  - mensuration
+  skills:
+  - symbolic_reasoning
+  language: multi
+  provenance: self_authored
+- id: math.g08
+  title: Linear equations, mensuration and graphs
+  subject: mathematics
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - math.g07
+  topics:
+  - equations
+  - mensuration
+  - graphs
+  skills:
+  - graph_reading
+  - modelling
+  language: multi
+  provenance: self_authored
+- id: math.g09
+  title: Coordinate geometry, statistics and polynomials
+  subject: mathematics
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - math.g08
+  topics:
+  - coordinate_geometry
+  - statistics
+  - polynomials
+  - mensuration
+  skills:
+  - data_interpretation
+  - proof_basics
+  language: multi
+  provenance: self_authored
+- id: math.g10
+  title: Trigonometry, probability and quadratic equations
+  subject: mathematics
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - math.g09
+  topics:
+  - trigonometry
+  - probability
+  - quadratic_equations
+  - mathematical_reasoning
+  skills:
+  - proof_basics
+  - mathematical_reasoning
+  language: multi
+  provenance: self_authored
+- id: science.g01
+  title: Observing the living and non-living world
+  subject: science
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - scientific_observation
+  - living_things
+  skills:
+  - observation
+  language: multi
+  provenance: self_authored
+- id: science.g02
+  title: Plants, animals and the human body
+  subject: science
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - science.g01
+  topics:
+  - biology_fundamentals
+  - scientific_observation
+  skills:
+  - observation
+  - classification
+  language: multi
+  provenance: self_authored
+- id: science.g03
+  title: Air, water, weather and materials
+  subject: science
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - science.g02
+  topics:
+  - matter_basics
+  - measurement
+  - scientific_observation
+  skills:
+  - observation
+  - measurement
+  language: multi
+  provenance: self_authored
+- id: science.g04
+  title: Food, digestion and simple machines
+  subject: science
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - science.g03
+  topics:
+  - biology_fundamentals
+  - physics_fundamentals
+  - measurement
+  skills:
+  - observation
+  language: multi
+  provenance: self_authored
+- id: science.g05
+  title: States of matter, force and energy
+  subject: science
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - science.g04
+  topics:
+  - matter_basics
+  - physics_fundamentals
+  - measurement
+  - experiments
+  skills:
+  - measurement
+  - experiment_basics
+  language: multi
+  provenance: self_authored
+- id: science.g06
+  title: Separation of substances, light and electricity
+  subject: science
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - science.g05
+  topics:
+  - chemistry_fundamentals
+  - physics_fundamentals
+  - experiments
+  skills:
+  - experiment_basics
+  language: multi
+  provenance: self_authored
+- id: science.g07
+  title: Nutrition, heat and chemical changes
+  subject: science
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - science.g06
+  topics:
+  - biology_fundamentals
+  - chemistry_fundamentals
+  - physics_fundamentals
+  - experiments
+  skills:
+  - experiment_basics
+  language: multi
+  provenance: self_authored
+- id: science.g08
+  title: Cells, microorganisms, sound and electric effects
+  subject: science
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - science.g07
+  topics:
+  - biology_fundamentals
+  - chemistry_fundamentals
+  - physics_fundamentals
+  - experiments
+  skills:
+  - experiment_basics
+  - scientific_reasoning
+  language: multi
+  provenance: self_authored
+- id: science.g09
+  title: Motion, atoms and molecules, tissues
+  subject: science
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - science.g08
+  topics:
+  - physics_fundamentals
+  - chemistry_fundamentals
+  - biology_fundamentals
+  - scientific_reasoning
+  skills:
+  - scientific_reasoning
+  language: multi
+  provenance: self_authored
+- id: science.g10
+  title: Life processes, chemical reactions, light and electricity
+  subject: science
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - science.g09
+  topics:
+  - biology_fundamentals
+  - chemistry_fundamentals
+  - physics_fundamentals
+  - experiments
+  - scientific_reasoning
+  skills:
+  - scientific_reasoning
+  - experiment_design_basics
+  language: multi
+  provenance: self_authored
+- id: ss.g01
+  title: Family, neighbourhood and community
+  subject: social_science
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - society_culture
+  skills:
+  - civic_awareness
+  language: multi
+  provenance: self_authored
+- id: ss.g02
+  title: Community life and local surroundings
+  subject: social_science
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - ss.g01
+  topics:
+  - society_culture
+  - geography
+  skills:
+  - civic_awareness
+  language: multi
+  provenance: self_authored
+- id: ss.g03
+  title: Villages, towns and early communities
+  subject: social_science
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - ss.g02
+  topics:
+  - society_culture
+  - history
+  - geography
+  skills:
+  - civic_awareness
+  language: multi
+  provenance: self_authored
+- id: ss.g04
+  title: 'India: rivers, states and ancient civilisations'
+  subject: social_science
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - ss.g03
+  topics:
+  - geography
+  - history
+  skills:
+  - map_reading
+  language: multi
+  provenance: self_authored
+- id: ss.g05
+  title: Maps, climate and early kingdoms
+  subject: social_science
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - ss.g04
+  topics:
+  - geography
+  - history
+  - civics
+  skills:
+  - map_reading
+  language: multi
+  provenance: self_authored
+- id: ss.g06
+  title: Government, diversity and trade
+  subject: social_science
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - ss.g05
+  topics:
+  - civics
+  - society_culture
+  - economics
+  skills:
+  - civic_awareness
+  language: multi
+  provenance: self_authored
+- id: ss.g07
+  title: Medieval India, environment and local government
+  subject: social_science
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - ss.g06
+  topics:
+  - history
+  - geography
+  - civics
+  skills:
+  - civic_awareness
+  language: multi
+  provenance: self_authored
+- id: ss.g08
+  title: Modern India, resources and the constitution
+  subject: social_science
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - ss.g07
+  topics:
+  - history
+  - civics
+  - economics
+  - geography
+  skills:
+  - source_reading
+  language: multi
+  provenance: self_authored
+- id: ss.g09
+  title: Democracy, economy and global history
+  subject: social_science
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - ss.g08
+  topics:
+  - civics
+  - political_science
+  - economics
+  - history
+  skills:
+  - source_reading
+  - argumentation
+  language: multi
+  provenance: self_authored
+- id: ss.g10
+  title: Nationalism, resources and development
+  subject: social_science
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - ss.g09
+  topics:
+  - history
+  - civics
+  - political_science
+  - economics
+  - geography
+  skills:
+  - argumentation
+  language: multi
+  provenance: self_authored
+- id: hindi.g01
+  title: वर्णमाला, मात्राएँ और सरल शब्द
+  subject: hindi
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - grammar
+  - vocabulary
+  - reading
+  skills:
+  - decoding
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - recognize all swar (vowels)
+    - recognize all vyanjan (consonants)
+    - write basic matras correctly
+    - identify simple words
+- id: hindi.g02
+  title: वाक्य, संज्ञा और सरल पठन
+  subject: hindi
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - hindi.g01
+  topics:
+  - grammar
+  - vocabulary
+  - reading_comprehension
+  skills:
+  - decoding
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - form simple sentences
+    - identify nouns in context
+    - read simple passages with 90% comprehension
+    - use correct pronunciation
+- id: hindi.g03
+  title: सर्वनाम, विशेषण और अनुच्छेद लेखन
+  subject: hindi
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - hindi.g02
+  topics:
+  - grammar
+  - vocabulary
+  - writing
+  skills:
+  - composition
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - use pronouns correctly
+    - use adjectives appropriately
+    - write short paragraphs (3-5 sentences)
+    - maintain topic focus
+- id: hindi.g04
+  title: क्रिया, काल और अपठित गद्य
+  subject: hindi
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - hindi.g03
+  topics:
+  - grammar
+  - reading_comprehension
+  - writing
+  skills:
+  - composition
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - conjugate verbs in present/past tense
+    - understand tense markers
+    - comprehend unseen passages
+    - write composition based on passage
+- id: hindi.g05
+  title: लिंग, वचन, संधि और पत्र लेखन
+  subject: hindi
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - hindi.g04
+  topics:
+  - grammar
+  - writing
+  - vocabulary
+  skills:
+  - composition
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - apply gender-number agreement
+    - perform sandhi rules correctly
+    - write formal letters
+    - use vocabulary accurately
+- id: hindi.g06
+  title: समास, उपसर्ग-प्रत्यय और निबंध
+  subject: hindi
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - hindi.g05
+  topics:
+  - grammar
+  - writing
+  - vocabulary
+  skills:
+  - composition
+  - semantic_understanding
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - identify and use samas (compounds)
+    - apply upasarga-pratyay
+    - write essays (200+ words)
+    - demonstrate semantic understanding
+- id: hindi.g07
+  title: मुहावरे, काव्य और व्याकरण
+  subject: hindi
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - hindi.g06
+  topics:
+  - grammar
+  - vocabulary
+  - literature
+  skills:
+  - literary_reading
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - interpret idioms and Muhavre
+    - analyze simple poetry
+    - apply advanced grammar rules
+    - demonstrate literary awareness
+- id: hindi.g08
+  title: रचना, अनुवाद और बोध
+  subject: hindi
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - hindi.g07
+  topics:
+  - writing
+  - translation
+  - reading_comprehension
+  skills:
+  - translation
+  - composition
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - translate Hindi-English and vice versa
+    - create original content
+    - demonstrate reading comprehension
+    - use appropriate register
+- id: hindi.g09
+  title: साहित्य, अलंकार और निबंध लेखन
+  subject: hindi
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - hindi.g08
+  topics:
+  - literature
+  - grammar
+  - writing
+  skills:
+  - literary_reading
+  - argumentation
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - analyze literary devices (alankar)
+    - write argumentative essays
+    - critique text effectively
+    - demonstrate deep literary understanding
+- id: hindi.g10
+  title: गद्य-पद्य विश्लेषण, अनुवाद और अर्थ
+  subject: hindi
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - hindi.g09
+  topics:
+  - literature
+  - translation
+  - semantic_understanding
+  - writing
+  skills:
+  - semantic_understanding
+  - translation
+  language: hi
+  provenance: self_authored
+  mastery_criteria:
+    min_correct: 0.85
+    assessment_type: oralscript
+    objectives:
+    - perform comprehensive semantic analysis
+    - execute accurate translation
+    - demonstrate advanced writing skills
+    - ' synthesize meaning across genres'
+- id: english.g01
+  title: Letters, sounds and simple words
+  subject: english
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - grammar
+  - vocabulary
+  - reading
+  skills:
+  - decoding
+  language: en
+  provenance: self_authored
+- id: english.g02
+  title: Sentences, nouns and reading aloud
+  subject: english
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - english.g01
+  topics:
+  - grammar
+  - vocabulary
+  - reading_comprehension
+  skills:
+  - decoding
+  language: en
+  provenance: self_authored
+- id: english.g03
+  title: Verbs, tenses and short paragraphs
+  subject: english
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - english.g02
+  topics:
+  - grammar
+  - writing
+  - vocabulary
+  skills:
+  - composition
+  language: en
+  provenance: self_authored
+- id: english.g04
+  title: Adjectives, adverbs and comprehension
+  subject: english
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - english.g03
+  topics:
+  - grammar
+  - reading_comprehension
+  - writing
+  skills:
+  - composition
+  language: en
+  provenance: self_authored
+- id: english.g05
+  title: Tenses, punctuation and letter writing
+  subject: english
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - english.g04
+  topics:
+  - grammar
+  - writing
+  skills:
+  - composition
+  language: en
+  provenance: self_authored
+- id: english.g06
+  title: Clauses, word formation and essay writing
+  subject: english
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - english.g05
+  topics:
+  - grammar
+  - writing
+  - vocabulary
+  skills:
+  - composition
+  - semantic_understanding
+  language: en
+  provenance: self_authored
+- id: english.g07
+  title: Idioms, poetry and grammar revision
+  subject: english
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - english.g06
+  topics:
+  - grammar
+  - vocabulary
+  - literature
+  skills:
+  - literary_reading
+  language: en
+  provenance: self_authored
+- id: english.g08
+  title: Composition, translation and comprehension
+  subject: english
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - english.g07
+  topics:
+  - writing
+  - translation
+  - reading_comprehension
+  skills:
+  - translation
+  - composition
+  language: en
+  provenance: self_authored
+- id: english.g09
+  title: Literature, figures of speech and essays
+  subject: english
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - english.g08
+  topics:
+  - literature
+  - grammar
+  - writing
+  skills:
+  - literary_reading
+  - argumentation
+  language: en
+  provenance: self_authored
+- id: english.g10
+  title: Prose and poetry analysis, translation and meaning
+  subject: english
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - english.g09
+  topics:
+  - literature
+  - translation
+  - semantic_understanding
+  - writing
+  skills:
+  - semantic_understanding
+  - translation
+  language: en
+  provenance: self_authored
+- id: il.g01
+  title: 'Regional language: script and sounds'
+  subject: indian_languages
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - grammar
+  - vocabulary
+  - reading
+  skills:
+  - decoding
+  language: multi
+  provenance: self_authored
+- id: il.g02
+  title: 'Regional language: words and simple sentences'
+  subject: indian_languages
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - il.g01
+  topics:
+  - grammar
+  - vocabulary
+  - reading_comprehension
+  skills:
+  - decoding
+  language: multi
+  provenance: self_authored
+- id: il.g03
+  title: 'Regional language: reading and short writing'
+  subject: indian_languages
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - il.g02
+  topics:
+  - grammar
+  - vocabulary
+  - writing
+  skills:
+  - composition
+  language: multi
+  provenance: self_authored
+- id: il.g04
+  title: 'Regional language: grammar basics and comprehension'
+  subject: indian_languages
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - il.g03
+  topics:
+  - grammar
+  - reading_comprehension
+  - writing
+  skills:
+  - composition
+  language: multi
+  provenance: self_authored
+- id: il.g05
+  title: 'Regional language: composition and vocabulary'
+  subject: indian_languages
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - il.g04
+  topics:
+  - grammar
+  - vocabulary
+  - writing
+  skills:
+  - composition
+  language: multi
+  provenance: self_authored
+- id: il.g06
+  title: 'Regional language: advanced grammar and essays'
+  subject: indian_languages
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - il.g05
+  topics:
+  - grammar
+  - writing
+  - vocabulary
+  skills:
+  - composition
+  language: multi
+  provenance: self_authored
+- id: il.g07
+  title: 'Regional language: literature and idioms'
+  subject: indian_languages
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - il.g06
+  topics:
+  - literature
+  - grammar
+  - vocabulary
+  skills:
+  - literary_reading
+  language: multi
+  provenance: self_authored
+- id: il.g08
+  title: 'Regional language: translation and comprehension'
+  subject: indian_languages
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - il.g07
+  topics:
+  - translation
+  - reading_comprehension
+  - writing
+  skills:
+  - translation
+  language: multi
+  provenance: self_authored
+- id: il.g09
+  title: 'Regional language: literary analysis'
+  subject: indian_languages
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - il.g08
+  topics:
+  - literature
+  - grammar
+  - writing
+  skills:
+  - literary_reading
+  language: multi
+  provenance: self_authored
+- id: il.g10
+  title: 'Regional language: semantics and cross-lingual transfer'
+  subject: indian_languages
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - il.g09
+  topics:
+  - semantic_understanding
+  - translation
+  - literature
+  skills:
+  - semantic_understanding
+  - cross_lingual_transfer
+  language: multi
+  provenance: self_authored
+- id: hinglish.g06
+  title: 'Hinglish: roman script and everyday sentences'
+  subject: hinglish
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - hindi.g06
+  - english.g06
+  topics:
+  - code_mixing
+  - vocabulary
+  - reading
+  skills:
+  - code_switching
+  language: hinc-latn
+  provenance: self_authored
+- id: hinglish.g07
+  title: 'Hinglish: conversation and informal writing'
+  subject: hinglish
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - hinglish.g06
+  topics:
+  - code_mixing
+  - writing
+  - vocabulary
+  skills:
+  - code_switching
+  - composition
+  language: hinc-latn
+  provenance: self_authored
+- id: hinglish.g08
+  title: 'Hinglish: comprehension and translation'
+  subject: hinglish
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - hinglish.g07
+  topics:
+  - code_mixing
+  - reading_comprehension
+  - translation
+  skills:
+  - code_switching
+  - translation
+  language: hinc-latn
+  provenance: self_authored
+- id: hinglish.g09
+  title: 'Hinglish: formal contexts and transliteration'
+  subject: hinglish
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - hinglish.g08
+  topics:
+  - code_mixing
+  - translation
+  - writing
+  skills:
+  - transliteration
+  language: hinc-latn
+  provenance: self_authored
+- id: hinglish.g10
+  title: 'Hinglish: semantics and code-switch understanding'
+  subject: hinglish
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - hinglish.g09
+  topics:
+  - code_mixing
+  - semantic_understanding
+  - translation
+  skills:
+  - semantic_understanding
+  - code_switching
+  language: hinc-latn
+  provenance: self_authored
+- id: cs.g01
+  title: Computational thinking with patterns and sequences
+  subject: computer_science
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - computational_thinking
+  skills:
+  - sequencing
+  language: multi
+  provenance: self_authored
+- id: cs.g02
+  title: Stepwise instructions and simple algorithms
+  subject: computer_science
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - cs.g01
+  topics:
+  - computational_thinking
+  - algorithms
+  skills:
+  - sequencing
+  - decomposition
+  language: multi
+  provenance: self_authored
+- id: cs.g03
+  title: Block-based programming ideas
+  subject: computer_science
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - cs.g02
+  topics:
+  - programming
+  - computational_thinking
+  skills:
+  - sequencing
+  language: multi
+  provenance: self_authored
+- id: cs.g04
+  title: Input, output and variables
+  subject: computer_science
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - cs.g03
+  topics:
+  - programming
+  - computer_fundamentals
+  skills:
+  - debugging
+  language: multi
+  provenance: self_authored
+- id: cs.g05
+  title: Conditionals, loops and debugging
+  subject: computer_science
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - cs.g04
+  topics:
+  - programming
+  - algorithms
+  skills:
+  - debugging
+  language: multi
+  provenance: self_authored
+- id: cs.g06
+  title: Computer fundamentals and file systems
+  subject: computer_science
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - cs.g05
+  topics:
+  - computer_fundamentals
+  - programming
+  skills:
+  - systems_literacy
+  language: multi
+  provenance: self_authored
+- id: cs.g07
+  title: Algorithms, flowcharts and decomposition
+  subject: computer_science
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - cs.g06
+  - reasoning.g07
+  topics:
+  - algorithms
+  - programming
+  - decomposition
+  skills:
+  - decomposition
+  - algorithmic_thinking
+  language: multi
+  provenance: self_authored
+- id: cs.g08
+  title: Introduction to Python programming
+  subject: computer_science
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - cs.g07
+  topics:
+  - programming
+  - data_structures
+  skills:
+  - coding
+  - debugging
+  language: multi
+  provenance: self_authored
+- id: cs.g09
+  title: Data structures and databases basics
+  subject: computer_science
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - cs.g08
+  topics:
+  - data_structures
+  - databases
+  - programming
+  skills:
+  - coding
+  - data_modelling
+  language: multi
+  provenance: self_authored
+- id: cs.g10
+  title: Networks, internet basics and software engineering
+  subject: computer_science
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - cs.g09
+  topics:
+  - networking
+  - internet_basics
+  - software_engineering
+  - security_basics
+  skills:
+  - systems_literacy
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: reasoning.g01
+  title: Picture patterns and sequences
+  subject: reasoning
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - pattern_recognition
+  - abstract_reasoning
+  skills:
+  - pattern_recognition
+  language: multi
+  provenance: self_authored
+- id: reasoning.g02
+  title: Odd-one-out and simple analogies
+  subject: reasoning
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - reasoning.g01
+  topics:
+  - pattern_recognition
+  - analogy
+  - abstract_reasoning
+  skills:
+  - classification
+  language: multi
+  provenance: self_authored
+- id: reasoning.g03
+  title: Classification, ordering and comparison
+  subject: reasoning
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - reasoning.g02
+  topics:
+  - abstract_reasoning
+  - pattern_recognition
+  skills:
+  - classification
+  language: multi
+  provenance: self_authored
+- id: reasoning.g04
+  title: Verbal analogies and simple logic
+  subject: reasoning
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - reasoning.g03
+  topics:
+  - verbal_reasoning
+  - logical_reasoning
+  - analogy
+  skills:
+  - verbal_reasoning
+  language: multi
+  provenance: self_authored
+- id: reasoning.g05
+  title: Direction, ranking and coding-decoding
+  subject: reasoning
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - reasoning.g04
+  topics:
+  - logical_reasoning
+  - verbal_reasoning
+  skills:
+  - spatial_reasoning
+  language: multi
+  provenance: self_authored
+- id: reasoning.g06
+  title: Series, relations and syllogisms
+  subject: reasoning
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - reasoning.g05
+  topics:
+  - logical_reasoning
+  - pattern_recognition
+  - analogy
+  skills:
+  - deduction
+  language: multi
+  provenance: self_authored
+- id: reasoning.g07
+  title: Syllogisms, puzzles and planning
+  subject: reasoning
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - reasoning.g06
+  topics:
+  - logical_reasoning
+  - planning
+  skills:
+  - deduction
+  - planning
+  language: multi
+  provenance: self_authored
+- id: reasoning.g08
+  title: Mathematical reasoning and data interpretation
+  subject: reasoning
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - reasoning.g07
+  - math.g08
+  topics:
+  - mathematical_reasoning
+  - data_interpretation
+  skills:
+  - mathematical_reasoning
+  - data_interpretation
+  language: multi
+  provenance: self_authored
+- id: reasoning.g09
+  title: Causal reasoning and counterexamples
+  subject: reasoning
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - reasoning.g08
+  topics:
+  - causal_reasoning
+  - logical_reasoning
+  skills:
+  - causal_reasoning
+  - falsification
+  language: multi
+  provenance: self_authored
+- id: reasoning.g10
+  title: Multi-step planning and problem decomposition
+  subject: reasoning
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - reasoning.g09
+  topics:
+  - planning
+  - problem_decomposition
+  - logical_reasoning
+  skills:
+  - planning
+  - decomposition
+  language: multi
+  provenance: self_authored
+- id: gk.g01
+  title: Surroundings, family and festivals
+  subject: general_knowledge
+  track: foundation
+  band: primary
+  grade: 1
+  depends_on: []
+  topics:
+  - india
+  - culture
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+- id: gk.g02
+  title: Plants, animals and our country
+  subject: general_knowledge
+  track: foundation
+  band: primary
+  grade: 2
+  depends_on:
+  - gk.g01
+  topics:
+  - india
+  - geography
+  - science
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+- id: gk.g03
+  title: States, capitals and monuments
+  subject: general_knowledge
+  track: foundation
+  band: primary
+  grade: 3
+  depends_on:
+  - gk.g02
+  topics:
+  - india
+  - geography
+  - culture
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+- id: gk.g04
+  title: India's rivers, mountains and states
+  subject: general_knowledge
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - gk.g03
+  topics:
+  - india
+  - geography
+  skills:
+  - recall
+  - map_reading
+  language: multi
+  provenance: self_authored
+- id: gk.g05
+  title: World continents, oceans and countries
+  subject: general_knowledge
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - gk.g04
+  - ss.g05
+  topics:
+  - world
+  - geography
+  skills:
+  - map_reading
+  language: multi
+  provenance: self_authored
+- id: gk.g06
+  title: Science and technology around us
+  subject: general_knowledge
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - gk.g05
+  topics:
+  - science
+  - technology
+  - world
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+- id: gk.g07
+  title: Institutions, sports and culture
+  subject: general_knowledge
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - gk.g06
+  topics:
+  - institutions
+  - culture
+  - india
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+- id: gk.g08
+  title: Indian polity, economy and science
+  subject: general_knowledge
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - gk.g07
+  topics:
+  - india
+  - institutions
+  - science
+  - technology
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+- id: gk.g09
+  title: World history, organisations and technology
+  subject: general_knowledge
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - gk.g08
+  topics:
+  - world
+  - history
+  - institutions
+  - technology
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+- id: gk.g10
+  title: Current concepts, institutions and global affairs
+  subject: general_knowledge
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - gk.g09
+  topics:
+  - world
+  - india
+  - institutions
+  - important_concepts
+  - science
+  skills:
+  - recall
+  - synthesis
+  language: multi
+  provenance: self_authored
+- id: st.g04
+  title: Observation and questioning
+  subject: scientific_thinking
+  track: foundation
+  band: primary
+  grade: 4
+  depends_on:
+  - science.g04
+  topics:
+  - observation
+  - questioning
+  skills:
+  - observation
+  - questioning
+  language: multi
+  provenance: self_authored
+- id: st.g05
+  title: Hypothesis and prediction
+  subject: scientific_thinking
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - st.g04
+  topics:
+  - hypothesis
+  - prediction
+  skills:
+  - hypothesis_generation
+  language: multi
+  provenance: self_authored
+- id: st.g06
+  title: Experiments and controls
+  subject: scientific_thinking
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - st.g05
+  topics:
+  - experiment
+  - controls
+  skills:
+  - experiment_design_basics
+  language: multi
+  provenance: self_authored
+- id: st.g07
+  title: Evidence and measurement
+  subject: scientific_thinking
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - st.g06
+  topics:
+  - evidence
+  - measurement
+  skills:
+  - measurement
+  - evidence_evaluation
+  language: multi
+  provenance: self_authored
+- id: st.g08
+  title: Analysis and error
+  subject: scientific_thinking
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - st.g07
+  topics:
+  - analysis
+  - error_analysis
+  skills:
+  - error_analysis
+  language: multi
+  provenance: self_authored
+- id: st.g09
+  title: Conclusion and reporting
+  subject: scientific_thinking
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - st.g08
+  topics:
+  - conclusion
+  - reporting
+  skills:
+  - scientific_writing
+  language: multi
+  provenance: self_authored
+- id: st.g10
+  title: Scientific reasoning in new contexts
+  subject: scientific_thinking
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - st.g09
+  topics:
+  - scientific_reasoning
+  - transfer
+  skills:
+  - transfer
+  - scientific_reasoning
+  language: multi
+  provenance: self_authored
+- id: ik.g05
+  title: India's states, languages and diversity
+  subject: indian_knowledge
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - ss.g05
+  topics:
+  - indian_history
+  - indian_geography
+  - indian_languages
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+  epistemic_note: Descriptive facts (state names, language families, geography) vs.
+    community claims are labelled separately; no tradition is presented as verified
+    history.
+- id: ik.g06
+  title: Ancient Indian science and mathematics
+  subject: indian_knowledge
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - ik.g05
+  - science.g06
+  topics:
+  - indian_science_mathematics
+  - indian_history
+  skills:
+  - recall
+  - source_reading
+  language: multi
+  provenance: self_authored
+  epistemic_note: Datable contributions (e.g. decimal place-value notation, early
+    trigonometry) are separated from later attributions; dates carry sources and uncertainty.
+- id: ik.g07
+  title: Indian philosophy and literature
+  subject: indian_knowledge
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - ik.g06
+  topics:
+  - indian_philosophy
+  - literature
+  - indian_history
+  skills:
+  - source_reading
+  language: multi
+  provenance: self_authored
+  epistemic_note: Philosophical schools are presented as reasoned positions with named
+    proponents, not as settled scientific findings.
+- id: ik.g08
+  title: Indian arts, culture and architecture
+  subject: indian_knowledge
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - ik.g07
+  topics:
+  - indian_arts
+  - indian_culture
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+  epistemic_note: Living traditions are described as practice and belief; architectural
+    dating rests on evidence and is marked when uncertain.
+- id: ik.g09
+  title: Constitutional knowledge and institutions
+  subject: indian_knowledge
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - ik.g08
+  - ss.g09
+  topics:
+  - constitutional_knowledge
+  - institutions
+  skills:
+  - civic_awareness
+  - source_reading
+  language: multi
+  provenance: self_authored
+  epistemic_note: Constitutional text and legal provisions are cited by article; interpretation
+    is labelled as interpretation.
+- id: ik.g10
+  title: 'Indian knowledge systems: synthesis and sources'
+  subject: indian_knowledge
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - ik.g09
+  topics:
+  - indian_knowledge_systems
+  - provenance
+  - indian_history
+  skills:
+  - source_evaluation
+  - provenance_tracking
+  language: multi
+  provenance: self_authored
+  epistemic_note: Mythological narrative is never presented as historical fact; every
+    claim is tagged as record, tradition, or interpretation, with its source.
+- id: wk.g05
+  title: 'World geography: continents and climate'
+  subject: world_knowledge
+  track: foundation
+  band: primary
+  grade: 5
+  depends_on:
+  - gk.g05
+  topics:
+  - world_geography
+  - climate
+  skills:
+  - map_reading
+  language: multi
+  provenance: self_authored
+- id: wk.g06
+  title: 'World history: ancient civilisations'
+  subject: world_knowledge
+  track: foundation
+  band: middle
+  grade: 6
+  depends_on:
+  - wk.g05
+  topics:
+  - world_history
+  skills:
+  - source_reading
+  language: multi
+  provenance: self_authored
+- id: wk.g07
+  title: 'World history: medieval to modern'
+  subject: world_knowledge
+  track: foundation
+  band: middle
+  grade: 7
+  depends_on:
+  - wk.g06
+  topics:
+  - world_history
+  skills:
+  - source_reading
+  language: multi
+  provenance: self_authored
+- id: wk.g08
+  title: World institutions and economies
+  subject: world_knowledge
+  track: foundation
+  band: middle
+  grade: 8
+  depends_on:
+  - wk.g07
+  topics:
+  - institutions
+  - economics
+  - world_affairs
+  skills:
+  - recall
+  language: multi
+  provenance: self_authored
+- id: wk.g09
+  title: Science, technology and global change
+  subject: world_knowledge
+  track: foundation
+  band: secondary
+  grade: 9
+  depends_on:
+  - wk.g08
+  topics:
+  - science
+  - technology
+  - global_change
+  skills:
+  - synthesis
+  language: multi
+  provenance: self_authored
+- id: wk.g10
+  title: Global affairs and comparative knowledge
+  subject: world_knowledge
+  track: foundation
+  band: secondary
+  grade: 10
+  depends_on:
+  - wk.g09
+  topics:
+  - world_affairs
+  - comparative_knowledge
+  - institutions
+  skills:
+  - synthesis
+  - argumentation
+  language: multi
+  provenance: self_authored
+- id: bridge.c11_12
+  title: Class 11-12 foundation
+  subject: bridge
+  track: bridge
+  band: higher_secondary
+  grade: null
+  depends_on:
+  - math.g10
+  - science.g10
+  - ss.g10
+  - hindi.g10
+  - english.g10
+  - cs.g10
+  - reasoning.g10
+  - gk.g10
+  topics:
+  - senior_secondary_foundation
+  skills:
+  - abstract_reasoning
+  language: multi
+  provenance: self_authored
+- id: bridge.undergraduate
+  title: Undergraduate foundation
+  subject: bridge
+  track: bridge
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  topics:
+  - undergraduate_foundation
+  skills:
+  - formal_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.math.calculus
+  title: 'Calculus: limits, derivatives, integrals, multivariable'
+  subject: mathematics
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - math.g10
+  topics:
+  - calculus
+  - limits
+  - derivatives
+  - integrals
+  skills:
+  - formal_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.math.linear_algebra
+  title: 'Linear algebra: vector spaces, matrices, eigenstructure'
+  subject: mathematics
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - math.g10
+  topics:
+  - linear_algebra
+  - matrices
+  - eigenvalues
+  skills:
+  - formal_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.math.probability
+  title: Probability theory
+  subject: mathematics
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - math.g10
+  topics:
+  - probability
+  - random_variables
+  skills:
+  - probabilistic_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.math.statistics
+  title: Mathematical statistics and inference
+  subject: mathematics
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.math.probability
+  topics:
+  - statistics
+  - estimation
+  - hypothesis_testing
+  skills:
+  - statistical_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.math.discrete
+  title: Discrete mathematics and combinatorics
+  subject: mathematics
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - math.g10
+  topics:
+  - discrete_mathematics
+  - combinatorics
+  - graph_theory
+  - proofs
+  skills:
+  - proof_writing
+  - formal_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.math.optimization
+  title: 'Optimization: convexity, gradients, constrained problems'
+  subject: mathematics
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.math.calculus
+  - adv.math.linear_algebra
+  topics:
+  - optimization
+  - convexity
+  - gradients
+  skills:
+  - modelling
+  language: multi
+  provenance: self_authored
+- id: adv.math.numerical_methods
+  title: Numerical methods and error analysis
+  subject: mathematics
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.math.calculus
+  - adv.math.linear_algebra
+  topics:
+  - numerical_methods
+  - numerical_error
+  - stability
+  skills:
+  - numerical_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.phy.mechanics
+  title: Classical mechanics
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - adv.math.calculus
+  topics:
+  - mechanics
+  - dynamics
+  - energy
+  skills:
+  - modelling
+  language: multi
+  provenance: self_authored
+- id: adv.phy.electromagnetism
+  title: Electromagnetism
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.phy.mechanics
+  - adv.math.calculus
+  topics:
+  - electromagnetism
+  - maxwell_equations
+  skills:
+  - modelling
+  language: multi
+  provenance: self_authored
+- id: adv.phy.thermodynamics
+  title: Thermodynamics
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.phy.mechanics
+  topics:
+  - thermodynamics
+  - entropy
+  - heat
+  skills:
+  - modelling
+  language: multi
+  provenance: self_authored
+- id: adv.phy.statistical_mechanics
+  title: Statistical mechanics
+  subject: science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.phy.thermodynamics
+  - adv.math.probability
+  topics:
+  - statistical_mechanics
+  - ensembles
+  skills:
+  - statistical_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.phy.optics
+  title: 'Optics: waves, interference, diffraction'
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.phy.electromagnetism
+  topics:
+  - optics
+  - waves
+  - interference
+  skills:
+  - modelling
+  language: multi
+  provenance: self_authored
+- id: adv.phy.quantum
+  title: Quantum mechanics
+  subject: science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.phy.electromagnetism
+  - adv.math.linear_algebra
+  topics:
+  - quantum_mechanics
+  - wavefunctions
+  - operators
+  skills:
+  - formal_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.phy.relativity
+  title: Special and general relativity
+  subject: science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.phy.mechanics
+  - adv.phy.electromagnetism
+  topics:
+  - relativity
+  - spacetime
+  skills:
+  - formal_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.phy.modern_physics
+  title: 'Modern physics: particles, condensed matter, cosmology'
+  subject: science
+  track: advanced
+  band: research
+  grade: null
+  depends_on:
+  - adv.phy.quantum
+  - adv.phy.relativity
+  topics:
+  - modern_physics
+  - particle_physics
+  - condensed_matter
+  skills:
+  - synthesis
+  language: multi
+  provenance: self_authored
+- id: adv.chem.inorganic
+  title: Inorganic chemistry
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  topics:
+  - inorganic_chemistry
+  - periodic_trends
+  - coordination
+  skills:
+  - modelling
+  language: multi
+  provenance: self_authored
+- id: adv.chem.physical
+  title: Physical chemistry
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - adv.phy.thermodynamics
+  topics:
+  - physical_chemistry
+  - kinetics
+  - equilibria
+  skills:
+  - modelling
+  language: multi
+  provenance: self_authored
+- id: adv.chem.organic
+  title: Organic chemistry
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.chem.inorganic
+  topics:
+  - organic_chemistry
+  - reaction_mechanisms
+  skills:
+  - mechanistic_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.chem.analytical
+  title: Analytical chemistry
+  subject: science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.chem.physical
+  - adv.chem.organic
+  topics:
+  - analytical_chemistry
+  - spectroscopy
+  - measurement_error
+  skills:
+  - measurement
+  - error_analysis
+  language: multi
+  provenance: self_authored
+- id: adv.bio.molecular_biology
+  title: Molecular biology
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  topics:
+  - molecular_biology
+  - dna
+  - gene_expression
+  skills:
+  - mechanistic_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.bio.genetics
+  title: Genetics and heredity
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.bio.molecular_biology
+  topics:
+  - genetics
+  - inheritance
+  - variation
+  skills:
+  - probabilistic_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.bio.microbiology
+  title: Microbiology
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.bio.molecular_biology
+  topics:
+  - microbiology
+  - microbes
+  - culture
+  skills:
+  - experiment_design_basics
+  language: multi
+  provenance: self_authored
+- id: adv.bio.biotechnology
+  title: Biotechnology
+  subject: science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.bio.genetics
+  - adv.bio.microbiology
+  topics:
+  - biotechnology
+  - recombinant_dna
+  - bioprocess
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.bio.evolution
+  title: Evolution and population biology
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.bio.genetics
+  topics:
+  - evolution
+  - natural_selection
+  - population_genetics
+  skills:
+  - statistical_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.bio.ecology
+  title: Ecology and ecosystems
+  subject: science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.bio.evolution
+  topics:
+  - ecology
+  - ecosystems
+  - biodiversity
+  skills:
+  - systems_thinking
+  language: multi
+  provenance: self_authored
+- id: adv.bio.physiology
+  title: Physiology
+  subject: science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.bio.molecular_biology
+  topics:
+  - physiology
+  - organ_systems
+  - homeostasis
+  skills:
+  - systems_thinking
+  language: multi
+  provenance: self_authored
+- id: adv.cs.data_structures
+  title: Data structures and complexity
+  subject: computer_science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - cs.g09
+  topics:
+  - data_structures
+  - complexity
+  skills:
+  - coding
+  - algorithmic_thinking
+  language: multi
+  provenance: self_authored
+- id: adv.cs.algorithms
+  title: Algorithms and algorithm design
+  subject: computer_science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.cs.data_structures
+  - adv.math.discrete
+  topics:
+  - algorithms
+  - dynamic_programming
+  - complexity
+  skills:
+  - algorithmic_thinking
+  - proof_writing
+  language: multi
+  provenance: self_authored
+- id: adv.cs.operating_systems
+  title: Operating systems
+  subject: computer_science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - cs.g06
+  topics:
+  - operating_systems
+  - processes
+  - memory
+  skills:
+  - systems_thinking
+  language: multi
+  provenance: self_authored
+- id: adv.cs.networking
+  title: Computer networks
+  subject: computer_science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - bridge.c11_12
+  - cs.g10
+  topics:
+  - networking
+  - protocols
+  - tcp_ip
+  skills:
+  - systems_thinking
+  language: multi
+  provenance: self_authored
+- id: adv.cs.databases
+  title: Database systems
+  subject: computer_science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - cs.g09
+  - adv.cs.data_structures
+  topics:
+  - databases
+  - sql
+  - transactions
+  skills:
+  - data_modelling
+  language: multi
+  provenance: self_authored
+- id: adv.cs.distributed_systems
+  title: Distributed systems
+  subject: computer_science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.cs.networking
+  - adv.cs.operating_systems
+  topics:
+  - distributed_systems
+  - consistency
+  - fault_tolerance
+  skills:
+  - systems_thinking
+  language: multi
+  provenance: self_authored
+- id: adv.cs.compilers
+  title: Compilers and language implementation
+  subject: computer_science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.cs.algorithms
+  - adv.cs.data_structures
+  topics:
+  - compilers
+  - parsing
+  - code_generation
+  skills:
+  - formal_reasoning
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.cs.software_engineering
+  title: Software engineering practice
+  subject: computer_science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - cs.g10
+  - adv.cs.algorithms
+  topics:
+  - software_engineering
+  - testing
+  - version_control
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.cs.security_fundamentals
+  title: Security fundamentals
+  subject: computer_science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.cs.networking
+  - adv.cs.operating_systems
+  topics:
+  - security
+  - cryptography_basics
+  - threat_models
+  skills:
+  - adversarial_thinking
+  language: multi
+  provenance: self_authored
+- id: adv.ai.machine_learning
+  title: Machine learning foundations
+  subject: computer_science
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.math.linear_algebra
+  - adv.math.probability
+  - adv.math.optimization
+  topics:
+  - machine_learning
+  - supervised_learning
+  - evaluation
+  skills:
+  - modelling
+  - statistical_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.ai.deep_learning
+  title: Deep learning
+  subject: computer_science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.ai.machine_learning
+  - adv.math.numerical_methods
+  topics:
+  - deep_learning
+  - neural_networks
+  - training_dynamics
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.ai.nlp
+  title: Natural language processing
+  subject: computer_science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.ai.deep_learning
+  - hindi.g10
+  - english.g10
+  topics:
+  - nlp
+  - tokenization
+  - sequence_models
+  skills:
+  - linguistic_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.ai.computer_vision
+  title: Computer vision
+  subject: computer_science
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.ai.deep_learning
+  topics:
+  - computer_vision
+  - convolutional_models
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.eng.electrical
+  title: Electrical engineering fundamentals
+  subject: engineering
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.phy.electromagnetism
+  topics:
+  - electrical_engineering
+  - circuits
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.eng.electronics
+  title: Electronics fundamentals
+  subject: engineering
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.eng.electrical
+  topics:
+  - electronics
+  - semiconductors
+  - signals
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.eng.mechanical
+  title: Mechanical engineering fundamentals
+  subject: engineering
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.phy.mechanics
+  - adv.phy.thermodynamics
+  topics:
+  - mechanical_engineering
+  - materials
+  - machines
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.eng.civil
+  title: Civil engineering fundamentals
+  subject: engineering
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.phy.mechanics
+  - bridge.c11_12
+  topics:
+  - civil_engineering
+  - structures
+  - materials
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.eng.computer_engineering
+  title: Computer engineering fundamentals
+  subject: engineering
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.cs.operating_systems
+  - adv.eng.electronics
+  topics:
+  - computer_engineering
+  - architecture
+  - embedded
+  skills:
+  - engineering_practice
+  language: multi
+  provenance: self_authored
+- id: adv.eng.systems_engineering
+  title: Systems engineering
+  subject: engineering
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.eng.mechanical
+  - adv.eng.electrical
+  topics:
+  - systems_engineering
+  - requirements
+  - reliability
+  skills:
+  - systems_thinking
+  language: multi
+  provenance: self_authored
+- id: adv.res.scientific_method
+  title: Scientific method and evidence standards
+  subject: research
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - st.g10
+  - bridge.c11_12
+  topics:
+  - scientific_method
+  - evidence
+  skills:
+  - evidence_evaluation
+  language: multi
+  provenance: self_authored
+- id: adv.res.research_methodology
+  title: Research methodology
+  subject: research
+  track: advanced
+  band: undergraduate
+  grade: null
+  depends_on:
+  - adv.res.scientific_method
+  topics:
+  - research_methodology
+  - study_design
+  skills:
+  - methodology_design
+  language: multi
+  provenance: self_authored
+- id: adv.res.literature_analysis
+  title: Literature analysis and synthesis
+  subject: research
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.res.research_methodology
+  - english.g10
+  topics:
+  - literature_analysis
+  - synthesis
+  skills:
+  - source_evaluation
+  language: multi
+  provenance: self_authored
+- id: adv.res.hypothesis_formation
+  title: Hypothesis formation and falsifiability
+  subject: research
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.res.research_methodology
+  topics:
+  - hypothesis_formation
+  - falsifiability
+  skills:
+  - hypothesis_generation
+  language: multi
+  provenance: self_authored
+- id: adv.res.statistical_reasoning
+  title: Statistical reasoning for research
+  subject: research
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.math.statistics
+  topics:
+  - statistical_reasoning
+  - uncertainty
+  - significance
+  skills:
+  - statistical_reasoning
+  language: multi
+  provenance: self_authored
+- id: adv.res.experimental_design
+  title: Experimental design and controls
+  subject: research
+  track: advanced
+  band: advanced
+  grade: null
+  depends_on:
+  - adv.res.hypothesis_formation
+  - adv.math.statistics
+  topics:
+  - experimental_design
+  - controls
+  - bias
+  skills:
+  - experiment_design_basics
+  language: multi
+  provenance: self_authored
+- id: adv.res.reproducibility
+  title: Reproducibility and replication
+  subject: research
+  track: advanced
+  band: research
+  grade: null
+  depends_on:
+  - adv.res.experimental_design
+  topics:
+  - reproducibility
+  - replication
+  - reporting_standards
+  skills:
+  - reproducibility_practice
+  language: multi
+  provenance: self_authored
+- id: adv.res.citation_provenance
+  title: Citation, provenance and attribution
+  subject: research
+  track: advanced
+  band: research
+  grade: null
+  depends_on:
+  - adv.res.literature_analysis
+  topics:
+  - citation
+  - provenance
+  - attribution
+  skills:
+  - provenance_tracking
+  language: multi
+  provenance: self_authored
+- id: adv.res.peer_review_reasoning
+  title: Peer-review reasoning and critique
+  subject: research
+  track: advanced
+  band: research
+  grade: null
+  depends_on:
+  - adv.res.literature_analysis
+  - adv.res.statistical_reasoning
+  topics:
+  - peer_review
+  - critique
+  - reviewer_standards
+  skills:
+  - critique
+  language: multi
+  provenance: self_authored
+- id: adv.res.research_communication
+  title: Research communication
+  subject: research
+  track: advanced
+  band: research
+  grade: null
+  depends_on:
+  - adv.res.research_methodology
+  - english.g10
+  topics:
+  - research_communication
+  - writing
+  - presentation
+  skills:
+  - scientific_writing
+  language: multi
+  provenance: self_authored
+- id: meta.brainstorming
+  title: Structured brainstorming and idea synthesis
+  subject: reasoning
+  track: meta
+  band: cross_cutting
+  grade: null
+  depends_on: []
+  available_from: nano
+  topics:
+  - brainstorming
+  - idea_generation
+  - synthesis
+  skills:
+  - divergent_thinking
+  - synthesis
+  language: multi
+  provenance: self_authored
+- id: meta.problem_decomposition
+  title: Problem decomposition
+  subject: reasoning
+  track: meta
+  band: cross_cutting
+  grade: null
+  depends_on:
+  - reasoning.g10
+  topics:
+  - problem_decomposition
+  - decomposition
+  skills:
+  - decomposition
+  language: multi
+  provenance: self_authored
+- id: meta.planning
+  title: Planning under constraints
+  subject: reasoning
+  track: meta
+  band: cross_cutting
+  grade: null
+  depends_on:
+  - reasoning.g10
+  topics:
+  - planning
+  - constraints
+  skills:
+  - planning
+  language: multi
+  provenance: self_authored
+- id: meta.cross_domain_synthesis
+  title: Cross-domain synthesis
+  subject: reasoning
+  track: meta
+  band: cross_cutting
+  grade: null
+  depends_on:
+  - meta.brainstorming
+  - meta.problem_decomposition
+  topics:
+  - cross_domain_connections
+  - synthesis
+  skills:
+  - synthesis
+  - transfer
+  language: multi
+  provenance: self_authored
+- id: meta.verification
+  title: Verification of own answers
+  subject: reasoning
+  track: meta
+  band: cross_cutting
+  grade: null
+  depends_on:
+  - reasoning.g09
+  - st.g09
+  topics:
+  - verification
+  - checking
+  - uncertainty
+  skills:
+  - verification
+  language: multi
+  provenance: self_authored
+- id: meta.transfer
+  title: Transfer to new contexts
+  subject: reasoning
+  track: meta
+  band: cross_cutting
+  grade: null
+  depends_on:
+  - reasoning.g10
+  topics:
+  - transfer
+  - generalisation
+  skills:
+  - transfer
+  language: multi
+  provenance: self_authored
+- id: meta.error_correction
+  title: Error diagnosis and correction
+  subject: reasoning
+  track: meta
+  band: cross_cutting
+  grade: null
+  depends_on:
+  - st.g08
+  topics:
+  - error_analysis
+  - correction
+  skills:
+  - error_analysis
+  - self_correction
+  language: multi
+  provenance: self_authored
