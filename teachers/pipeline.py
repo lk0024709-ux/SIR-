@@ -435,5 +435,142 @@ def main(argv: list[str] | None = None) -> int:
     return 0 if result.accepted else 1
 
 
+
+
+    def _collect_teacher_responses(
+        self, request: GenerationRequest, drafts: list[TeacherDraft]
+    ) -> list[TeacherResponseRecord]:
+        """Collect structured teacher responses with full provenance."""
+        records = []
+        for draft in drafts:
+            tr = TeacherResponseRecord(
+                task_id=request.request_id,
+                teacher_id=draft.teacher.model_id,
+                teacher_provider=draft.teacher.vendor or "unknown",
+                model_identifier=draft.teacher.model_id,
+                response=draft.payload.get("response", ""),
+                task_domain=request.kind,
+                curriculum_node=request.node_id,
+                language=request.language,
+                difficulty=request.difficulty,
+                generation_timestamp=time.time(),
+                provenance=f"synthetic:{draft.teacher.model_id}",
+                verification_status="single_teacher",
+                critic_status=worst_verdict(
+                    critique_draft(draft, language=request.language, required_fields=("task", "response", "answer"), prompt_text=request.prompt)
+                ),
+                payload=draft.payload,
+            )
+            records.append(tr)
+        return records
+
+    def _perform_synthesis(
+        self,
+        request: GenerationRequest,
+        result: PipelineResult,
+        teacher_responses: list[TeacherResponseRecord],
+        outcome: ConsensusOutcome,
+    ) -> None:
+        """Perform multi-model synthesis of teacher responses.
+
+        Identifies common points, disagreements, unique insights,
+        and produces a synthesized answer with provenance.
+        """
+        from teachers.consensus import normalise
+
+        tr_ids = [t.task_id for t in teacher_responses]
+        # Normalise answers for comparison
+        answer_groups: dict[str, list[TeacherResponseRecord]] = {}
+        for t in teacher_responses:
+            key = normalise(t.response)
+            answer_groups.setdefault(key, []).append(t)
+
+        common_points: list[str] = []
+        disagreements: list[str] = []
+        unique_insights: list[str] = []
+        rejected_claims: list[str] = []
+
+        if len(outcome.groups) == 1:
+            # All agree
+            group_key = next(iter(outcome.groups))
+            common_points.append(f"All {len(teacher_responses)} teachers agree on answer")
+            selected_reasoning = outcome.canonical_answer or teacher_responses[0].response
+            synthesized = outcome.canonical_answer or teacher_responses[0].response
+            synthesis_method = SynthesisMethod.CONSENSUS_VERIFIED
+            confidence = "high"
+        elif outcome.usable:
+            # Some resolution occurred
+            if outcome.status == ConsensusStatus.RESOLVED_BY_VERIFICATION:
+                # One answer verified, others not
+                verified_answer = outcome.canonical_answer
+                verified_record = next(
+                    (t for t in teacher_responses if normalise(t.response) == normalise(verified_answer)), None
+                )
+                selected_reasoning = verified_answer or (verified_record.response if verified_record else "")
+                synthesized = verified_answer or (verified_record.response if verified_record else "")
+                synthesis_method = SynthesisMethod.CONSENSUS_VERIFIED
+                confidence = "high"
+            else:
+                # AGREED but with verification path
+                selected_reasoning = outcome.canonical_answer or teacher_responses[0].response
+                synthesized = outcome.canonical_answer or teacher_responses[0].response
+                synthesis_method = SynthesisMethod.CONSENSUS_VERIFIED
+                confidence = "medium"
+        else:
+            # Disagreement - collect and flag
+            for key, group in answer_groups.items():
+                if len(group) == 1:
+                    # Unique answer - could be an insight
+                    unique_insights.append(f"Teacher {group[0].teacher_id}: {group[0].response[:80]}...")
+                else:
+                    # Multiple teachers with same answer but no consensus - flag
+                    disagreements.append(f"Multiple teachers agree on: {group[0].response[:80]}... (no consensus reached)")
+            # Check for unsupported claims
+            for t in teacher_responses:
+                rejected_claims.extend(self._detect_unsupported_claims(t.response, request.kind))
+            selected_reasoning = "; ".join(disagreements[:3]) if disagreements else "No consensus reached"
+            synthesized = "DISAGREEMENT: teachers could not reach agreement; see rejection/quarantine rationale"
+            synthesis_method = SynthesisMethod.MAJORITY_VOTE
+            confidence = "low"
+
+        # Build the synthesis record
+        provenance = f"synthetic:{'/'.join(outcome.teachers) or 'unknown'}"
+        synthesis_record = ArenaSynthesisRecord(
+            task_id=request.request_id,
+            teacher_response_ids=tr_ids,
+            common_points=common_points,
+            disagreements=disagreements,
+            unique_insights=unique_insights,
+            rejected_claims=rejected_claims,
+            selected_reasoning=selected_reasoning,
+            synthesized_response=synthesized,
+            verification_results={},
+            synthesis_method=synthesis_method,
+            confidence_status=confidence,
+            provenance=provenance,
+        )
+        result.synthesis_record = synthesis_record
+
+        # Attach synthesis info to the record's notes
+        if synthesis_record:
+            result.notes.append(
+                f"synthesis={synthesis_record.synthesis_method.value}; "
+                f"confidence={synthesis_record.confidence_status}; "
+                f"common_points={len(synthesis_record.common_points)}; "
+                f"disagreements={len(synthesis_record.disagreements)}; "
+                f"unique_insights={len(synthesis_record.unique_insights)}; "
+                f"rejected_claims={len(synthesis_record.rejected_claims)}"
+            )
+
+    @staticmethod
+    def _detect_unsupported_claims(response: str, task_domain: str) -> list[str]:
+        """Detect claims in the response that are not supported by evidence."""
+        claims: list[str] = []
+        # Check for arithmetic claims that weren't verified
+        import re
+        arithmetic_pattern = r"\d+[\/\*\-+]\d+[\/\*\-+]\d+"
+        if re.search(arithmetic_pattern, response):
+            claims.append("potential unsupported arithmetic claim")
+        return claims
 if __name__ == "__main__":
     raise SystemExit(main())
